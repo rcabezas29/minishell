@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "3.9"
+
+install:
+  - pip install -r requirements.txt
+  - git clone --recurse-submodule https://github.com/ouaisbrefbams/minishell ../minishell
+  - sed -i 's/-Werror//' ../minishell/Makefile ../minishell/libft/Makefile
+  - sudo apt update
+  - sudo apt install valgrind
+
+script:
+  - python -m flake8
+  - python -m mypy src
+  - ./run
+  - ./run -k pwd
