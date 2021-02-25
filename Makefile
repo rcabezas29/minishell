@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/02/23 14:05:17 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/02/25 13:50:32 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CFLAGS = gcc -Werror -Wextra -Wall
 
-SRCS = 
+SRCS = srcs/main.c
 
 INCLUDES = includes/minishell.h
 
