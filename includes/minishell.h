@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/02/25 13:59:16 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/02/26 09:24:45 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-#include "libft.h"
+#include "../libft/includes/libft.h"
 
-int main(int argc, char *argv);
+int main(void);
 #endif

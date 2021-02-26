@@ -6,19 +6,19 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:13:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/02/25 13:57:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/02/26 09:39:27 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char *argv)
+int main(void)
 {
     pid_t   pid;
     char comando[64];
-    printf("Holi");
+    printf("minishell- ");
     ft_memset(comando, '\0', 64);
-    scanf('%s', comando);
+    scanf("%s", comando);
     while(ft_strcmp(comando, "exit"))
     {
         pid = fork();
@@ -33,13 +33,13 @@ int main(int argc, char *argv)
             if (pid > 0)
             {
                 waitpid(pid, 0, 0);
-                printf("Holi");
+                printf("minishell- ");
                 ft_memset(comando, '\0', 64);
                 scanf("%s", comando);
             }
             else
                 perror("ERROR FORK\n");
         }
-        exit(0);
     }
+    exit(0);
 }

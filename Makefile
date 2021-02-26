@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/02/25 13:50:32 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/02/26 09:26:52 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ $(NAME) : $(OBJS)
 
 %.o: %.c
 	@$(CFLAGS) -I $(INCLUDES) -o $@ -c $<
+
+all : $(NAME)
 
 clean :
 	@$(RM) $(OBJS)
