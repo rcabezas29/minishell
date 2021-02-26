@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/02/26 09:26:52 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/02/26 12:50:41 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,13 @@ NAME = minishell
 
 CFLAGS = gcc -Werror -Wextra -Wall
 
-SRCS = srcs/main.c
+SRCS_MS = main.c parse.c
 
-INCLUDES = includes/minishell.h
+SRCS = $(addprefix srcs/, $(SRCS_MS))
+
+INCLUDES_MS = minishell.h
+
+INCLUDES = $(addprefix includes/, $(INCLUDES_MS))
 
 OBJS = $(SRCS:.c=.o)
 

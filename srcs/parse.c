@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/02/26 13:54:42 by rcabezas         ###   ########.fr       */
+/*   Created: 2021/02/26 12:50:16 by rcabezas          #+#    #+#             */
+/*   Updated: 2021/02/26 13:53:51 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../includes/minishell.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-#include "../libft/includes/libft.h"
+char    **parse_comand()
+{
+    char *line;
+    char **args;
+    
+    ft_printf("minishell- ");
+    line = read_line();
+    args = ft_split(line, ' ');
+    return (args);
+}
 
-int main(void);
-char    **parse_comand();
-char *read_line(void);
-#endif
+char *read_line(void)
+{
+    char *line;
+    
+    line = NULL;
+    get_next_line(1, &line);
+    return (line);
+}

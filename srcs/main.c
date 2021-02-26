@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:13:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/02/26 09:39:27 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/02/26 13:56:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 int main(void)
 {
     pid_t   pid;
-    char comando[64];
+    char **comando;
+
+    comando = NULL;
     printf("minishell- ");
-    ft_memset(comando, '\0', 64);
-    scanf("%s", comando);
-    while(ft_strcmp(comando, "exit"))
+    ft_memset(*comando, '\0', 64);
+    comando = parse_comand();
+    while(ft_strcmp(*comando, "exit"))
     {
         pid = fork();
         if (pid == 0)
         {
-            execlp(comando, comando, NULL);
+            execlp(*comando, *comando, NULL);
             printf("comando no válido\n");
             exit(0);
         }
@@ -34,8 +36,8 @@ int main(void)
             {
                 waitpid(pid, 0, 0);
                 printf("minishell- ");
-                ft_memset(comando, '\0', 64);
-                scanf("%s", comando);
+                ft_memset(*comando, '\0', 64);
+                comando = parse_comand();
             }
             else
                 perror("ERROR FORK\n");

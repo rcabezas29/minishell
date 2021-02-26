@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/09 09:36:16 by rcabezas          #+#    #+#              #
-#    Updated: 2020/09/09 10:33:23 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/02/26 11:45:24 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(NAME): $(OBJS)
 	@ranlib $(NAME)
 
 %.o: %.c
-	gcc $(CFLAGS) -I $(INCLUDES) -o $@ -c $<
+	@gcc $(CFLAGS) -I $(INCLUDES) -o $@ -c $<
 
 clean:
 	@$(RM) $(OBJS)
