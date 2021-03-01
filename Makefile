@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/02/26 12:50:41 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/03/01 13:50:54 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CFLAGS = gcc -Werror -Wextra -Wall
 
-SRCS_MS = main.c parse.c
+SRCS_MS = main.c parse.c  execute.c
 
 SRCS = $(addprefix srcs/, $(SRCS_MS))
 

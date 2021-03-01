@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:13:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/03/01 11:14:23 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/01 13:49:35 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ int main(void)
         pid = fork();
         if (pid == 0)
         {
-            printf("comando no válido\n");
-            exit(0);
+            if (check_args(comando))
+                execute(comando);
+            else
+            {
+                ft_putstr_fd("comando no válido\n", 1);
+                exit(0);
+            }
         }
         else
         {

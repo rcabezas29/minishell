@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/02/26 13:54:42 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/01 13:50:14 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@
 int main(void);
 char    **parse_comand();
 char *read_line(void);
+int     check_args(char **comando);
 #endif
