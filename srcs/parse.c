@@ -22,6 +22,8 @@ char   **parse_comand()
     return (args);
 }
 
+// Importante saber el número de args, |, < y > y sus posiciones en la matriz
+
 char *read_line(void)
 {
     char *line;
