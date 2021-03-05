@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 13:14:18 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/09/09 09:27:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/05 11:24:28 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void	ft_parsespecs(t_struct *ps, const char *format, va_list ap)
 		ft_parseast(format, ps, ap);
 }
 
-int			ft_parse(t_struct *ps, const char *format, va_list ap)
+int	ft_parse(t_struct *ps, const char *format, va_list ap)
 {
-	while ((format[ps->i] == '0' || format[ps->i] == '-' ||
-				format[ps->i] == '.' || ft_isdigit(format[ps->i]) ||
-				format[ps->i] == '*') && format[ps->i])
+	while ((format[ps->i] == '0' || format[ps->i] == '-'
+			|| format[ps->i] == '.' || ft_isdigit(format[ps->i])
+			|| format[ps->i] == '*') && format[ps->i])
 		ft_parsespecs(ps, format, ap);
 	if (ps->precision == 0 && ps->dot == 1)
 		ps->precision = -1;

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 13:33:14 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/09/09 09:27:04 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/05 11:18:57 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_castsgn(t_struct *ps, va_list ap)
 {
-	int nb;
+	int	nb;
 
 	nb = va_arg(ap, int);
 	if (nb < 0)
@@ -23,12 +23,12 @@ static void	ft_castsgn(t_struct *ps, va_list ap)
 		ft_printsgn(ps, nb);
 }
 
-void		ft_compute(t_struct *ps, va_list ap)
+void	ft_compute(t_struct *ps, va_list ap)
 {
 	if (ps->conversion == 'd' || ps->conversion == 'i')
 		ft_castsgn(ps, ap);
-	else if (ps->conversion == 'u' || ps->conversion == 'x' ||
-				ps->conversion == 'X')
+	else if (ps->conversion == 'u' || ps->conversion == 'x'
+		|| ps->conversion == 'X')
 		ft_printuns(ps, va_arg(ap, unsigned int));
 	else if (ps->conversion == 's')
 		ft_printstr(ps, va_arg(ap, char *));

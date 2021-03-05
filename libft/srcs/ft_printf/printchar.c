@@ -6,11 +6,20 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 11:39:20 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/09/09 09:27:27 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/05 11:35:53 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static void	skip_ternary(t_struct *ps, int widthlen, int arglen)
+{
+	widthlen = ps->precision;
+	if (widthlen < arglen)
+		ps->width - ps->precision;
+	else
+		ps->width - arglen;
+}
 
 static void	ft_putpads(t_struct *ps, int less, int arglen)
 {
@@ -23,8 +32,7 @@ static void	ft_putpads(t_struct *ps, int less, int arglen)
 		if (ps->precision >= ps->width)
 			widthlen = ps->width - arglen;
 		else
-			widthlen = ps->precision < arglen ?
-						ps->width - ps->precision : ps->width - arglen;
+			skip_ternary(ps, widthlen, arglen);
 	}
 	else if (ps->precision == 0 && ps->width != 0)
 		widthlen = ps->width - arglen;
@@ -32,8 +40,8 @@ static void	ft_putpads(t_struct *ps, int less, int arglen)
 		widthlen = 0;
 	if (ps->precision == -1)
 		widthlen += ps->width;
-	if (ps->width != 0 && ((less == 0 && ps->flags[1] == '1') ||
-				(less != 0 && ps->flags[1] != '1')))
+	if (ps->width != 0 && ((less == 0 && ps->flags[1] == '1')
+			|| (less != 0 && ps->flags[1] != '1')))
 	{
 		while (++i <= widthlen)
 			ft_putchar_fd(' ', 1);
@@ -41,10 +49,10 @@ static void	ft_putpads(t_struct *ps, int less, int arglen)
 	}
 }
 
-void		ft_printchar(t_struct *ps, char arg)
+void	ft_printchar(t_struct *ps, char arg)
 {
 	int	i;
-	int j;
+	int	j;
 
 	j = 0;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 17:16:23 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/09/09 09:27:41 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/05 12:12:15 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	ft_putwidth(t_struct *ps, int less, int arglen)
 
 	i = 0;
 	widthlen = ps->width - arglen;
-	if (ps->width != 0 && ((less == 0 && ps->flags[1] == '1') ||
-				(less > 0 && ps->flags[1] == '0')))
+	if (ps->width != 0 && ((less == 0 && ps->flags[1] == '1')
+			|| (less > 0 && ps->flags[1] == '0')))
 	{
 		while (++i <= widthlen)
 			ft_putchar_fd(' ', 1);
@@ -34,7 +34,9 @@ static void	ft_putprec(t_struct *ps, int arglen)
 	int	preclen;
 
 	i = 0;
-	preclen = ps->precision > arglen ? ps->precision - arglen : 0;
+	preclen = ps->precision;
+	if (preclen > arglen)
+		ps->precision - arglen;
 	if (ps->precision != 0)
 	{
 		while (++i <= preclen)
@@ -43,7 +45,7 @@ static void	ft_putprec(t_struct *ps, int arglen)
 	}
 }
 
-void		ft_printptr(t_struct *ps, intptr_t arg)
+void	ft_printptr(t_struct *ps, intptr_t arg)
 {
 	if (ps->width != 0 && arg == 0 && ps->precision == -1)
 		ft_putwidth(ps, 1, 2);

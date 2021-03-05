@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 17:23:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/09/09 09:26:51 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/05 11:21:24 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_read(t_struct *ps, const char *format, va_list ap)
 	}
 }
 
-int			ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	va_list		ap;
 	t_struct	*ps;
@@ -40,7 +40,8 @@ int			ft_printf(const char *format, ...)
 
 	if (!format)
 		return (-1);
-	if (!(ps = malloc(sizeof(t_struct))) || !(ft_init(ps)))
+	ps = malloc(sizeof(t_struct));
+	if (!ps || !(ft_init(ps)))
 		return (-1);
 	va_start(ap, format);
 	ft_read(ps, format, ap);

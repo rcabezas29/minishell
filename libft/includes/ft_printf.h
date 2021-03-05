@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 17:39:54 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/07/21 09:20:39 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/05 12:04:37 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include "libft.h"
 
-typedef struct	s_struct
+typedef struct s_struct
 {
 	char		flags[2];
 	int			width;
@@ -59,4 +59,6 @@ void			ft_printuns(t_struct *ps, unsigned long long arg);
 
 void			ft_putsharp(t_struct *ps);
 int				ft_charchr(const char *s, int c);
+
+void			put_s_or_z(t_struct *ps);
 #endif
