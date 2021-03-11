@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 18:04:35 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/02/10 16:13:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:11:07 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_number(const char *str, int min, int max, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (str[i] > 47 && str[i] < 58)
@@ -33,15 +33,15 @@ static int	ft_number(const char *str, int min, int max, int i)
 	return (j);
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int i;
-	int min;
-	int max;
+	int	i;
+	int	min;
+	int	max;
 
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\f' || str[i] == '\n' ||
-			str[i] == '\r' || str[i] == '\t' || str[i] == '\v')
+	while (str[i] == ' ' || str[i] == '\f' || str[i] == '\n'
+		|| str[i] == '\r' || str[i] == '\t' || str[i] == '\v')
 		i++;
 	min = 0;
 	max = 0;

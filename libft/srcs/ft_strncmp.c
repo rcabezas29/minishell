@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 16:28:40 by rcabezas          #+#    #+#             */
-/*   Updated: 2019/11/26 18:07:53 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:42:28 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strncmp(const char *str1, const char *str2, size_t n)
+int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
 	size_t				i;
-	const unsigned char *s1;
-	const unsigned char *s2;
+	const unsigned char	*s1;
+	const unsigned char	*s2;
 
 	s1 = (const unsigned char *)str1;
 	s2 = (const unsigned char *)str2;

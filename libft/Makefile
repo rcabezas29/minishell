@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/21 09:02:58 by rcabezas          #+#    #+#              #
-#    Updated: 2020/09/24 13:09:22 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/03/11 09:43:13 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,9 @@ SRCS_FOLDER = srcs
 
 INCLUDES = includes
 
-FT_PRINTF 	= $(SRCS_FOLDER)/ft_printf
-
 OBJ = $(SRCS:.c=.o)
 
 $(NAME): $(OBJ)
-	@make -C $(FT_PRINTF)
-	@cp $(FT_PRINTF)/libftprintf.a ./$(NAME)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
@@ -51,10 +47,8 @@ all: $(NAME)
 
 clean:
 	@$(RM) $(OBJ)
-	@make clean -C $(FT_PRINTF)
 
 fclean:     clean
 	@$(RM) $(NAME)
-	@make fclean -C $(FT_PRINTF)
 
 re:		fclean all

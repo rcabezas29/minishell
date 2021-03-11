@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 12:23:16 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/12/02 17:55:03 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:20:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_numlen(int i)
 {
-	int len;
+	int	len;
 
 	len = 1;
 	while (i >= 10 || i <= -10)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:00:03 by rcabezas          #+#    #+#             */
-/*   Updated: 2019/12/02 18:40:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:15:03 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ static int	ft_size(int n)
 	return (size);
 }
 
-char		*ft_itoa(int nb)
+char	*ft_itoa(int nb)
 {
 	char	*str;
 	long	nbr;
 	int		i;
 
 	i = 0;
-	if (!(str = (char *)malloc(sizeof(char) * ft_size(nb) + 1)))
+	str = (char *)malloc(sizeof(char) * ft_size(nb) + 1);
+	if (!str)
 		return (NULL);
 	if (nb < 0)
 		str[0] = '-';

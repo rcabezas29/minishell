@@ -6,13 +6,20 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:59:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2020/12/14 16:48:58 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/03/11 12:39:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_countwords(const char *s, char c)
+static void	destroy(char **a)
+{
+	free(a);
+	a = NULL;
+	exit (EXIT_SUCCESS);
+}
+
+static int	ft_countwords(const char *s, char c)
 {
 	int	i;
 
@@ -31,7 +38,7 @@ static int		ft_countwords(const char *s, char c)
 	return (i);
 }
 
-static char		*ft_word(const char *s, char c)
+static char	*ft_word(const char *s, char c)
 {
 	char	*word;
 	int		i;
@@ -50,18 +57,16 @@ static char		*ft_word(const char *s, char c)
 	return (word);
 }
 
-char			**ft_split(const char *s, char c)
+char	**ft_split(const char *s, char c)
 {
 	char	**a;
 	int		i;
 
 	if (s == '\0')
 		return (NULL);
-	if (!(a = (char **)malloc(sizeof(char *) * (ft_countwords(s, c) + 1))))
-	{
-		return (NULL);
-		free(a);
-	}
+	a = (char **)malloc(sizeof(char *) * (ft_countwords(s, c) + 1));
+	if (!a)
+		destroy(a);
 	i = 0;
 	while (*s)
 	{
