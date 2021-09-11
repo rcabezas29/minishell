@@ -6,44 +6,44 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/03/01 13:50:54 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/09/11 11:27:08 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CFLAGS = gcc -Werror -Wextra -Wall
+SRCS_MS = minishell.c environments.c
 
-SRCS_MS = main.c parse.c  execute.c
+SRCS_DIR = srcs/
 
-SRCS = $(addprefix srcs/, $(SRCS_MS))
+INCLUDES = includes/
 
-INCLUDES_MS = minishell.h
-
-INCLUDES = $(addprefix includes/, $(INCLUDES_MS))
+SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 
 OBJS = $(SRCS:.c=.o)
 
-RM = rm -rf
-
 LIBFT = libft
 
-$(NAME) : $(OBJS)
+RM = rm -rf
+
+CFLAGS = gcc -Wall -Wextra -Werror
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
 	@make -C $(LIBFT)
-	@$(CFLAGS) -I $(INCLUDES) $(LIBFT)/libft.a $(OBJS) -o $(NAME)
+	@$(CFLAGS) -I $(INCLUDES) -lreadline $(LIBFT)/libft.a $(OBJS) -o $(NAME)
 
 %.o: %.c
 	@$(CFLAGS) -I $(INCLUDES) -o $@ -c $<
 
-all : $(NAME)
-
-clean :
-	@$(RM) $(OBJS)
+clean:
 	@make clean -C $(LIBFT)
+	@$(RM) $(OBJS)
 
-fclean : clean
-	@$(RM) $(NAME)
+fclean: clean
 	@make fclean -C $(LIBFT)
+	@$(RM) $(NAME)
 
 re:				fclean all
 

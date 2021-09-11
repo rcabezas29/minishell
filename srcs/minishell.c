@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/26 12:50:16 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/03/01 13:55:16 by rcabezas         ###   ########.fr       */
+/*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
+/*   Updated: 2021/09/11 11:31:55 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <minishell.h>
 
-char   **parse_comand()
+int	main(int argc, char **argv, char **envp)
 {
-    char *line;
-    char **args;
+	t_env	*env;
+	char	*prompt;
 
-    line = read_line();
-    args = ft_split(line, ' ');
-    return (args);
-}
+	argc = 0;
+	argv = NULL;
+	env = ft_calloc(sizeof(t_env), 1);
+	env = take_envs(envp);
 
-// Importante saber el número de args, |, < y > y sus posiciones en la matriz
-
-char *read_line(void)
-{
-    char *line;
-    
-    line = NULL;
-    get_next_line(1, &line);
-    return (line);
-}
-
-int     check_args(char **comando)
-{
-    
+	prompt = readline("\033[0;32mminishell - \033[0;0m");
+	while (ft_strcmp("exit", prompt))
+	{
+		prompt = readline("\033[0;32mminishell - \033[0;0m");
+	}
+	return (0);
 }
