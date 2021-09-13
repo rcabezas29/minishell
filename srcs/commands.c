@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 13:21:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/13 13:58:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:10:58 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,15 @@ void	path_command(char *command, t_env *env)
 		}
 	}
 	if (!path)
-	{
-		ft_putstr(ft_strjoin(command, ": command not found"));
-		exit(EXIT_SUCCESS);
-	}
-	return (path);
+		ft_putstr_fd(ft_strjoin(command, ": command not found"), 1);
+	execute(path, command, env);
+}
+
+void	execute(char *path, char *command, t_env *env)
+{
+	int	pid;
+	
+	pid = fork();
+	if (pid == 0)
+		execve(path, ft_split(command, ' '), env->envp);
 }

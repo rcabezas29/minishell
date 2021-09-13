@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/13 13:17:36 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/13 15:11:33 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_env	*take_envs(char	**envp)
 
 	i = 0;
 	env = ft_calloc(sizeof(t_env), 1);
+	env->envp = envp;
 	while (envp[i])
 	{
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
@@ -34,7 +35,7 @@ t_env	*take_envs(char	**envp)
 	return (env);
 }
 
-void	define_env_variable(t_env *env, char *command)
+void	define_env_variable(char *command)
 {
 	char	*name;
 	char	*value;
