@@ -6,11 +6,16 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/11 11:31:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/13 12:11:05 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	leaks()
+{
+	system("leaks minishell");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,9 +28,14 @@ int	main(int argc, char **argv, char **envp)
 	env = take_envs(envp);
 
 	prompt = readline("\033[0;32mminishell - \033[0;0m");
+	add_history(prompt);
 	while (ft_strcmp("exit", prompt))
 	{
+		free(prompt);
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
+		add_history(prompt);
 	}
+	free(prompt);
+	atexit(leaks);
 	return (0);
 }
