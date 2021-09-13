@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/11 10:33:16 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/13 13:14:45 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ typedef struct	s_env
 	char	**paths;
 }	t_env;
 
+
 //minishell.h
 int	main(int argc, char **argv, char **envp);
 
 //environments.h
 t_env	*take_envs(char	**envp);
+
+//parse.c
+void	parse(char *prompt, t_env *env);
 #endif

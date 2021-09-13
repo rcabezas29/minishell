@@ -6,13 +6,13 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/09/13 11:58:57 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/09/13 12:48:33 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_MS = minishell.c environments.c
+SRCS_MS = minishell.c environments.c parse.c
 
 SRCS_DIR = srcs/
 
