@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/13 15:11:33 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/14 09:30:20 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,4 @@ t_env	*take_envs(char	**envp)
 		i++;
 	}
 	return (env);
-}
-
-void	define_env_variable(char *command)
-{
-	char	*name;
-	char	*value;
-	char	**split;
-
-	split = ft_split(command, '=');
-	name = ft_strdup(split[0]);
-	value = ft_strdup(split[1]);
-
-	//Llamar a la funcion export
-
-	//Free split y strdup
 }

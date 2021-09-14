@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/13 15:14:07 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/14 10:57:28 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	leaks()
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
+	t_list *command_list;
 	char	*prompt;
 
 	argc = 0;
@@ -31,10 +32,9 @@ int	main(int argc, char **argv, char **envp)
 	add_history(prompt);
 	while (ft_strcmp("exit", prompt))
 	{
-		parse(prompt, env);
+		command_list = parse(prompt, env);
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 		add_history(prompt);
-		free(prompt);
 	}
 	atexit(leaks);
 	return (0);
