@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/14 10:56:41 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/14 12:33:30 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 # include <readline/history.h>
 # include "../libft/includes/libft.h"
 
+typedef enum e_type
+{
+	COMMAND,
+	PARAMETER,
+	ARGUMENT,
+	PIPE,
+	INDIRECTION,
+	REDIRECTION,
+	HERE_DOC,
+	APPEND
+	
+}			t_type;
+
 typedef struct	s_env
 {
 	char	**envp;
@@ -35,7 +48,7 @@ typedef struct	s_env
 typedef struct s_node
 {
 	char	*content;
-	char	*type;
+	t_type	*type;
 }	t_node;
 
 
