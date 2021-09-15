@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/15 10:07:13 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/15 12:48:04 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 t_cmd_list	*parse(char *prompt, t_env *env)
 {
-	int		i;
+	int			i;
+	int			j;
 	t_cmd_list	*command_line;
-	char	*word;
+	char		word[20];
 
 	i = 0;
-	command_line = NULL;
-	word = NULL;
+	command_line = malloc(sizeof(t_cmd_list));
 	while (prompt[i])
 	{
 		while (prompt[i] == ' ')
@@ -28,10 +28,12 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 		if (prompt[i] == '\'')
 		{
 			i++;
+			j = 0;
 			while (prompt[i] != '\'')
 			{
-				*word = prompt[i];
-				word++;
+				word[j] = prompt[i];
+				j++;
+				word[j] = '\0';
 				i++;
 			}
 			add_word_to_list(word, command_line);
@@ -39,23 +41,26 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 		else if (prompt[i] == '\"')
 		{
 			i++;
+			j = 0;
 			while (prompt[i] != '\"')
 			{
-				*word = prompt[i];
-				word++;
+				word[j] = prompt[i];
+				j++;
 				i++;
 			}
+			word[j] = '\0';
 			add_word_to_list(word, command_line);
 		}
 		else
 		{
-			while (prompt[i] != ' ')
+			j = 0;
+			while (prompt[i] != ' ' && prompt[i])
 			{
-				*word = prompt[i];
-				word++;
-				*word = '\0';
+				word[j] = prompt[i];
+				j++;
 				i++;
 			}
+			word[j] = '\0';
 			add_word_to_list(word, command_line);
 		}
 		i++;
@@ -68,7 +73,7 @@ void	add_word_to_list(char *word, t_cmd_list *command_line)
 {
 	t_node	*node;
 
-	node = NULL;
+	node = malloc(sizeof(t_node));
 	node->content = word;
 	if (!ft_strncmp(word, "<", 1))
 		node->type = INDIRECTION;
@@ -89,6 +94,7 @@ void	ft_cmdlstadd_back(t_cmd_list *alst, t_node *new)
 {
 	t_cmd_list	*tmp;
 
+	tmp = malloc(sizeof(t_cmd_list));
 	if (alst)
 	{
 		if (alst == NULL)
@@ -96,7 +102,7 @@ void	ft_cmdlstadd_back(t_cmd_list *alst, t_node *new)
 		else
 		{
 			tmp = ft_cmdlstlast(alst);
-			tmp->next->content = new;
+			tmp->content = new;
 		}
 	}
 }
