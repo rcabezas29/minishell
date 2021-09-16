@@ -17,12 +17,14 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 	int			i;
 	int			j;
 	t_cmd_list	*command_line;
-	char		word[20];
+	char		*word;
 
 	i = 0;
 	command_line = malloc(sizeof(t_cmd_list));
+	//command_line = NULL;
 	while (prompt[i])
 	{
+		word = malloc(sizeof(char) * 20);
 		while (prompt[i] == ' ')
 			i++;
 		if (prompt[i] == '\'')
@@ -63,6 +65,7 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 			word[j] = '\0';
 			add_word_to_list(word, command_line);
 		}
+		free(word);
 		i++;
 	}
 	env->home = NULL; //////////////////
@@ -92,16 +95,18 @@ void	add_word_to_list(char *word, t_cmd_list *command_line)
 
 void	ft_cmdlstadd_back(t_cmd_list *alst, t_node *node)
 {
-	t_cmd_list	*tmp;
+	t_cmd_list *tmp;
+	t_cmd_list *aux;
 
-	tmp = malloc(sizeof(t_cmd_list));
-	tmp = alst;
-	if (tmp == NULL)
-		tmp->content = node;
+	aux = malloc(sizeof(t_cmd_list));
+	aux->content = node;
+	aux->next = NULL;
+	if (alst->content == NULL)
+		alst->content = node;
 	else
 	{
 		tmp = ft_cmdlstlast(alst);
-		tmp->content = node;
+		tmp->next = aux;
 	}
 }
 
