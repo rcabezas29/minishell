@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/15 12:48:04 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/16 13:14:09 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ void	add_word_to_list(char *word, t_cmd_list *command_line)
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
-	node->content = word;
+	node->prompts = word;
 	if (!ft_strncmp(word, "<", 1))
-		node->type = INDIRECTION;
+		node->types = INDIRECTION;
 	else if (!ft_strncmp(word, ">", 1))
-		node->type = REDIRECTION;
+		node->types = REDIRECTION;
 	else if (!ft_strncmp(word, "<<", 2))
-		node->type = HERE_DOC;
+		node->types = HERE_DOC;
 	else if (!ft_strncmp(word, ">>", 2))
-		node->type = APPEND;
+		node->types = APPEND;
 	else if (!ft_strncmp(word, "|", 1))
-		node->type = PIPE;
+		node->types = PIPE;
 	else
-		node->type = ARGUMENT;
+		node->types = ARGUMENT;
 	ft_cmdlstadd_back(command_line, node);
 }
 

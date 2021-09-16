@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/15 12:46:47 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/16 13:27:15 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_list(t_cmd_list *command_list)
 	tmp = command_list;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content->content);
+		printf("%s\n", tmp->content->prompts);
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/16 10:23:19 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/16 13:12:08 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ typedef struct s_env
 
 typedef struct s_node
 {
-	char	*content;
-	t_type	type;
+	char	*prompts;
+	t_type	types;
 }	t_node;
 
 typedef struct s_cmd_list
