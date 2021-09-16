@@ -90,20 +90,18 @@ void	add_word_to_list(char *word, t_cmd_list *command_line)
 	ft_cmdlstadd_back(command_line, node);
 }
 
-void	ft_cmdlstadd_back(t_cmd_list *alst, t_node *new)
+void	ft_cmdlstadd_back(t_cmd_list *alst, t_node *node)
 {
 	t_cmd_list	*tmp;
 
 	tmp = malloc(sizeof(t_cmd_list));
-	if (alst)
+	tmp = alst;
+	if (tmp == NULL)
+		tmp->content = node;
+	else
 	{
-		if (alst == NULL)
-			alst->content = new;
-		else
-		{
-			tmp = ft_cmdlstlast(alst);
-			tmp->content = new;
-		}
+		tmp = ft_cmdlstlast(alst);
+		tmp->content = node;
 	}
 }
 
