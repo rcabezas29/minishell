@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/19 19:01:24 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:20:22 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	print_list(t_list *command_list)
 	tmp = command_list;
 	while (tmp)
 	{
-		printf("%p\n", tmp);
 		if (((t_node *)tmp->content))
 			printf("%s\n", ((t_node *)tmp->content)->prompts);
 		tmp = tmp->next;

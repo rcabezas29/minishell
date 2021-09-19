@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/19 19:08:22 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:19:34 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_list	*parse(char *prompt, t_env *env)
 			j = 0;
 			while (prompt[i] != '\'')
 			{
+				word = ft_realloc(word, sizeof(word) + 1);
 				word[j] = prompt[i];
 				j++;
 				word[j] = '\0';
@@ -45,6 +46,7 @@ t_list	*parse(char *prompt, t_env *env)
 			j = 0;
 			while (prompt[i] != '\"')
 			{
+				word = ft_realloc(word, sizeof(word) + 1);
 				word[j] = prompt[i];
 				j++;
 				i++;
@@ -57,6 +59,7 @@ t_list	*parse(char *prompt, t_env *env)
 			j = 0;
 			while (prompt[i] && prompt[i] != ' ')
 			{
+				word = ft_realloc(word, sizeof(word) + 1);
 				word[j] = prompt[i];
 				j++;
 				i++;
