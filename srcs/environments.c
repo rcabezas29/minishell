@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/14 09:30:20 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:01:15 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_env	*take_envs(char	**envp)
 {
-	int	i;
+	int		i;
 	t_env	*env;
 
 	i = 0;

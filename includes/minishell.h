@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/16 13:12:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:02:00 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,6 @@ typedef struct s_node
 	t_type	types;
 }	t_node;
 
-typedef struct s_cmd_list
-{
-	t_node				*content;
-	struct s_cmd_list	*next;
-}	t_cmd_list;
-
 //minishell.h
 int			main(int argc, char **argv, char **envp);
 
@@ -60,8 +54,8 @@ int			main(int argc, char **argv, char **envp);
 t_env		*take_envs(char	**envp);
 
 //parse.c
-t_cmd_list	*parse(char *prompt, t_env *env);
-void		add_word_to_list(char *word, t_cmd_list *command_line);
-void		ft_cmdlstadd_back(t_cmd_list *alst, t_node *new);
-t_cmd_list	*ft_cmdlstlast(t_cmd_list *lst);
+t_list		*parse(char *prompt, t_env *env);
+void		add_word_to_list(char *word, t_list **command_line);
+void		ft_cmdlstadd_back(t_list *alst, t_node *new);
+t_list		*ft_cmdlstlast(t_list *lst);
 #endif

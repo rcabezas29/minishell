@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/16 13:14:09 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:08:22 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_cmd_list	*parse(char *prompt, t_env *env)
+t_list	*parse(char *prompt, t_env *env)
 {
 	int			i;
 	int			j;
-	t_cmd_list	*command_line;
+	t_list		*command_line;
 	char		*word;
 
 	i = 0;
-	command_line = malloc(sizeof(t_cmd_list));
-	//command_line = NULL;
+	command_line = NULL;
 	while (prompt[i])
 	{
-		word = malloc(sizeof(char) * 20);
+		word = malloc(sizeof(char));
 		while (prompt[i] == ' ')
 			i++;
 		if (prompt[i] == '\'')
@@ -38,7 +37,7 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 				word[j] = '\0';
 				i++;
 			}
-			add_word_to_list(word, command_line);
+			add_word_to_list(word, &command_line);
 		}
 		else if (prompt[i] == '\"')
 		{
@@ -51,19 +50,19 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 				i++;
 			}
 			word[j] = '\0';
-			add_word_to_list(word, command_line);
+			add_word_to_list(word, &command_line);
 		}
 		else
 		{
 			j = 0;
-			while (prompt[i] != ' ' && prompt[i])
+			while (prompt[i] && prompt[i] != ' ')
 			{
 				word[j] = prompt[i];
 				j++;
 				i++;
 			}
 			word[j] = '\0';
-			add_word_to_list(word, command_line);
+			add_word_to_list(word, &command_line);
 		}
 		free(word);
 		i++;
@@ -72,12 +71,12 @@ t_cmd_list	*parse(char *prompt, t_env *env)
 	return (command_line);
 }
 
-void	add_word_to_list(char *word, t_cmd_list *command_line)
+void	add_word_to_list(char *word, t_list **command_line)
 {
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
-	node->prompts = word;
+	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<", 1))
 		node->types = INDIRECTION;
 	else if (!ft_strncmp(word, ">", 1))
@@ -90,33 +89,5 @@ void	add_word_to_list(char *word, t_cmd_list *command_line)
 		node->types = PIPE;
 	else
 		node->types = ARGUMENT;
-	ft_cmdlstadd_back(command_line, node);
-}
-
-void	ft_cmdlstadd_back(t_cmd_list *alst, t_node *node)
-{
-	t_cmd_list *tmp;
-	t_cmd_list *aux;
-
-	aux = malloc(sizeof(t_cmd_list));
-	aux->content = node;
-	aux->next = NULL;
-	if (alst->content == NULL)
-		alst->content = node;
-	else
-	{
-		tmp = ft_cmdlstlast(alst);
-		tmp->next = aux;
-	}
-}
-
-t_cmd_list	*ft_cmdlstlast(t_cmd_list *lst)
-{
-	t_cmd_list	*tmp;
-
-	tmp = lst;
-	if (lst)
-		while (tmp->next)
-			tmp = tmp->next;
-	return (tmp);
+	ft_lstadd_back(command_line, ft_lstnew(node));
 }

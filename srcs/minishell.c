@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/16 13:35:31 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/19 19:01:24 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-void	print_list(t_cmd_list *command_list)
+void	print_list(t_list *command_list)
 {
-	t_cmd_list	*tmp;
+	t_list	*tmp;
 
 	tmp = command_list;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content->prompts);
+		printf("%p\n", tmp);
+		if (((t_node *)tmp->content))
+			printf("%s\n", ((t_node *)tmp->content)->prompts);
 		tmp = tmp->next;
 	}
 }
@@ -32,7 +34,7 @@ void	print_list(t_cmd_list *command_list)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*env;
-	t_cmd_list	*command_list;
+	t_list		*command_list;
 	char		*prompt;
 
 	argc = 0;
