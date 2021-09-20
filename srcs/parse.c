@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/20 10:18:02 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/20 14:02:08 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_list	*parse(char *prompt, t_env *env)
+t_list	*parse(t_cmd_info *cmd_info, char *prompt)
 {
 	int			i;
 	int			j;
-	t_list		*command_line;
 	char		*word;
 
 	i = 0;
-	command_line = NULL;
 	while (prompt[i])
 	{
 		word = malloc(sizeof(char));
@@ -38,7 +36,7 @@ t_list	*parse(char *prompt, t_env *env)
 				word[j] = '\0';
 				i++;
 			}
-			add_word_to_list(word, command_line);
+			add_word_to_list(cmd_info, word);
 		}
 		else if (prompt[i] == '\"')
 		{
@@ -52,7 +50,7 @@ t_list	*parse(char *prompt, t_env *env)
 				i++;
 			}
 			word[j] = '\0';
-			add_word_to_list(word, command_line);
+			add_word_to_list(cmd_info, word);
 		}
 		else
 		{
@@ -60,49 +58,104 @@ t_list	*parse(char *prompt, t_env *env)
 			while (prompt[i] && prompt[i] != ' ')
 			{
 				word = ft_realloc(word, sizeof(word) + 1);
+				if (prompt[i] == '\'')
+				{
+					i++;
+					while (prompt[i] != '\'')
+					{
+						word = ft_realloc(word, sizeof(word) + 1);
+						word[j] = prompt[i];
+						j++;
+						i++;
+					}
+					i++;
+				}
+				else if (prompt[i] == '\"')
+				{
+					i++;
+					while (prompt[i] != '\"')
+					{
+						word = ft_realloc(word, sizeof(word) + 1);
+						word[j] = prompt[i];
+						j++;
+						i++;
+					}
+					i++;
+				}
 				word[j] = prompt[i];
 				j++;
 				i++;
 			}
 			word[j] = '\0';
-			add_word_to_list(word, command_line);
+			add_word_to_list(cmd_info, word);
 		}
 		free(word);
 		i++;
 	}
-	env->home = NULL; //////////////////
-	return (command_line);
+	return (cmd_info->command_list);
 }
 
-void	add_word_to_list(char *word, t_list *command_line)
+void	add_word_to_list(t_cmd_info *cmd_info, char *word)
 {
 	t_node	*node;
 
 	node = malloc(sizeof(t_node));
 	node->prompts = ft_strdup(word);
-	if (!ft_strncmp(word, "<", 1))
-		node->types = INDIRECTION;
-	else if (!ft_strncmp(word, ">", 1))
-		node->types = REDIRECTION;
-	else if (!ft_strncmp(word, "<<", 2))
+	if (!ft_strncmp(word, "<<", 2))
 		node->types = HERE_DOC;
 	else if (!ft_strncmp(word, ">>", 2))
 		node->types = APPEND;
+	else if (!ft_strncmp(word, "<", 1))
+		node->types = INDIRECTION;
+	else if (!ft_strncmp(word, ">", 1))
+		node->types = REDIRECTION;
 	else if (!ft_strncmp(word, "|", 1))
+	{
 		node->types = PIPE;
+		cmd_info->no_pipes++;
+	}
 	else
 		node->types = ARGUMENT;
-	ft_lstadd_back(&command_line, ft_lstnew(node));
+	ft_lstadd_back(&cmd_info->command_list, ft_lstnew(node));
 }
 
-void	analyze_prompt(t_list *command_list)
+void	analyze_prompt(t_cmd_info *cmd_info)
 {
 	t_list	*aux;
 
-	aux = command_list;
-	while(((t_node *)aux->content)->types != 1)
+	aux = cmd_info->command_list;
+	if (((t_node *)aux->content)->types == 1)	
+		perror("syntax error near unexpected token `|'");
+	if (((t_node *)aux->content)->types > 1 && ((t_node *)aux->content)->types < 6)
 	{
-		if (((t_node *)aux->content)->prompts == )
-
+		/////// primer argumento redirecciones
+		aux = aux->next;
+		((t_node *)aux->content)->file_name = ft_strdup(((t_node *)aux->content)->prompts);
+		if (aux->next)
+			aux = aux->next;
 	}
+	while(aux->next && ((t_node *)aux->content)->types != 1)
+	{
+		if (((t_node *)aux->content)->types > 1 && ((t_node *)aux->content)->types < 6)
+		{
+			/////// redirecciones
+			aux = aux->next;
+			((t_node *)aux->content)->file_name = ft_strdup(((t_node *)aux->content)->prompts);
+		}
+		else if (((t_node *)aux->content)->types == 0)
+		{
+			check_builtins((t_node *)aux->content);
+		}
+		while (aux->next && ((t_node *)aux->content)->types == 0)
+			aux = aux->next;
+	}
+}
+
+void	check_builtins(t_node *node)
+{
+	if (!ft_strcmp(node->prompts, "echo") || !ft_strcmp(node->prompts, "cd")
+		|| !ft_strcmp(node->prompts, "pwd") || !ft_strcmp(node->prompts, "export")
+		|| !ft_strcmp(node->prompts, "unset") || !ft_strcmp(node->prompts, "env")
+		|| !ft_strcmp(node->prompts, "exit"))
+		node->built_in = 1;
 }

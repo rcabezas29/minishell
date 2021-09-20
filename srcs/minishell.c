@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/20 09:37:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/20 13:52:05 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,20 @@ void	leaks(void)
 	system("leaks minishell");
 }
 
-void	print_list(t_list *command_list)
+void	print_list(t_cmd_info *cmd_info)
 {
 	t_list	*tmp;
 
-	tmp = command_list;
+	tmp = cmd_info->command_list;
 	while (tmp)
 	{
 		if (((t_node *)tmp->content))
 		{
 			printf("%s\n", ((t_node *)tmp->content)->prompts);
 			printf("%u\n", ((t_node *)tmp->content)->types);
+			printf("%s\n", ((t_node *)tmp->content)->file_name);
+			printf("%d\n", ((t_node *)tmp->content)->built_in);
+			printf("----------------------------------------\n");
 		}
 		tmp = tmp->next;
 	}
@@ -36,12 +39,13 @@ void	print_list(t_list *command_list)
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*env;
-	t_list		*command_list;
+	t_cmd_info	*cmd_info;
 	char		*prompt;
 
 	argc = 0;
 	argv = NULL;
 	env = ft_calloc(sizeof(t_env), 1);
+	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = take_envs(envp);
 	prompt = readline("\033[0;32mminishell - \033[0;0m");
 	if (prompt[0] != '\0')
@@ -51,9 +55,10 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
-			command_list = parse(prompt, env);
-			print_list(command_list);
-			analyze_prompt(command_list);
+			cmd_info->command_list = parse(cmd_info, prompt);
+			analyze_prompt(cmd_info);
+			print_list(cmd_info);
+			cmd_info->command_list = NULL;
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 	}
