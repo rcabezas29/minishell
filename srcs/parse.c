@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/19 19:19:34 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/20 10:18:02 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list	*parse(char *prompt, t_env *env)
 				word[j] = '\0';
 				i++;
 			}
-			add_word_to_list(word, &command_line);
+			add_word_to_list(word, command_line);
 		}
 		else if (prompt[i] == '\"')
 		{
@@ -52,7 +52,7 @@ t_list	*parse(char *prompt, t_env *env)
 				i++;
 			}
 			word[j] = '\0';
-			add_word_to_list(word, &command_line);
+			add_word_to_list(word, command_line);
 		}
 		else
 		{
@@ -65,7 +65,7 @@ t_list	*parse(char *prompt, t_env *env)
 				i++;
 			}
 			word[j] = '\0';
-			add_word_to_list(word, &command_line);
+			add_word_to_list(word, command_line);
 		}
 		free(word);
 		i++;
@@ -74,7 +74,7 @@ t_list	*parse(char *prompt, t_env *env)
 	return (command_line);
 }
 
-void	add_word_to_list(char *word, t_list **command_line)
+void	add_word_to_list(char *word, t_list *command_line)
 {
 	t_node	*node;
 
@@ -92,5 +92,17 @@ void	add_word_to_list(char *word, t_list **command_line)
 		node->types = PIPE;
 	else
 		node->types = ARGUMENT;
-	ft_lstadd_back(command_line, ft_lstnew(node));
+	ft_lstadd_back(&command_line, ft_lstnew(node));
+}
+
+void	analyze_prompt(t_list *command_list)
+{
+	t_list	*aux;
+
+	aux = command_list;
+	while(((t_node *)aux->content)->types != 1)
+	{
+		if (((t_node *)aux->content)->prompts == )
+
+	}
 }
