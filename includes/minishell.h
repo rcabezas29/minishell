@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 09:26:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/22 13:32:05 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef enum s_type
 	INDIRECTION,
 	REDIRECTION,
 	HERE_DOC,
-	APPEND
+	APPEND,
+	FILE_NAME
 }			t_type;
 
 typedef struct s_env
@@ -52,12 +53,10 @@ typedef struct s_node
 	char	*prompts;
 	t_type	types;
 	int		built_in;
-	char	*file_name;
 }	t_node;
 
 //minishell.h
 int			main(int argc, char **argv, char **envp);
-void		free_everything(t_env *env, t_cmd_info *cmd_info);
 
 //environments.h
 t_env		*take_envs(char	**envp);
@@ -67,4 +66,8 @@ t_list		*parse(t_cmd_info *cmd_info, char *prompt);
 void		add_word_to_list(t_cmd_info *cmd_info, char *word);
 void		analyze_prompt(t_cmd_info *cmd_info);
 void		check_builtins(t_node *node);
+
+//execute.c
+void	execute(t_cmd_info *cmd_info, t_env *env);
+char	*cmd_path(t_env *env, char *cmd);
 #endif

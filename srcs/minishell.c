@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 09:29:44 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/22 13:13:37 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	print_list(t_cmd_info *cmd_info)
 		{
 			printf("%s\n", ((t_node *)tmp->content)->prompts);
 			printf("%u\n", ((t_node *)tmp->content)->types);
-			printf("%s\n", ((t_node *)tmp->content)->file_name);
 			printf("%d\n", ((t_node *)tmp->content)->built_in);
 			printf("----------------------------------------\n");
 		}
@@ -57,19 +56,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			cmd_info->command_list = parse(cmd_info, prompt);
 			analyze_prompt(cmd_info);
+			execute();
 			print_list(cmd_info);
 			cmd_info->command_list = NULL;
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 	}
-	free_everything(env, cmd_info);
 	atexit(leaks);
 	return (0);
-}
-
-void	free_everything(t_env *env, t_cmd_info *cmd_info)
-{
-	free_double_ptr(env->paths);
-	free(env);
-	free(cmd_info);
 }

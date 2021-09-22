@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/20 14:02:08 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/22 12:54:59 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 	{
 		/////// primer argumento redirecciones
 		aux = aux->next;
-		((t_node *)aux->content)->file_name = ft_strdup(((t_node *)aux->content)->prompts);
+		((t_node *)aux->content)->types = FILE_NAME ;
 		if (aux->next)
 			aux = aux->next;
 	}
@@ -140,7 +140,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		{
 			/////// redirecciones
 			aux = aux->next;
-			((t_node *)aux->content)->file_name = ft_strdup(((t_node *)aux->content)->prompts);
+			((t_node *)aux->content)->types = FILE_NAME;
 		}
 		else if (((t_node *)aux->content)->types == 0)
 		{

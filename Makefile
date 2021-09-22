@@ -6,13 +6,13 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/09/22 11:18:59 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/09/22 13:18:18 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS)
+SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS) $(EXEC_SRCS)
 
 INCLUDES = includes/
 
@@ -20,9 +20,13 @@ SRCS_DIR = srcs/
 
 ENV_DIR = env/
 
+EXEC_DIR = executer/
+
 PARSER_DIR = parser/
 
 SRCS_PARSER = parse.c
+
+SRCS_EXEC = execute.c
 
 SRCS_ENV = environments.c
 
@@ -31,6 +35,8 @@ SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 ENV_SRCS = $(addprefix $(ENV_DIR), $(SRCS_ENV))
 
 PARSER_SRCS = $(addprefix $(PARSER_DIR), $(SRCS_PARSER))
+
+EXEC_SRCS = $(addprefix $(EXEC_DIR), $(SRCS_EXEC))
 
 OBJS = $(SRCS:.c=.o)
 
