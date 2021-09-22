@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/20 13:52:05 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/22 09:29:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,14 @@ int	main(int argc, char **argv, char **envp)
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 	}
+	free_everything(env, cmd_info);
 	atexit(leaks);
 	return (0);
+}
+
+void	free_everything(t_env *env, t_cmd_info *cmd_info)
+{
+	free_double_ptr(env->paths);
+	free(env);
+	free(cmd_info);
 }

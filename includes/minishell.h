@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/20 13:40:08 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/22 09:26:02 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_node
 
 //minishell.h
 int			main(int argc, char **argv, char **envp);
+void		free_everything(t_env *env, t_cmd_info *cmd_info);
 
 //environments.h
 t_env		*take_envs(char	**envp);
