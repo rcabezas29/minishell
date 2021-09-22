@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 13:32:05 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:37:58 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			main(int argc, char **argv, char **envp);
 
 //environments.h
 t_env		*take_envs(char	**envp);
+void		add_slash_to_path(t_env *env);
 
 //parse.c
 t_list		*parse(t_cmd_info *cmd_info, char *prompt);
@@ -68,6 +69,8 @@ void		analyze_prompt(t_cmd_info *cmd_info);
 void		check_builtins(t_node *node);
 
 //execute.c
-void	execute(t_cmd_info *cmd_info, t_env *env);
-char	*cmd_path(t_env *env, char *cmd);
+void		execute(t_cmd_info *cmd_info, t_env *env);
+char		*cmd_path(t_env *env, char *cmd);
+char		**assign_arguments_for_execve(t_list *tmp);
+void		execute_paths(t_list *tmp, t_env *env);
 #endif
