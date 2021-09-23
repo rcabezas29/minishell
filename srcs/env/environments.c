@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 20:06:29 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/23 10:38:42 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_env	*take_envs(char	**envp)
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
 		{
 			env->paths = ft_split(ft_strchr(envp[i], '/'), ':');
-			//add_slash_to_path(env);
+			add_slash_to_path(env);
 		}
 		if (ft_strncmp("USER=", envp[i], 5) == 0)
 			env->user = ft_strchr(envp[i], '=');
@@ -48,7 +48,7 @@ void	add_slash_to_path(t_env *env)
 	{
 		tmp = ft_strjoin(env->paths[i], "/");
 		free(env->paths[i]);
-		env->paths[i] = tmp;
+		env->paths[i] = ft_strdup(tmp);
 		free(tmp);
 		i++;
 	}
