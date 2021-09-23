@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/23 11:18:41 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:30:32 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	int		narg;
 
 	narg = count_arguments(tmp);
-
 	ret = (char **)malloc(sizeof(char *) * (narg + 1));
 	i = 0;
 	while (i < narg)

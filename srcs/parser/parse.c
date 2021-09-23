@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 12:54:59 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:28:47 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*parse(t_cmd_info *cmd_info, char *prompt)
 	i = 0;
 	while (prompt[i])
 	{
-		word = malloc(sizeof(char));
+		word = ft_calloc(sizeof(char), 1);
 		while (prompt[i] == ' ')
 			i++;
 		if (prompt[i] == '\'')
@@ -99,7 +99,7 @@ void	add_word_to_list(t_cmd_info *cmd_info, char *word)
 {
 	t_node	*node;
 
-	node = malloc(sizeof(t_node));
+	node = ft_calloc(sizeof(t_node), 1);
 	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<<", 2))
 		node->types = HERE_DOC;
