@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 19:37:58 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/23 13:12:49 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ void		execute(t_cmd_info *cmd_info, t_env *env);
 char		*cmd_path(t_env *env, char *cmd);
 char		**assign_arguments_for_execve(t_list *tmp);
 void		execute_paths(t_list *tmp, t_env *env);
+void		ft_freearray(char **array);
 #endif

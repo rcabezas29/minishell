@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/22 19:30:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/23 14:27:11 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 	}
+	ft_freearray(env->paths);
+	free(env);
+	free((t_node *)cmd_info->command_list);
+	free(cmd_info);
 	atexit(leaks);
 	return (0);
 }

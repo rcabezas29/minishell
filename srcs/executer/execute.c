@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/23 11:30:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/23 14:03:00 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int		count_arguments(t_list *tmp)
+int	count_arguments(t_list *tmp)
 {
 	t_list	*aux;
 	int		i;
@@ -45,17 +45,34 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	return (ret);
 }
 
+void	ft_freearray(char **array)
+{
+	int		i;
+
+	i = 0;
+	while (array[i] != '\0')
+	{
+		free(array[i]);
+		array[i] = NULL;
+		i++;
+	}
+	free(array);
+	array = NULL;
+}
+
 void	execute_paths(t_list *tmp, t_env *env)
 {
 	char	*path;
 	int		pid;
-	char	**exeggutor; //Es un pokemon
+	char	**exeggutor;
 
 	path = cmd_path(env, ((t_node *)tmp->content)->prompts);
 	exeggutor = assign_arguments_for_execve(tmp);
 	pid = fork();
 	if (pid == 0)
 		execve(path, exeggutor, env->envp);
+	free(path);
+	ft_freearray(exeggutor);
 }
 
 void	execute(t_cmd_info *cmd_info, t_env *env)
@@ -70,8 +87,8 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 		if (((t_node *)tmp->content)->types == 0)
 		{
 			if (((t_node *)tmp->content)->built_in == 1)
-				continue ; 
-				//execute_builtins();
+				continue; 
+				//execute_builtins(cmd_info);
 			else
 			{
 				execute_paths(tmp, env);
@@ -97,7 +114,10 @@ char	*cmd_path(t_env *env, char *cmd)
 		tmp = ft_strjoin(env->paths[i], cmd);
 		check_path = open(tmp, O_RDONLY);
 		if (check_path < 0)
+		{
+			free(tmp);
 			i++;
+		}
 		else
 		{
 			path = ft_strdup(tmp);
@@ -114,3 +134,27 @@ char	*cmd_path(t_env *env, char *cmd)
 	}
 	return (path);
 }
+
+// FUNCION PARA DERIBAR LOS BUILTINS A SU FUNCION EJECUTABLE CORRESPONDIENTE
+// void	execute_builtins(t_cmd_info *cmd_info)
+// {
+// 	t_list	*aux;
+
+// 	aux = cmd_info->command_list;
+// 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "echo"))
+// 		excute_echo(cmd_info);
+// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))
+// 		excute_cd(cmd_info);
+// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "pwd"))
+// 		excute_pwd(cmd_info);
+// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "env"))
+// 		excute_env(cmd_info);
+// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "export"))
+// 		excute_export(cmd_info);
+// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "unset"))
+// 		excute_unset(cmd_info);
+// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
+// 		excute_exit(cmd_info);
+// 	else
+// 		perror("command not found");
+// }
