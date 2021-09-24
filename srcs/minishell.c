@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/23 14:27:11 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/24 12:59:03 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(prompt);
 			cmd_info->command_list = parse(cmd_info, prompt);
+			print_list(cmd_info);
 			analyze_prompt(cmd_info);
 			execute(cmd_info, env);
-			//print_list(cmd_info);
 			cmd_info->command_list = NULL;
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");

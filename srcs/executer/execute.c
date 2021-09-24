@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/23 14:03:00 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/24 12:11:08 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	int		narg;
 
 	narg = count_arguments(tmp);
+	ret = NULL;
 	ret = (char **)malloc(sizeof(char *) * (narg + 1));
 	i = 0;
 	while (i < narg)
@@ -41,6 +42,7 @@ char	**assign_arguments_for_execve(t_list *tmp)
 		ret[i] = ft_strdup(((t_node *)tmp->content)->prompts);
 		tmp = tmp->next;
 		i++;
+		ret[i] = NULL;
 	}
 	return (ret);
 }
@@ -50,7 +52,7 @@ void	ft_freearray(char **array)
 	int		i;
 
 	i = 0;
-	while (array[i] != '\0')
+	while (array[i])
 	{
 		free(array[i]);
 		array[i] = NULL;
@@ -66,7 +68,7 @@ void	execute_paths(t_list *tmp, t_env *env)
 	int		pid;
 	char	**exeggutor;
 
-	path = cmd_path(env, ((t_node *)tmp->content)->prompts);
+	path = cmd_path(env, (char *)((t_node *)tmp->content)->prompts);
 	exeggutor = assign_arguments_for_execve(tmp);
 	pid = fork();
 	if (pid == 0)
@@ -111,7 +113,7 @@ char	*cmd_path(t_env *env, char *cmd)
 		return (cmd);
 	while (env->paths[i])
 	{
-		tmp = ft_strjoin(env->paths[i], cmd);
+		tmp = ft_strjoin((char *)env->paths[i], cmd);
 		check_path = open(tmp, O_RDONLY);
 		if (check_path < 0)
 		{
