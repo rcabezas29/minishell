@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 12:32:40 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/27 13:23:47 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ t_list	*parse(t_cmd_info *cmd_info, char *prompt)
 			word[j] = '\0';
 			add_word_to_list(cmd_info, word);
 		}
-		free(word);
-		word = NULL;
 		i++;
 	}
 	return (cmd_info->command_list);
@@ -119,6 +117,8 @@ void	add_word_to_list(t_cmd_info *cmd_info, char *word)
 	}
 	else
 		node->types = ARGUMENT;
+	free(word);
+	word = NULL;
 	ft_lstadd_back(&cmd_info->command_list, ft_lstnew(node));
 }
 

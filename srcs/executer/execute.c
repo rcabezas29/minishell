@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 12:56:36 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/27 13:16:51 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	{
 		ret[i] = ft_strdup(((t_node *)tmp->content)->prompts);
 		free(((t_node *)tmp->content)->prompts);
+		((t_node *)tmp->content)->prompts = NULL;
 		ft_lstdelone(tmp, free);
 		tmp = tmp->next;
 		i++;
