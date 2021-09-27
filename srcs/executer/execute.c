@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/24 12:11:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/27 11:29:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ void	execute_paths(t_list *tmp, t_env *env)
 
 	path = cmd_path(env, (char *)((t_node *)tmp->content)->prompts);
 	exeggutor = assign_arguments_for_execve(tmp);
+	ft_lsterase(tmp);
 	pid = fork();
 	if (pid == 0)
 		execve(path, exeggutor, env->envp);
 	free(path);
 	ft_freearray(exeggutor);
+	
 }
 
 void	execute(t_cmd_info *cmd_info, t_env *env)
