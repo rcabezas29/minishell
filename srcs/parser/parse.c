@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/24 12:30:58 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/27 12:32:40 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,19 +149,24 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		}
 		else if (((t_node *)aux->content)->types == 0)
 		{
-			check_builtins((t_node *)aux->content);
+			check_builtins(cmd_info);
 		}
 		while (aux->next && ((t_node *)aux->content)->types == 0)
 			aux = aux->next;
 	}
 }
 
-void	check_builtins(t_node *node)
+void	check_builtins(t_cmd_info *cmd_info)
 {
-	if (!ft_strcmp(node->prompts, "echo") || !ft_strcmp(node->prompts, "cd")
-		|| !ft_strcmp(node->prompts, "pwd") || !ft_strcmp(node->prompts, "env")
-		|| !ft_strcmp(node->prompts, "export")
-		|| !ft_strcmp(node->prompts, "unset")
-		|| !ft_strcmp(node->prompts, "exit"))
-		node->built_in = 1;
+	t_list	*aux;
+
+	aux = cmd_info->command_list;
+	if (!ft_strcmp(((t_node *)aux->content)->prompts, "echo")
+		|| !ft_strcmp(((t_node *)aux->content)->prompts, "cd")
+		|| !ft_strcmp(((t_node *)aux->content)->prompts, "pwd")
+		|| !ft_strcmp(((t_node *)aux->content)->prompts, "env")
+		|| !ft_strcmp(((t_node *)aux->content)->prompts, "export")
+		|| !ft_strcmp(((t_node *)aux->content)->prompts, "unset")
+		|| !ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
+		((t_node *)aux->content)->built_in = 1;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 11:29:44 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/09/27 12:56:36 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	while (i < narg)
 	{
 		ret[i] = ft_strdup(((t_node *)tmp->content)->prompts);
+		free(((t_node *)tmp->content)->prompts);
+		ft_lstdelone(tmp, free);
 		tmp = tmp->next;
 		i++;
 		ret[i] = NULL;
@@ -70,7 +72,6 @@ void	execute_paths(t_list *tmp, t_env *env)
 
 	path = cmd_path(env, (char *)((t_node *)tmp->content)->prompts);
 	exeggutor = assign_arguments_for_execve(tmp);
-	ft_lsterase(tmp);
 	pid = fork();
 	if (pid == 0)
 		execve(path, exeggutor, env->envp);
