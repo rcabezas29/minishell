@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 13:16:51 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/29 13:44:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ void	execute_paths(t_list *tmp, t_env *env)
 	exeggutor = assign_arguments_for_execve(tmp);
 	pid = fork();
 	if (pid == 0)
+	{
 		execve(path, exeggutor, env->envp);
+		free(path);
+		ft_freearray(exeggutor);
+	}
 	free(path);
 	ft_freearray(exeggutor);
 	
