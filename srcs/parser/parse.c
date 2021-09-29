@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 13:23:47 by fballest         ###   ########.fr       */
+/*   Updated: 2021/09/29 10:45:14 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_list	*parse(t_cmd_info *cmd_info, char *prompt)
 		{
 			i++;
 			j = 0;
-			while (prompt[i] != '\'')
+			while (prompt[i] != '\'' && prompt[i + 1] && prompt[i + 1] != ' ')
 			{
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[i];
@@ -42,8 +42,10 @@ t_list	*parse(t_cmd_info *cmd_info, char *prompt)
 		{
 			i++;
 			j = 0;
-			while (prompt[i] != '\"')
+			while (prompt[i] && prompt[i] != ' ')
 			{
+				if (prompt[i] == '\"')
+					i++;
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[i];
 				j++;
@@ -84,9 +86,12 @@ t_list	*parse(t_cmd_info *cmd_info, char *prompt)
 					word[j] = '\0';
 					i++;
 				}
-				word[j] = prompt[i];
-				j++;
-				i++;
+				else
+				{
+					word[j] = prompt[i];
+					j++;
+					i++;
+				}
 			}
 			word[j] = '\0';
 			add_word_to_list(cmd_info, word);
