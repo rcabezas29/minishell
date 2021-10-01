@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:28:29 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 12:50:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,48 @@ static char	*parse_simple_chars(char *prompt, int *i)
 	int		j;
 
 	j = 0;
-	word = malloc(sizeof(char));
-	while (prompt[*i] && prompt[*i] != ' ')
+	word = calloc(sizeof(char), 2);
+	while (prompt[*i] != '\0' && prompt[*i] != ' ')
 	{
 		if (prompt[*i] == '\'')
 		{
 			(*i)++;
-			while (prompt[*i] != '\'')
+			while (prompt[*i] != '\0' && prompt[*i] != '\'')
 			{
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[*i];
 				j++;
+				word[j] = '\0';
 				(*i)++;
 			}
+			if (prompt[*i] != '\'')
+				(*i)++;
 		}
 		else if (prompt[*i] == '\"')
 		{
 			(*i)++;
-			while (prompt[*i] != '\"')
+			while (prompt[*i] != '\0' && prompt[*i] != '\"')
 			{
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[*i];
 				j++;
+				word[j] = '\0';
 				(*i)++;
 			}
+			if (prompt[*i] != '\"')
+				(*i)++;
 		}
 		else
 		{
+			if (prompt[*i] == '\0')
+				break;
 			word = ft_realloc(word, (ft_strlen(word) + 1));
 			word[j] = prompt[*i];
 			j++;
+			word[j] = '\0';
+			(*i)++;
 		}
-		(*i)++;
 	}
-	word = ft_realloc(word, (ft_strlen(word) + 1));
-	word[*i] = '\0';
 	return (word);
 }
 
@@ -63,16 +70,15 @@ static char	*parse_quotes(char *prompt, int *i, char c)
 
 	(*i)++;
 	j = 0;
-	word = malloc(sizeof(char));
+	word = calloc(sizeof(char), 2);
 	while (prompt[*i] != c && prompt[*i + 1] && prompt[*i + 1] != ' ')
 	{
-		word = ft_realloc(word, (ft_strlen(word) + 1));
+		word = ft_realloc(word, (ft_strlen(word) + 2));
 		word[j] = prompt[*i];
 		j++;
+		word[j] = '\0';
 		(*i)++;
 	}
-	word = ft_realloc(word, (ft_strlen(word) + 1));
-	word[*i] = '\0';
 	return (word);
 }
 
@@ -90,16 +96,19 @@ void	parse(t_cmd_info *cmd_info, char *prompt)
 		{
 			word = parse_quotes(prompt, &i, '\'');
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
+			printf("WORD1 = %s\n", word);
 		}
 		else if (prompt[i] == '\"')
 		{
 			word = parse_quotes(prompt, &i, '\"');
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
+			printf("WORD2 = %s\n", word);
 		}
 		else
 		{
 			word = parse_simple_chars(prompt, &i);
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
+			printf("WORD3 = %s\n", word);
 		}
 		free(word);
 		word = NULL;
@@ -111,7 +120,7 @@ void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word)
 {
 	t_node	*node;
 
-	node = malloc(sizeof(t_node));
+	node = calloc(sizeof(t_node), 1);
 	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<<", 2))
 		node->types = HERE_DOC;

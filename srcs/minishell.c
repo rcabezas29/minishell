@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:40:17 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 12:12:57 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 			print_list(cmd_info);
 			execute(cmd_info, env);
 			ft_lstclear(&cmd_info->command_list, del);
+			print_list(cmd_info);
 			free(prompt);
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
