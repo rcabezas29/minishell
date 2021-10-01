@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 12:52:30 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 11:27:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ void	print_list(t_cmd_info *cmd_info)
 	}
 }
 
+void	del(void *node)
+{
+	free(((t_node *)node)->prompts);
+	((t_node *)node)->prompts = NULL;
+	((t_node *)node)->types = 0;
+	((t_node *)node)->built_in = 0;
+	free(node);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*env;
@@ -43,9 +52,9 @@ int	main(int argc, char **argv, char **envp)
 
 	argc = 0;
 	argv = NULL;
-	env = ft_calloc(sizeof(t_env), 1);
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
-	env = take_envs(envp);
+	env = ft_calloc(sizeof(t_env), 1);
+	take_envs(envp, env);
 	prompt = readline("\033[0;32mminishell - \033[0;0m");
 	if (prompt[0] != '\0')
 		add_history(prompt);
@@ -54,18 +63,19 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
-			cmd_info->command_list = parse(cmd_info, prompt);
-			print_list(cmd_info);
+			parse(cmd_info, prompt);
 			analyze_prompt(cmd_info);
+			print_list(cmd_info);
 			execute(cmd_info, env);
-			//ft_lsterase(cmd_info->command_list);
-			cmd_info->command_list = NULL;
+			ft_lstclear(&cmd_info->command_list, del);
+			free(prompt);
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 	}
+	free(prompt);
 	ft_freearray(env->paths);
 	free(env);
-	free((t_node *)cmd_info->command_list);
+	free(cmd_info->command_list);
 	free(cmd_info);
 	atexit(leaks);
 	return (0);

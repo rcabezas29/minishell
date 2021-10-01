@@ -3,109 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/29 10:45:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/01 11:28:29 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_list	*parse(t_cmd_info *cmd_info, char *prompt)
+static char	*parse_simple_chars(char *prompt, int *i)
 {
-	int			i;
-	int			j;
-	char		*word;
+	char	*word;
+	int		j;
+
+	j = 0;
+	word = malloc(sizeof(char));
+	while (prompt[*i] && prompt[*i] != ' ')
+	{
+		if (prompt[*i] == '\'')
+		{
+			(*i)++;
+			while (prompt[*i] != '\'')
+			{
+				word = ft_realloc(word, (ft_strlen(word) + 1));
+				word[j] = prompt[*i];
+				j++;
+				(*i)++;
+			}
+		}
+		else if (prompt[*i] == '\"')
+		{
+			(*i)++;
+			while (prompt[*i] != '\"')
+			{
+				word = ft_realloc(word, (ft_strlen(word) + 1));
+				word[j] = prompt[*i];
+				j++;
+				(*i)++;
+			}
+		}
+		else
+		{
+			word = ft_realloc(word, (ft_strlen(word) + 1));
+			word[j] = prompt[*i];
+			j++;
+		}
+		(*i)++;
+	}
+	word = ft_realloc(word, (ft_strlen(word) + 1));
+	word[*i] = '\0';
+	return (word);
+}
+
+static char	*parse_quotes(char *prompt, int *i, char c)
+{
+	char	*word;
+	int		j;
+
+	(*i)++;
+	j = 0;
+	word = malloc(sizeof(char));
+	while (prompt[*i] != c && prompt[*i + 1] && prompt[*i + 1] != ' ')
+	{
+		word = ft_realloc(word, (ft_strlen(word) + 1));
+		word[j] = prompt[*i];
+		j++;
+		(*i)++;
+	}
+	word = ft_realloc(word, (ft_strlen(word) + 1));
+	word[*i] = '\0';
+	return (word);
+}
+
+void	parse(t_cmd_info *cmd_info, char *prompt)
+{
+	int		i;
+	char	*word;
 
 	i = 0;
 	while (prompt[i])
 	{
-		word = ft_calloc(sizeof(char), 1);
 		while (prompt[i] == ' ')
 			i++;
 		if (prompt[i] == '\'')
 		{
-			i++;
-			j = 0;
-			while (prompt[i] != '\'' && prompt[i + 1] && prompt[i + 1] != ' ')
-			{
-				word = ft_realloc(word, (ft_strlen(word) + 1));
-				word[j] = prompt[i];
-				j++;
-				word[j] = '\0';
-				i++;
-			}
-			add_word_to_list(cmd_info, word);
+			word = parse_quotes(prompt, &i, '\'');
+			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		else if (prompt[i] == '\"')
 		{
-			i++;
-			j = 0;
-			while (prompt[i] && prompt[i] != ' ')
-			{
-				if (prompt[i] == '\"')
-					i++;
-				word = ft_realloc(word, (ft_strlen(word) + 1));
-				word[j] = prompt[i];
-				j++;
-				i++;
-			}
-			word[j] = '\0';
-			add_word_to_list(cmd_info, word);
+			word = parse_quotes(prompt, &i, '\"');
+			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		else
 		{
-			j = 0;
-			while (prompt[i] && prompt[i] != ' ')
-			{
-				word = ft_realloc(word, (ft_strlen(word) + 1));
-				if (prompt[i] == '\'')
-				{
-					i++;
-					while (prompt[i] != '\'')
-					{
-						word = ft_realloc(word, (ft_strlen(word) + 1));
-						word[j] = prompt[i];
-						j++;
-						i++;
-					}
-					word[j] = '\0';
-					i++;
-				}
-				else if (prompt[i] == '\"')
-				{
-					i++;
-					while (prompt[i] != '\"')
-					{
-						word = ft_realloc(word, (ft_strlen(word) + 1));
-						word[j] = prompt[i];
-						j++;
-						i++;
-					}
-					word[j] = '\0';
-					i++;
-				}
-				else
-				{
-					word[j] = prompt[i];
-					j++;
-					i++;
-				}
-			}
-			word[j] = '\0';
-			add_word_to_list(cmd_info, word);
+			word = parse_simple_chars(prompt, &i);
+			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
+		free(word);
+		word = NULL;
 		i++;
 	}
-	return (cmd_info->command_list);
 }
 
-void	add_word_to_list(t_cmd_info *cmd_info, char *word)
+void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word)
 {
 	t_node	*node;
 
-	node = ft_calloc(sizeof(t_node), 1);
+	node = malloc(sizeof(t_node));
 	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<<", 2))
 		node->types = HERE_DOC;
@@ -122,9 +128,7 @@ void	add_word_to_list(t_cmd_info *cmd_info, char *word)
 	}
 	else
 		node->types = ARGUMENT;
-	free(word);
-	word = NULL;
-	ft_lstadd_back(&cmd_info->command_list, ft_lstnew(node));
+	ft_lstadd_back(list, ft_lstnew(node));
 }
 
 void	analyze_prompt(t_cmd_info *cmd_info)

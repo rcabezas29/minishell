@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/27 11:58:05 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 11:30:02 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ typedef struct s_node
 int			main(int argc, char **argv, char **envp);
 
 //environments.h
-t_env		*take_envs(char	**envp);
+void		take_envs(char	**envp, t_env *env);
 void		add_slash_to_path(t_env *env);
 
 //parse.c
-t_list		*parse(t_cmd_info *cmd_info, char *prompt);
-void		add_word_to_list(t_cmd_info *cmd_info, char *word);
+void		parse(t_cmd_info *cmd_info, char *prompt);
+void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
 void		analyze_prompt(t_cmd_info *cmd_info);
 void		check_builtins(t_cmd_info *cmd_info);
 

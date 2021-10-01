@@ -6,19 +6,17 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/09/23 14:19:47 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 11:29:31 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_env	*take_envs(char	**envp)
+void	take_envs(char	**envp, t_env *env)
 {
 	int		i;
-	t_env	*env;
 
 	i = 0;
-	env = ft_calloc(sizeof(t_env), 1);
 	env->envp = envp;
 	while (envp[i])
 	{
@@ -35,7 +33,6 @@ t_env	*take_envs(char	**envp)
 			env->pwd = ft_strchr(envp[i], '=');
 		i++;
 	}
-	return (env);
 }
 
 void	add_slash_to_path(t_env *env)
