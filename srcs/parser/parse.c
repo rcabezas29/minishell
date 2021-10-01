@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 12:50:54 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:52:47 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*parse_simple_chars(char *prompt, int *i)
 		if (prompt[*i] == '\'')
 		{
 			(*i)++;
-			while (prompt[*i] != '\0' && prompt[*i] != '\'')
+			while (prompt[*i] && prompt[*i] != '\'')
 			{
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[*i];
@@ -38,7 +38,7 @@ static char	*parse_simple_chars(char *prompt, int *i)
 		else if (prompt[*i] == '\"')
 		{
 			(*i)++;
-			while (prompt[*i] != '\0' && prompt[*i] != '\"')
+			while (prompt[*i] && prompt[*i] != '\"')
 			{
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[*i];
@@ -51,7 +51,7 @@ static char	*parse_simple_chars(char *prompt, int *i)
 		}
 		else
 		{
-			if (prompt[*i] == '\0')
+			if (!prompt[*i])
 				break;
 			word = ft_realloc(word, (ft_strlen(word) + 1));
 			word[j] = prompt[*i];
