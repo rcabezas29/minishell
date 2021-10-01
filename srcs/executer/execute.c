@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:29:03 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 11:55:59 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	execute_paths(t_list *tmp, t_env *env)
 	char	*path;
 	int		pid;
 	char	**exeggutor;
+	int		j;
 
 	path = cmd_path(env, (char *)((t_node *)tmp->content)->prompts);
 	exeggutor = assign_arguments_for_execve(tmp);
@@ -74,12 +75,14 @@ void	execute_paths(t_list *tmp, t_env *env)
 	if (pid == 0)
 	{
 		execve(path, exeggutor, env->envp);
+		exit(0);
+	}
+	else
+	{
+		waitpid(pid, &j, 0);
 		free(path);
 		ft_freearray(exeggutor);
 	}
-	free(path);
-	ft_freearray(exeggutor);
-	
 }
 
 void	execute(t_cmd_info *cmd_info, t_env *env)

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:27:54 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/01 11:40:17 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	del(void *node)
 	((t_node *)node)->prompts = NULL;
 	((t_node *)node)->types = 0;
 	((t_node *)node)->built_in = 0;
-	free(node);
+	free((t_node *)node);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -77,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 	free(env);
 	free(cmd_info->command_list);
 	free(cmd_info);
+	clear_history();
 	atexit(leaks);
 	return (0);
 }
