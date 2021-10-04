@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/04 10:59:11 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/04 11:26:14 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*parse_simple_chars(char *prompt, int *i)
 		else
 		{
 			if (!prompt[*i])
-				break;
+				break ;
 			word = ft_realloc(word, (ft_strlen(word) + 1));
 			word[j] = prompt[*i];
 			j++;

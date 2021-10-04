@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:57:59 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/04 11:49:58 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	i = 0;
 	while (i < narg)
 	{
-		ret[i] = ft_strdup(((t_node *)tmp->content)->prompts);;
+		ret[i] = ft_strdup(((t_node *)tmp->content)->prompts);
 		tmp = tmp->next;
 		i++;
 		ret[i] = NULL;
@@ -97,8 +97,7 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 		if (((t_node *)tmp->content)->types == 0)
 		{
 			if (((t_node *)tmp->content)->built_in == 1)
-				continue; 
-				//execute_builtins(cmd_info);
+				execute_builtins(cmd_info, env);
 			else
 			{
 				execute_paths(tmp, env);
@@ -107,7 +106,7 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 		}
 	}
 }
- 
+
 char	*cmd_path(t_env *env, char *cmd)
 {
 	char	*path;
@@ -145,26 +144,25 @@ char	*cmd_path(t_env *env, char *cmd)
 	return (path);
 }
 
-// FUNCION PARA DERIBAR LOS BUILTINS A SU FUNCION EJECUTABLE CORRESPONDIENTE
-// void	execute_builtins(t_cmd_info *cmd_info)
-// {
-// 	t_list	*aux;
+void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
+{
+	t_list	*aux;
 
-// 	aux = cmd_info->command_list;
+	aux = cmd_info->command_list;
 // 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "echo"))
-// 		excute_echo(cmd_info);
-// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))
-// 		excute_cd(cmd_info);
-// 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "pwd"))
-// 		excute_pwd(cmd_info);
+// 		execute_echo(cmd_info);
+	if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))
+		execute_cd(cmd_info, env);
+	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "pwd"))
+		execute_pwd(cmd_info, env);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "env"))
-// 		excute_env(cmd_info);
+// 		execute_env(cmd_info);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "export"))
-// 		excute_export(cmd_info);
+// 		execute_export(cmd_info);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "unset"))
-// 		excute_unset(cmd_info);
+// 		execute_unset(cmd_info);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
-// 		excute_exit(cmd_info);
-// 	else
-// 		perror("command not found");
-// }
+// 		execute_exit(cmd_info);
+	else
+		perror("command not found");
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:30:02 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/04 11:51:32 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,14 @@ char		*cmd_path(t_env *env, char *cmd);
 char		**assign_arguments_for_execve(t_list *tmp);
 void		execute_paths(t_list *tmp, t_env *env);
 void		ft_freearray(char **array);
+int			count_arguments(t_list *tmp);
+
+//builtins
+void	execute_builtins(t_cmd_info *cmd_info, t_env *env);
+void	execute_echo(t_cmd_info *cmd_info, t_env *env);
+void	execute_cd(t_cmd_info *cmd_info, t_env *env);
+void	execute_pwd(t_cmd_info *cmd_info, t_env *env);
+void	execute_env(t_cmd_info *cmd_info, t_env *env);
+void	execute_export(t_cmd_info *cmd_info, t_env *env);
+void	execute_unset(t_cmd_info *cmd_info, t_env *env);
 #endif
