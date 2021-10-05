@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/04 11:51:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/05 13:35:16 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_env
 	char	*home;
 	char	*user;
 	char	*pwd;
+	char	*oldpwd;
 	char	**paths;
 }	t_env;
 
@@ -77,11 +78,13 @@ void		ft_freearray(char **array);
 int			count_arguments(t_list *tmp);
 
 //builtins
-void	execute_builtins(t_cmd_info *cmd_info, t_env *env);
-void	execute_echo(t_cmd_info *cmd_info, t_env *env);
-void	execute_cd(t_cmd_info *cmd_info, t_env *env);
-void	execute_pwd(t_cmd_info *cmd_info, t_env *env);
-void	execute_env(t_cmd_info *cmd_info, t_env *env);
-void	execute_export(t_cmd_info *cmd_info, t_env *env);
-void	execute_unset(t_cmd_info *cmd_info, t_env *env);
+void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
+void		execute_echo(t_cmd_info *cmd_info, t_env *env);
+void		execute_cd(t_cmd_info *cmd_info, t_env *env);
+void		execute_pwd(t_cmd_info *cmd_info, t_env *env);
+void		execute_env(t_cmd_info *cmd_info, t_env *env);
+void		execute_export(t_cmd_info *cmd_info, t_env *env);
+void		execute_unset(t_cmd_info *cmd_info, t_env *env);
+void		manage_points(char *arg, t_env *env);
+void		ft_createcdpath(char **tmp, t_env *env);
 #endif
