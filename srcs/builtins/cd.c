@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/05 15:16:20 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/05 15:30:37 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_createcdpath(char **tmp, t_env *env)
 {
 	char	*aux;
 	char	*path;
-	char 	*aux2;
+	char	*aux2;
 
 	path = *tmp;
 	while (*tmp)
@@ -39,12 +39,15 @@ void	ft_createcdpath(char **tmp, t_env *env)
 void	manage_points(char *arg, t_env *env)
 {
 	char	**tmp;
+	int		i;
 
-	
 	if (arg[0] == '.' && arg[1] == '.')
 	{
 		if (!arg[2] && env->pwd != '/')
 		{
+			i = 2;
+			while (arg[i] == '/')
+				i++;
 			tmp = ft_split(env->pwd, "/");
 			if (!ft_strncmp(*tmp, "/", 2))
 			{
@@ -61,7 +64,11 @@ void	manage_points(char *arg, t_env *env)
 			i = 2;
 			while (arg[i] == '/')
 				i++;
-		}
+			while (arg[i] != ' ' || arg[i] != '\0')
+			{
+				env->oldpwd = env->pwd;
+				*env->pwd++ = arg[i++];
+			}
 		}
 	}
 }
