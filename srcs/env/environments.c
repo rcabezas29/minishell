@@ -6,11 +6,31 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/01 11:29:31 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/06 12:06:07 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static char	*ft_strchr2(const char *str, char c)
+{
+	int		i;
+	int		j;
+	char	*ret;
+
+	i = 0;
+	j = 0;
+	ret = ft_strdup("");
+	while (str[i] != c)
+		i++;
+	i++;
+	while (str[i] != '\0')
+	{
+		ret[j++] = str[i++];
+	}
+	ret[j] = '\0';
+	return (ret);
+}
 
 void	take_envs(char	**envp, t_env *env)
 {
@@ -26,11 +46,11 @@ void	take_envs(char	**envp, t_env *env)
 			add_slash_to_path(env);
 		}
 		if (ft_strncmp("USER=", envp[i], 5) == 0)
-			env->user = ft_strchr(envp[i], '=');
+			env->user = ft_strchr2(envp[i], '=');
 		if (ft_strncmp("HOME=", envp[i], 5) == 0)
-			env->home = ft_strchr(envp[i], '=');
+			env->home = ft_strchr2(envp[i], '=');
 		if (ft_strncmp("PWD=", envp[i], 5) == 0)
-			env->pwd = ft_strchr(envp[i], '=');
+			env->pwd = ft_strchr2(envp[i], '=');
 		i++;
 	}
 }

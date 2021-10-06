@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/05 15:30:37 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/06 12:28:51 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_createcdpath(char **tmp, t_env *env)
 {
 	char	*aux;
 	char	*path;
-	char	*aux2;
 
 	path = *tmp;
 	while (*tmp)
@@ -34,6 +33,7 @@ void	ft_createcdpath(char **tmp, t_env *env)
 	}
 	env->oldpwd = env->pwd;
 	env->pwd = ft_strdup(path);
+	free(path);
 }
 
 void	manage_points(char *arg, t_env *env)
@@ -43,12 +43,12 @@ void	manage_points(char *arg, t_env *env)
 
 	if (arg[0] == '.' && arg[1] == '.')
 	{
-		if (!arg[2] && env->pwd != '/')
+		if (!arg[2] && !ft_strncmp(env->pwd, "/", ft_strlen(env->pwd)))
 		{
 			i = 2;
 			while (arg[i] == '/')
 				i++;
-			tmp = ft_split(env->pwd, "/");
+			tmp = ft_split(env->pwd, '/');
 			if (!ft_strncmp(*tmp, "/", 2))
 			{
 				env->oldpwd = env->pwd;
@@ -88,8 +88,10 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	}
 	else if (nargs == 1)
 	{
-		env->pwd = ft_strdup(env->home);
-		return ;
+		path = ft_strjoin(env->home, "/");
+		path = ft_strjoin(ft_strjoin(env->pwd, "/"), ((t_node *)aux->content)->prompts);
+		
+		if (open, path)
 	}
 	else
 	{
@@ -143,6 +145,5 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 				}
 			}	
 		}
-		
 	}
 }

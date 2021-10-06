@@ -6,7 +6,7 @@
 #    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/05 10:26:24 by fballest         ###   ########.fr        #
+#    Updated: 2021/10/06 11:28:27 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS_EXEC = execute.c
 
 SRCS_ENV = environments.c
 
-SRCS_BUILTINS = pwd.c #cd.c
+SRCS_BUILTINS = pwd.c cd.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 
