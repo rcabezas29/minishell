@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/06 12:28:51 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:01:43 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,13 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	else if (nargs == 1)
 	{
 		path = ft_strjoin(env->home, "/");
-		path = ft_strjoin(ft_strjoin(env->pwd, "/"), ((t_node *)aux->content)->prompts);
-		
-		if (open, path)
+		env->pwd = ft_strjoin(path, ((t_node *)aux->content)->prompts);
+		free(path);
+		if (open(path, O_RDONLY) < 0)
+		{
+			perror("no such file or directory");
+			return ;
+		}
 	}
 	else
 	{
@@ -108,6 +112,7 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		else if (((t_node *)aux->content)->prompts[0] == '.')
 		{
 			manage_points(((t_node *)aux->content)->prompts, env);
+			return ;
 		}
 		else if (((t_node *)aux->content)->prompts[0] == '-'
 			&& !((t_node *)aux->content)->prompts[1])

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/05 10:27:58 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/06 14:57:35 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 		if (((t_node *)tmp->content)->types == 0)
 		{
 			if (((t_node *)tmp->content)->built_in == 1)
+			{
 				execute_builtins(cmd_info, env);
+				return ;
+			}
 			else
 			{
 				execute_paths(tmp, env);
@@ -163,6 +166,5 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 // 		execute_unset(cmd_info);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
 // 		execute_exit(cmd_info);
-	else
 		perror("command not found");
 }
