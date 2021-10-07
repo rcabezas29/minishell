@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/06 14:57:35 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/07 12:53:58 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	count_arguments(t_list *tmp)
 
 	aux = tmp;
 	i = 1;
-	while (((t_node *)aux->next) && ((t_node *)aux->content)->types == ARGUMENT)
+	while ((t_node *)aux && ((t_node *)aux->content)->types == ARGUMENT)
 	{
 		aux = aux->next;
 		i++;
@@ -166,5 +166,5 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 // 		execute_unset(cmd_info);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
 // 		execute_exit(cmd_info);
-		perror("command not found");
+	//	perror("command not found");
 }

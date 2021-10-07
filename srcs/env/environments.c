@@ -6,13 +6,13 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/06 12:06:07 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/07 12:51:50 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*ft_strchr2(const char *str, char c)
+char	*ft_strchr2(const char *str, char c)
 {
 	int		i;
 	int		j;
@@ -49,7 +49,7 @@ void	take_envs(char	**envp, t_env *env)
 			env->user = ft_strchr2(envp[i], '=');
 		if (ft_strncmp("HOME=", envp[i], 5) == 0)
 			env->home = ft_strchr2(envp[i], '=');
-		if (ft_strncmp("PWD=", envp[i], 5) == 0)
+		if (ft_strncmp("PWD=", envp[i], 4) == 0)
 			env->pwd = ft_strchr2(envp[i], '=');
 		i++;
 	}

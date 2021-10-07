@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/06 15:01:43 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/07 13:34:08 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,18 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	int		nargs;
 	char	*path;
 
+	nargs = count_arguments(aux) - 1;
 	aux = cmd_info->command_list->next;
-	nargs = count_arguments(aux);
-	if (nargs > 2)
+	if (nargs > 1)
 	{
 		perror("string not in pwd");
 		return ;
 	}
-	else if (nargs == 1)
+	else if (nargs == 0)
 	{
-		path = ft_strjoin(env->home, "/");
-		env->pwd = ft_strjoin(path, ((t_node *)aux->content)->prompts);
-		free(path);
-		if (open(path, O_RDONLY) < 0)
+		env->oldpwd = env->pwd;
+		env->pwd = env->home;
+		if (open(env->pwd, O_RDONLY) < 0)
 		{
 			perror("no such file or directory");
 			return ;
@@ -133,22 +132,49 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		}
 		else
 		{
-			if (!((t_node *)aux->content)->prompts)
+			path = ft_strdup(((t_node *)aux->content)->prompts);
+			if (open(path, O_RDONLY) < 0)
 			{
-				path = env->home;
-				env->oldpwd = env->pwd;
-				env->pwd = ft_strdup(path);
+				perror("no such file or directory");
 				return ;
 			}
-			else
-			{
-				path = ft_strdup(((t_node *)aux->content)->prompts);
-				if (open(path, O_RDONLY) < 0)
-				{
-					perror("no such file or directory");
-					return ;
-				}
-			}	
-		}
+			env->pwd = ft_strjoin(env->pwd, "/");
+			env->pwd = ft_strjoin(env->pwd, path);
+			free(path);
+		}	
+	}
+	ft_change_env(env);
+}
+
+char	*ft_strextract(const char *str)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	ret = ft_strdup("");
+	while (str[i] && str[i] != '=')
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	ret[i++] = '=';
+	ret[i] = '\0';
+	return (ret);
+}
+
+void	ft_change_env(t_env *env)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (env->envp[i])
+	{
+		if (ft_strncmp("OLDPWD=", env->envp[i], 7) == 0)
+			tmp = ft_strjoin(ft_strextract(env->envp[i]), env->oldpwd);
+		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
+			tmp = ft_strjoin(ft_strextract(env->envp[i]), env->pwd);
+		i++;
 	}
 }

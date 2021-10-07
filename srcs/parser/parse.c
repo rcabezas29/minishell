@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/04 11:26:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/07 12:50:37 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		if (aux->next)
 			aux = aux->next;
 	}
-	while (aux->next && ((t_node *)aux->content)->types != 1)
+	while (aux && ((t_node *)aux->content)->types != 1)
 	{
 		if (((t_node *)aux->content)->types > 1
 			&& ((t_node *)aux->content)->types < 6)
@@ -170,8 +170,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		{
 			check_builtins(cmd_info);
 		}
-		while (aux->next && ((t_node *)aux->content)->types == 0)
-			aux = aux->next;
+		aux = aux->next;
 	}
 }
 
