@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/07 12:24:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/08 10:05:26 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ void		take_envs(char	**envp, t_env *env);
 void		add_slash_to_path(t_env *env);
 
 //parse.c
-void		parse(t_cmd_info *cmd_info, char *prompt);
+void		parse(t_env *env, t_cmd_info *cmd_info, char *prompt);
 void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
 void		analyze_prompt(t_cmd_info *cmd_info);
 void		check_builtins(t_cmd_info *cmd_info);
+char		*parse_quotes(t_env *env, char *prompt, int *i, char c);
 
 //execute.c
 void		execute(t_cmd_info *cmd_info, t_env *env);
@@ -80,15 +81,23 @@ int			count_arguments(t_list *tmp);
 
 //builtins
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
-void		execute_echo(t_cmd_info *cmd_info, t_env *env);
+void		execute_echo(t_cmd_info *cmd_info);
 void		execute_pwd(t_cmd_info *cmd_info, t_env *env);
-void		execute_env(t_cmd_info *cmd_info, t_env *env);
+void		execute_env(t_env *env);
 void		execute_export(t_cmd_info *cmd_info, t_env *env);
 void		execute_unset(t_cmd_info *cmd_info, t_env *env);
-	//cd
+
+//dolar
+void		expand_dollars(t_env *env, char *prompt, int *i,
+				char **word, int *j);
+
+//cd
 void		manage_points(char *arg, t_env *env);
 void		ft_createcdpath(char **tmp, t_env *env);
 char		*ft_strextract(const char *str);
 void		ft_change_env(t_env *env);
 void		execute_cd(t_cmd_info *cmd_info, t_env *env);
+
+//signal
+void		sig_init(void);
 #endif

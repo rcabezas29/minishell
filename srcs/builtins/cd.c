@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/07 13:34:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/08 10:10:33 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	int		nargs;
 	char	*path;
 
-	nargs = count_arguments(aux) - 1;
 	aux = cmd_info->command_list->next;
+	nargs = count_arguments(aux);
 	if (nargs > 1)
 	{
 		perror("string not in pwd");

@@ -6,13 +6,13 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/07 12:50:37 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/08 10:00:13 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*parse_simple_chars(char *prompt, int *i)
+static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 {
 	char	*word;
 	int		j;
@@ -41,6 +41,8 @@ static char	*parse_simple_chars(char *prompt, int *i)
 			(*i)++;
 			while (prompt[*i] && prompt[*i] != '\"')
 			{
+				if (prompt[*i] == '$')
+					expand_dollars(env, prompt, i, &word, &j);
 				word = ft_realloc(word, (ft_strlen(word) + 1));
 				word[j] = prompt[*i];
 				j++;
@@ -54,6 +56,17 @@ static char	*parse_simple_chars(char *prompt, int *i)
 		{
 			if (!prompt[*i])
 				break ;
+			if (prompt[*i] == '$')
+			{
+				if (prompt[*i + 1] != '\'' && prompt[*i + 1] != '\"')
+					expand_dollars(env, prompt, i, &word, &j);
+				else
+				{
+					(*i)++;
+					word = ft_strjoin(word, parse_quotes(env, prompt, i, prompt[*i]));
+					return (word);
+				}
+			}
 			word = ft_realloc(word, (ft_strlen(word) + 1));
 			word[j] = prompt[*i];
 			j++;
@@ -64,7 +77,7 @@ static char	*parse_simple_chars(char *prompt, int *i)
 	return (word);
 }
 
-static char	*parse_quotes(char *prompt, int *i, char c)
+char	*parse_quotes(t_env *env, char *prompt, int *i, char c)
 {
 	char	*word;
 	int		j;
@@ -75,6 +88,10 @@ static char	*parse_quotes(char *prompt, int *i, char c)
 	word[0] = '\0';
 	while (prompt[*i] != c && prompt[*i + 1] && prompt[*i + 1] != ' ')
 	{
+		if (prompt[*i] == '$' && c == '\"')
+			expand_dollars(env, prompt, i, &word, &j);
+		if (prompt[*i] == c)
+			return (word);
 		word = ft_realloc(word, (ft_strlen(word) + 1));
 		word[j] = prompt[*i];
 		j++;
@@ -84,7 +101,7 @@ static char	*parse_quotes(char *prompt, int *i, char c)
 	return (word);
 }
 
-void	parse(t_cmd_info *cmd_info, char *prompt)
+void	parse(t_env *env, t_cmd_info *cmd_info, char *prompt)
 {
 	int		i;
 	char	*word;
@@ -98,17 +115,17 @@ void	parse(t_cmd_info *cmd_info, char *prompt)
 			i++;
 		if (prompt[i] == '\'')
 		{
-			word = parse_quotes(prompt, &i, '\'');
+			word = parse_quotes(env, prompt, &i, '\'');
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		else if (prompt[i] == '\"')
 		{
-			word = parse_quotes(prompt, &i, '\"');
+			word = parse_quotes(env, prompt, &i, '\"');
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		else
 		{
-			word = parse_simple_chars(prompt, &i);
+			word = parse_simple_chars(env, prompt, &i);
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		free(word);
@@ -147,7 +164,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 
 	aux = cmd_info->command_list;
 	if (((t_node *)aux->content)->types == 1)
-		perror("syntax error near unexpected token `|'");
+		perror("syntax error near unexpected token `|'\n");
 	if (((t_node *)aux->content)->types > 1
 		&& ((t_node *)aux->content)->types < 6)
 	{
@@ -170,6 +187,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		{
 			check_builtins(cmd_info);
 		}
+		//while (((t_node *)aux->content)->types == 0)
 		aux = aux->next;
 	}
 }

@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 11:38:39 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 09:57:05 by fballest         ###   ########.fr       */
+/*   Created: 2021/10/06 16:50:24 by rcabezas          #+#    #+#             */
+/*   Updated: 2021/10/07 09:53:55 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	execute_env(t_env *env)
+static void	sig_int(int sig)
 {
-	int		i;
+	(void)sig;
+	printf("\n");
+	return ;
+}
 
-	i = 0;
-	while (env->envp[i])
-	{
-		printf("%s\n", env->envp[i]);
-		i++;
-	}
+static void	sig_quit(int sig)
+{
+	(void)sig;
+	return ;
+}
+
+void	sig_init(void)
+{
+	signal(SIGINT, sig_int);
+	signal(SIGQUIT, sig_quit);
 }

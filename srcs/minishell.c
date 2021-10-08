@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/07 13:30:46 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/08 10:01:36 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ int	main(int argc, char **argv, char **envp)
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
 	take_envs(envp, env);
+	sig_init();
 	prompt = readline("\033[0;32mminishell - \033[0;0m");
+	if (!prompt)
+		exit(0);
 	if (prompt[0] != '\0')
 		add_history(prompt);
 	while (ft_strcmp("exit", prompt))
@@ -63,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
-			parse(cmd_info, prompt);
+			parse(env, cmd_info, prompt);
 			analyze_prompt(cmd_info);
 			print_list(cmd_info);
 			execute(cmd_info, env);
@@ -73,8 +76,11 @@ int	main(int argc, char **argv, char **envp)
 			prompt = NULL;
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
+		if (!prompt)
+			exit(0);
 	}
 	free(prompt);
+	prompt = NULL;
 	ft_freearray(env->paths);
 	free(env);
 	free(cmd_info->command_list);

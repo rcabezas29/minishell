@@ -6,13 +6,13 @@
 #    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/06 11:28:27 by fballest         ###   ########.fr        #
+#    Updated: 2021/10/08 09:37:51 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS)
+SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS)
 
 INCLUDES = includes/
 
@@ -26,13 +26,17 @@ PARSER_DIR = parser/
 
 BUILTINS_DIR = builtins/
 
-SRCS_PARSER = parse.c
+SIG_DIR = signals/
+
+SRCS_PARSER = parse.c dollars.c
 
 SRCS_EXEC = execute.c
 
 SRCS_ENV = environments.c
 
-SRCS_BUILTINS = pwd.c cd.c
+SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c
+
+SRCS_SIG = signal.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 
@@ -43,6 +47,8 @@ PARSER_SRCS = $(addprefix $(PARSER_DIR), $(SRCS_PARSER))
 EXEC_SRCS = $(addprefix $(EXEC_DIR), $(SRCS_EXEC))
 
 BUILTINS_SRCS = $(addprefix $(BUILTINS_DIR), $(SRCS_BUILTINS))
+
+SIG_SRCS = $(addprefix $(SIG_DIR), $(SRCS_SIG))
 
 OBJS = $(SRCS:.c=.o)
 
