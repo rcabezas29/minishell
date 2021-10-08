@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 10:10:33 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/08 12:38:39 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,9 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	int		nargs;
 	char	*path;
 
-	aux = cmd_info->command_list->next;
+	aux = cmd_info->command_list;
 	nargs = count_arguments(aux);
-	if (nargs > 1)
-	{
-		perror("string not in pwd");
-		return ;
-	}
-	else if (nargs == 0)
+	if (nargs == 1)
 	{
 		env->oldpwd = env->pwd;
 		env->pwd = env->home;
@@ -106,7 +101,11 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 				perror("no such file or directory");
 				return ;
 			}
-			env->oldpwd = env->pwd;
+			else
+			{
+				env->oldpwd = env->pwd;
+				env->pwd = path;
+			}
 		}
 		else if (((t_node *)aux->content)->prompts[0] == '.')
 		{
@@ -167,14 +166,24 @@ void	ft_change_env(t_env *env)
 {
 	int		i;
 	char	*tmp;
-
+	char 	*tmpold;
 	i = 0;
+	ft_freearray(env->envp);
+
 	while (env->envp[i])
 	{
 		if (ft_strncmp("OLDPWD=", env->envp[i], 7) == 0)
-			tmp = ft_strjoin(ft_strextract(env->envp[i]), env->oldpwd);
+		{
+			tmp = ft_strdup(env->envp[i]);
+			env->envp[i] = ft_strjoin(ft_strextract(tmp), env->oldpwd);
+			free (tmp);
+		}
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
-			tmp = ft_strjoin(ft_strextract(env->envp[i]), env->pwd);
+		{
+			tmp = ft_strdup(env->envp[i]);
+			env->envp[i] = ft_strjoin(ft_strextract(tmp), env->pwd);
+			free (tmp);
+		}
 		i++;
 	}
 }
