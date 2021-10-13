@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:34:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/13 13:58:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/13 18:04:04 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute_echo(t_cmd_info *cmd_info)
 	}
 	tmp = cmd_info->command_list->next;
 	n = 0;
-	while (!ft_strncmp(((t_node *)tmp->content)->prompts, "-n", 2))
+	while (tmp && !ft_strncmp(((t_node *)tmp->content)->prompts, "-n", 2))
 	{
 		i = 1;
 		while (((t_node *)tmp->content)->prompts[i + 1] && ((t_node *)tmp->content)->prompts[i + 1] == 'n')

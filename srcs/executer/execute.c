@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 10:09:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/13 20:17:05 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))
 		execute_cd(cmd_info, env);
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "pwd"))
-		execute_pwd(cmd_info, env);
+		execute_pwd(cmd_info);
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "env"))
 		execute_env(env);
 // 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "export"))

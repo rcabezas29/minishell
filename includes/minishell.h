@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 10:05:26 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/13 20:17:15 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			count_arguments(t_list *tmp);
 //builtins
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
 void		execute_echo(t_cmd_info *cmd_info);
-void		execute_pwd(t_cmd_info *cmd_info, t_env *env);
+void		execute_pwd(t_cmd_info *cmd_info);
 void		execute_env(t_env *env);
 void		execute_export(t_cmd_info *cmd_info, t_env *env);
 void		execute_unset(t_cmd_info *cmd_info, t_env *env);

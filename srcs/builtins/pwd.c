@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:37:50 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 09:57:50 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/13 20:16:38 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	execute_pwd(t_cmd_info *cmd_info, t_env *env)
+void	execute_pwd(t_cmd_info *cmd_info)
 {
 	int	nargs;
+	char	buf[FILENAME_MAX];
 
 	nargs = count_arguments(cmd_info->command_list);
 	if (nargs != 1)
@@ -22,6 +23,5 @@ void	execute_pwd(t_cmd_info *cmd_info, t_env *env)
 		perror("pwd: too many arguments\n");
 		return ;
 	}
-	ft_putstr(env->pwd);
-	write(1, "\n", 1);
+	printf("%s\n", getcwd(buf, sizeof(buf)));
 }
