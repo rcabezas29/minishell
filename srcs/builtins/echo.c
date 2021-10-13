@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:34:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 10:03:25 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/13 13:58:55 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,46 @@
 void	execute_echo(t_cmd_info *cmd_info)
 {
 	t_list	*tmp;
+	int		i;
+	int		n;
 
-	tmp = cmd_info->command_list->next;
-	if (tmp->next && !ft_strcmp(((t_node *)tmp->content)->prompts, "-n"))
+	if (!cmd_info->command_list->next)
 	{
-		tmp = tmp->next;
+		printf("\n");
+		return ;
+	}
+	tmp = cmd_info->command_list->next;
+	n = 0;
+	while (!ft_strncmp(((t_node *)tmp->content)->prompts, "-n", 2))
+	{
+		i = 1;
+		while (((t_node *)tmp->content)->prompts[i + 1] && ((t_node *)tmp->content)->prompts[i + 1] == 'n')
+			i++;
+		if (((t_node *)tmp->content)->prompts[i + 1])
+			break ;
+		else
+		{
+			n = 1;
+			tmp = tmp->next;
+		}
+	}
+	if (n == 1)
+	{
 		while (tmp && ((t_node *)tmp->content)->types == 0)
 		{
 			printf("%s", ((t_node *)tmp->content)->prompts);
+			if (tmp->next)
+				printf(" ");
 			tmp = tmp->next;
 		}
-		return ;
 	}
-	while (tmp && ((t_node *)tmp->content)->types == 0)
+	else
 	{
-		printf("%s", ((t_node *)tmp->content)->prompts);
-		tmp = tmp->next;
+		while (tmp && ((t_node *)tmp->content)->types == 0)
+		{
+			printf("%s ", ((t_node *)tmp->content)->prompts);
+			tmp = tmp->next;
+		}
+		printf("\n");
 	}
-	printf("\n");
 }
