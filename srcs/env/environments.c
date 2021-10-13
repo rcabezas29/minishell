@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 11:04:03 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/13 09:08:19 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 char	*ft_strchr2(const char *str, char c)
 {
-	int		i;
-	int		j;
-	char	*ret;
+	int				i;
+	unsigned char	ch;
+	char			*p;
 
 	i = 0;
-	j = 0;
-	ret = ft_strdup("");
-	while (str[i] != c)
-		i++;
-	i++;
-	while (str[i] != '\0')
+	p = (char *)str;
+	ch = c + '\0';
+	while (p[i] != '\0')
 	{
-		ret[j++] = str[i++];
+		if (p[i] == ch)
+			return (p + i + 1);
+		i++;
 	}
-	ret[j] = '\0';
-	return (ret);
+	if (ch == '\0')
+		return (p + i + 1);
+	return (0);
 }
 
 void	take_envs(char	**envp, t_env *env)

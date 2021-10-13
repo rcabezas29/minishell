@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 12:38:39 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/13 10:36:18 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,14 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	{
 		env->oldpwd = env->pwd;
 		env->pwd = env->home;
-		if (open(env->pwd, O_RDONLY) < 0)
-		{
-			perror("no such file or directory");
-			return ;
-		}
 	}
 	else
 	{
-		if (((t_node *)aux->content)->prompts[0] == '/')
+		aux = aux->next;
+		if (((t_node *)aux->content)->prompts[0] == '/'
+			|| (((t_node *)aux->content)->prompts[0] != '.'
+			&& ((t_node *)aux->content)->prompts[0] != '-'
+			&& ((t_node *)aux->content)->prompts[0] != '~'))
 		{
 			path = ft_strdup(((t_node *)aux->content)->prompts);
 			if (open(path, O_RDONLY) < 0)
@@ -117,7 +116,7 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		{
 			path = env->oldpwd;
 			env->oldpwd = env->pwd;
-			env->pwd = ft_strdup(path);
+			env->pwd = path;
 			printf("%s\n", env->pwd);
 			return ;
 		}
@@ -126,7 +125,7 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		{
 			path = env->home;
 			env->oldpwd = env->pwd;
-			env->pwd = ft_strdup(path);
+			env->pwd = path;
 			return ;
 		}
 		else
@@ -166,23 +165,20 @@ void	ft_change_env(t_env *env)
 {
 	int		i;
 	char	*tmp;
-	char 	*tmpold;
+
 	i = 0;
-	ft_freearray(env->envp);
 
 	while (env->envp[i])
 	{
 		if (ft_strncmp("OLDPWD=", env->envp[i], 7) == 0)
 		{
-			tmp = ft_strdup(env->envp[i]);
+			tmp = env->envp[i];
 			env->envp[i] = ft_strjoin(ft_strextract(tmp), env->oldpwd);
-			free (tmp);
 		}
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
 		{
-			tmp = ft_strdup(env->envp[i]);
+			tmp = env->envp[i];
 			env->envp[i] = ft_strjoin(ft_strextract(tmp), env->pwd);
-			free (tmp);
 		}
 		i++;
 	}
