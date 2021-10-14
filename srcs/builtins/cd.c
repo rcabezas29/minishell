@@ -6,140 +6,66 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/13 10:36:18 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/14 10:39:13 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_createcdpath(char **tmp, t_env *env)
-{
-	char	*aux;
-	char	*path;
-
-	path = *tmp;
-	while (*tmp)
-	{
-		if (!path)
-			path = ft_strjoin(*tmp, "/");
-		if (((*tmp)++))
-		{
-			aux = ft_strjoin(path, *tmp);
-			free (path);
-		}
-		path = ft_strjoin(aux, "/");
-		free (aux);
-		(*tmp)++;
-	}
-	env->oldpwd = env->pwd;
-	env->pwd = ft_strdup(path);
-	free(path);
-}
-
-void	manage_points(char *arg, t_env *env)
-{
-	char	**tmp;
-	int		i;
-
-	if (arg[0] == '.' && arg[1] == '.')
-	{
-		if (!arg[2] && !ft_strncmp(env->pwd, "/", ft_strlen(env->pwd)))
-		{
-			i = 2;
-			while (arg[i] == '/')
-				i++;
-			tmp = ft_split(env->pwd, '/');
-			if (!ft_strncmp(*tmp, "/", 2))
-			{
-				env->oldpwd = env->pwd;
-				env->pwd = "/";
-			}
-			while (*tmp)
-				(*tmp)++;
-			*tmp = NULL;
-			ft_createcdpath(tmp, env);
-		}
-		else if (arg[2] == '/')
-		{
-			i = 2;
-			while (arg[i] == '/')
-				i++;
-			while (arg[i] != ' ' || arg[i] != '\0')
-			{
-				env->oldpwd = env->pwd;
-				*env->pwd++ = arg[i++];
-			}
-		}
-	}
-}
-
 void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 {
 	t_list	*aux;
 	int		nargs;
-	char	*path;
+	char	*tmp;	
 
+	tmp = NULL;
 	aux = cmd_info->command_list;
 	nargs = count_arguments(aux);
+	if (nargs > 1)
+		aux = aux->next;
 	if (nargs == 1)
 	{
 		env->oldpwd = env->pwd;
 		env->pwd = env->home;
+		chdir(env->pwd);
 	}
-	else
+	else if (nargs > 1
+		&& ft_strncmp(((t_node *)aux->content)->prompts, "-", 2) == 0)
 	{
-		aux = aux->next;
-		if (((t_node *)aux->content)->prompts[0] == '/'
-			|| (((t_node *)aux->content)->prompts[0] != '.'
-			&& ((t_node *)aux->content)->prompts[0] != '-'
-			&& ((t_node *)aux->content)->prompts[0] != '~'))
+		if (!env->oldpwd)
 		{
-			path = ft_strdup(((t_node *)aux->content)->prompts);
-			if (open(path, O_RDONLY) < 0)
-			{
-				perror("no such file or directory");
-				return ;
-			}
-			else
-			{
-				env->oldpwd = env->pwd;
-				env->pwd = path;
-			}
-		}
-		else if (((t_node *)aux->content)->prompts[0] == '.')
-		{
-			manage_points(((t_node *)aux->content)->prompts, env);
-			return ;
-		}
-		else if (((t_node *)aux->content)->prompts[0] == '-'
-			&& !((t_node *)aux->content)->prompts[1])
-		{
-			path = env->oldpwd;
-			env->oldpwd = env->pwd;
-			env->pwd = path;
-			printf("%s\n", env->pwd);
-			return ;
-		}
-		else if (((t_node *)aux->content)->prompts[0] == '~'
-			&& !((t_node *)aux->content)->prompts[1])
-		{
-			path = env->home;
-			env->oldpwd = env->pwd;
-			env->pwd = path;
+			perror("cd: OLDPWD not set");
 			return ;
 		}
 		else
 		{
-			path = ft_strdup(((t_node *)aux->content)->prompts);
-			if (open(path, O_RDONLY) < 0)
-			{
-				perror("no such file or directory");
-				return ;
-			}
-			env->pwd = ft_strjoin(env->pwd, "/");
-			env->pwd = ft_strjoin(env->pwd, path);
-			free(path);
-		}	
+			tmp = env->pwd;
+			env->pwd = env->oldpwd;
+			env->oldpwd = tmp;
+			chdir(env->pwd);
+			printf("%s\n", env->pwd);
+		}
+	}
+	else if (nargs > 1
+		&& ft_strncmp(((t_node *)aux->content)->prompts, "~", 2) == 0)
+	{
+		tmp = env->pwd;
+		env->pwd = env->home;
+		env->oldpwd = tmp;
+		chdir(env->pwd);
+	}
+	else
+	{
+		tmp = NULL;
+		if (open(((t_node *)aux->content)->prompts, O_RDONLY) < 0)
+		{
+			perror("no such file or directory");
+			return ;
+		}
+		env->oldpwd = env->pwd;
+		chdir(((t_node *)aux->content)->prompts);
+		tmp = getcwd(tmp, 250);
+		env->pwd = tmp;
 	}
 	ft_change_env(env);
 }
@@ -165,20 +91,30 @@ void	ft_change_env(t_env *env)
 {
 	int		i;
 	char	*tmp;
+	char	*tmp2;
 
 	i = 0;
-
 	while (env->envp[i])
 	{
 		if (ft_strncmp("OLDPWD=", env->envp[i], 7) == 0)
 		{
-			tmp = env->envp[i];
-			env->envp[i] = ft_strjoin(ft_strextract(tmp), env->oldpwd);
+			tmp2 = ft_strextract(env->envp[i]);
+			tmp = ft_strjoin(tmp2, env->oldpwd);
+			env->envp[i] = tmp;
+			tmp = NULL;
+			tmp2 = NULL;
+			free (tmp);
+			free (tmp2);
 		}
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
 		{
-			tmp = env->envp[i];
-			env->envp[i] = ft_strjoin(ft_strextract(tmp), env->pwd);
+			tmp2 = ft_strextract(env->envp[i]);
+			tmp = ft_strjoin(ft_strextract(env->envp[i]), env->pwd);
+			env->envp[i] = tmp;
+			tmp = NULL;
+			tmp2 = NULL;
+			free (tmp);
+			free (tmp2);
 		}
 		i++;
 	}
