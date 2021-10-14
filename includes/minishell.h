@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/13 20:17:15 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/14 10:45:41 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void		expand_dollars(t_env *env, char *prompt, int *i,
 				char **word, int *j);
 
 //cd
-void		manage_points(char *arg, t_env *env);
-void		ft_createcdpath(char **tmp, t_env *env);
+// void		manage_points(char *arg, t_env *env);
+// void		ft_createcdpath(char **tmp, t_env *env);
 char		*ft_strextract(const char *str);
 void		ft_change_env(t_env *env);
 void		execute_cd(t_cmd_info *cmd_info, t_env *env);
