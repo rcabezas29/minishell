@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/14 10:45:13 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/14 14:35:12 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			parse(env, cmd_info, prompt);
 			analyze_prompt(cmd_info);
-			//print_list(cmd_info);
 			execute(cmd_info, env);
+			//print_list(cmd_info);
 			ft_lstclear(&cmd_info->command_list, del);
-			print_list(cmd_info);
 			free(prompt);
 			prompt = NULL;
 		}

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/14 10:39:13 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/14 14:54:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	else if (nargs > 1
 		&& ft_strncmp(((t_node *)aux->content)->prompts, "~", 2) == 0)
 	{
-		tmp = env->pwd;
+		env->oldpwd = env->pwd;
 		env->pwd = env->home;
-		env->oldpwd = tmp;
 		chdir(env->pwd);
 	}
 	else
