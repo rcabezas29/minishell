@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
+#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/14 20:53:27 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/10/15 12:07:53 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS)
+SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS) $(REDIRECT_SRCS)
 
 INCLUDES = includes/
 
@@ -28,15 +28,19 @@ BUILTINS_DIR = builtins/
 
 SIG_DIR = signals/
 
+REDIRECT_DIR = redirections/
+
 SRCS_PARSER = parse.c dollars.c
 
 SRCS_EXEC = execute.c
 
 SRCS_ENV = environments.c
 
-SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c
+SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c
 
 SRCS_SIG = signal.c
+
+SRCS_REDIRECT = redirections.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 
@@ -49,6 +53,8 @@ EXEC_SRCS = $(addprefix $(EXEC_DIR), $(SRCS_EXEC))
 BUILTINS_SRCS = $(addprefix $(BUILTINS_DIR), $(SRCS_BUILTINS))
 
 SIG_SRCS = $(addprefix $(SIG_DIR), $(SRCS_SIG))
+
+REDIRECT_SRCS = $(addprefix $(REDIRECT_DIR), $(SRCS_REDIRECT))
 
 OBJS = $(SRCS:.c=.o)
 

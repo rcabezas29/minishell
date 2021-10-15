@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 10:00:13 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/15 11:59:27 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 			(*i)++;
 			while (prompt[*i] && prompt[*i] != '\'')
 			{
-				word = ft_realloc(word, (ft_strlen(word) + 1));
+				word = ft_realloc(word, (ft_strlen(word) + 2));
 				word[j] = prompt[*i];
 				j++;
 				word[j] = '\0';
@@ -43,7 +43,7 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 			{
 				if (prompt[*i] == '$')
 					expand_dollars(env, prompt, i, &word, &j);
-				word = ft_realloc(word, (ft_strlen(word) + 1));
+				word = ft_realloc(word, (ft_strlen(word) + 2));
 				word[j] = prompt[*i];
 				j++;
 				word[j] = '\0';
@@ -67,7 +67,7 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 					return (word);
 				}
 			}
-			word = ft_realloc(word, (ft_strlen(word) + 1));
+			word = ft_realloc(word, (ft_strlen(word) + 2));
 			word[j] = prompt[*i];
 			j++;
 			word[j] = '\0';
@@ -92,7 +92,7 @@ char	*parse_quotes(t_env *env, char *prompt, int *i, char c)
 			expand_dollars(env, prompt, i, &word, &j);
 		if (prompt[*i] == c)
 			return (word);
-		word = ft_realloc(word, (ft_strlen(word) + 1));
+		word = ft_realloc(word, (ft_strlen(word) + 2));
 		word[j] = prompt[*i];
 		j++;
 		word[j] = '\0';
@@ -132,6 +132,8 @@ void	parse(t_env *env, t_cmd_info *cmd_info, char *prompt)
 		word = NULL;
 		i++;
 	}
+	free(prompt);
+	prompt = NULL;
 }
 
 void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word)
@@ -179,7 +181,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		if (((t_node *)aux->content)->types > 1
 			&& ((t_node *)aux->content)->types < 6)
 		{
-			/////// redirecciones
+			ft_redirections(cmd_info);
 			aux = aux->next;
 			((t_node *)aux->content)->types = FILE_NAME;
 		}

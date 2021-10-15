@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/14 14:35:12 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/15 11:55:06 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,20 @@ int	main(int argc, char **argv, char **envp)
 		exit(0);
 	if (prompt[0] != '\0')
 		add_history(prompt);
-	while (ft_strcmp("exit", prompt))
+	while (1)//OJO EL BUILTIN EXIT NUNCA LLEGA HACER WHILE (1)
 	{
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
 			parse(env, cmd_info, prompt);
 			analyze_prompt(cmd_info);
+			print_list(cmd_info);
 			execute(cmd_info, env);
-			//print_list(cmd_info);
 			ft_lstclear(&cmd_info->command_list, del);
-			free(prompt);
-			prompt = NULL;
 		}
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 		if (!prompt)
 			exit(0);
 	}
-	free(prompt);
-	prompt = NULL;
-	ft_freearray(env->paths);
-	free(env);
-	free(cmd_info->command_list);
-	free(cmd_info);
-	clear_history();
-	atexit(leaks);
 	return (0);
 }

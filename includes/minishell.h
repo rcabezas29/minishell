@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/14 10:45:41 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/15 12:05:56 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_node
 }	t_node;
 
 //minishell.h
+void		del(void *node);
+void		leaks(void);
 int			main(int argc, char **argv, char **envp);
 
 //environments.h
@@ -100,4 +102,11 @@ void		execute_cd(t_cmd_info *cmd_info, t_env *env);
 
 //signal
 void		sig_init(void);
+
+//redirection
+void		ft_redirections(t_cmd_info *cmd_info);
+
+//exit
+void		ft_cleanmemory(t_cmd_info *cmd_info, t_env *env);
+void		execute_exit(t_cmd_info *cmd_info, t_env *env);
 #endif
