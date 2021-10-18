@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_initial_env.c                                 :+:      :+:    :+:   */
+/*   find_initial_envs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 10:15:47 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:07:34 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:21:51 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	find_initial_envs(char **envs)
 			x++;
 		i++;
 	}
-	return (x);
+	return (4 - x);
 }
 
 int	find_oldpwd(char **envs)

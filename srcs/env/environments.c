@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environments.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:18:52 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:22:12 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,49 @@ int	ft_arraylines(char **str)
 	return (i);
 }
 
+char	**add_basic_envs(char **envp)
+{
+	char	buff[FILENAME_MAX];
+	char	**dst;
+	int		i;
+	int		x;
+
+	i = 0;
+	x = find_initial_envs(envp);
+	dst = (char **)malloc(sizeof(char *) * (ft_arraylines(envp) + x));
+	while (envp[i])
+	{
+		dst[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	if (!find_oldpwd(envp))
+	{
+		dst[i] = ft_strdup("OLDPWD");
+		i++;
+	}
+	if (!find_pwd(envp))
+	{
+		getcwd(buff, sizeof(buff));
+		dst[i] = ft_strjoin("PWD=", buff);
+		i++;
+	}
+	if (!find_shlvl(envp))
+	{
+		dst[i] = ft_strdup("SHLVL=1");
+		i++;
+	}
+	dst[i] = NULL;
+	return (dst);
+}
+
 void	take_envs(char	**envp, t_env *env)
 {
 	int		i;
 
 	i = 0;
-	env->envp = (char **)malloc(sizeof(char *) * (ft_arraylines(envp) + 1));
+	env->envp = add_basic_envs(envp);
 	while (envp[i])
 	{
-		env->envp[i] = ft_strdup(envp[i]);
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
 		{
 			env->paths = ft_split(ft_strchr(envp[i], '/'), ':');
@@ -64,7 +98,6 @@ void	take_envs(char	**envp, t_env *env)
 			env->pwd = ft_strchr2(envp[i], '=');
 		i++;
 	}
-	env->envp[i] = NULL;
 }
 
 void	add_slash_to_path(t_env *env)

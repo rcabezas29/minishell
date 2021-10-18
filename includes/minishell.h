@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:13:49 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 12:34:26 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			main(int argc, char **argv, char **envp);
 void		del(void *node);
 void		leaks(void);
 
-//environments.h
+//environments.c
 char		*ft_strchr2(const char *str, char c);
 void		take_envs(char	**envp, t_env *env);
 void		add_slash_to_path(t_env *env);
