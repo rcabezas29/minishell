@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/15 11:55:06 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 12:11:01 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 		exit(0);
 	if (prompt[0] != '\0')
 		add_history(prompt);
-	while (1)//OJO EL BUILTIN EXIT NUNCA LLEGA HACER WHILE (1)
+	while (1)
 	{
 		if (prompt[0] != '\0')
 		{

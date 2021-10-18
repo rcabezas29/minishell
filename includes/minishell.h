@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/15 12:05:56 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 12:13:49 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,20 @@ typedef struct s_node
 }	t_node;
 
 //minishell.h
+int			main(int argc, char **argv, char **envp);
 void		del(void *node);
 void		leaks(void);
-int			main(int argc, char **argv, char **envp);
 
 //environments.h
 char		*ft_strchr2(const char *str, char c);
 void		take_envs(char	**envp, t_env *env);
 void		add_slash_to_path(t_env *env);
+int			ft_arraylines(char **str);
+
+int			find_initial_envs(char **envs);
+int			find_oldpwd(char **envs);
+int			find_pwd(char **envs);
+int			find_shlvl(char **envs);
 
 //parse.c
 void		parse(t_env *env, t_cmd_info *cmd_info, char *prompt);
@@ -80,6 +86,9 @@ char		**assign_arguments_for_execve(t_list *tmp);
 void		execute_paths(t_list *tmp, t_env *env);
 void		ft_freearray(char **array);
 int			count_arguments(t_list *tmp);
+
+
+int			double_ptr_len(char	**arr);
 
 //builtins
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
@@ -97,13 +106,13 @@ void		expand_dollars(t_env *env, char *prompt, int *i,
 // void		manage_points(char *arg, t_env *env);
 // void		ft_createcdpath(char **tmp, t_env *env);
 char		*ft_strextract(const char *str);
-void		ft_change_env(t_env *env);
+char		**ft_change_env(t_env *env);
 void		execute_cd(t_cmd_info *cmd_info, t_env *env);
 
 //signal
 void		sig_init(void);
 
-//redirection
+//redireccion
 void		ft_redirections(t_cmd_info *cmd_info);
 
 //exit

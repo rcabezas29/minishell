@@ -6,9 +6,11 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/15 12:02:58 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 12:04:57 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <minishell.h>
 
 #include <minishell.h>
 
@@ -161,11 +163,11 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 		execute_pwd(cmd_info);
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "env"))
 		execute_env(env);
-	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "export"))
-		execute_export(cmd_info, env);
+ 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "export"))
+ 		execute_export(cmd_info, env);
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "unset"))
 		execute_unset(cmd_info, env);
-	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
-		execute_exit(cmd_info, env);
+ 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
+ 		execute_exit(cmd_info, env);
 	//	perror("command not found");
 }

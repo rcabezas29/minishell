@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/08 09:51:19 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 12:06:07 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*copy_expanded_env(t_env *env, char *variable, int *j)
 	return (ret);
 }
 
-static int	check_env(t_env *env, char *variable)
+static int	check_envi(t_env *env, char *variable)
 {
 	int	i;
 
@@ -83,7 +83,7 @@ void	expand_dollars(t_env *env, char *prompt, int *i, char **word, int *j)
 			variable[k] = '\0';
 			(*i)++;
 		}
-		if (check_env(env, variable))
+		if (check_envi(env, variable))
 		{
 			variable = copy_expanded_env(env, variable, j);
 			*word = ft_strjoin(*word, variable);

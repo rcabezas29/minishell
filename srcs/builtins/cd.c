@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/15 14:30:52 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 10:34:22 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		else
 		{
 			i = 0;
-			while (*env->oldpwd)
+			while (*env->pwd)
 			{
-				tmp[i] = *env->oldpwd;
+				tmp[i] = *env->pwd;
 				i++;
-				env->oldpwd++;
+				env->pwd++;
 			}
-			env->oldpwd = env->pwd;
-			env->pwd = tmp;
+			env->pwd = env->oldpwd;
+			env->oldpwd = tmp;
 			chdir(env->pwd);
 			printf("%s\n", env->pwd);
 		}
@@ -67,7 +67,7 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		getcwd(tmp, FILENAME_MAX);
 		env->pwd = tmp;
 	}
-	ft_change_env(env);
+	env->envp = ft_change_env(env);
 }
 
 char	*ft_strextract(const char *str)
@@ -87,37 +87,31 @@ char	*ft_strextract(const char *str)
 	return (ret);
 }
 
-void	ft_change_env(t_env *env)
+char	**ft_change_env(t_env *env)
 {
 	int		i;
 	int		ok;
-	char	*tmp;
-	char	*tmp2;
+	char	**tmpenv;
 
-	i = 0;
 	ok = 0;
+	i = ft_arraylines(env->envp);
+	tmpenv = (char **)malloc(sizeof(char *) * (i + 2));
+	i = 0;
 	while (env->envp[i])
 	{
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
-		{
-			tmp = ft_strjoin("PWD=", env->pwd);
-			env->envp[i] = tmp;
-			free (tmp);
-			tmp = NULL;
-		}
-		if (ft_strncmp("OLDPWD", env->envp[i], 6) == 0)
-		{
-			ok += 1;
-			tmp2 = ft_strjoin("OLDPWD=", env->oldpwd);
-			env->envp[i] = tmp2;
-		}
+			tmpenv[i] = ft_strjoin("PWD=", env->pwd);
+		else if (ft_strncmp("OLDPWD", env->envp[i], 6) == 0)
+			ok = i;
+		else
+			tmpenv[i] = ft_strdup(env->envp[i]);
 		i++;
 	}
-	if (ok == 0)
-	{
-		tmp2 = ft_strjoin("OLDPWD=", env->oldpwd);
-		env->envp[i] = tmp2;
-	}
-	free (tmp2);
-	tmp2 = NULL;
+	if (ok > 0)
+		tmpenv[ok] = ft_strjoin("OLDPWD=", env->oldpwd);
+	else if (ok == 0)
+		tmpenv[i] = ft_strjoin("OLDPWD=", env->oldpwd);
+	tmpenv[++i] = NULL;
+	ft_freearray(env->envp);
+	return (tmpenv);
 }
