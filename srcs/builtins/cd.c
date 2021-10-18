@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 13:25:17 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/18 15:50:22 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	getcwd(env->pwd, FILENAME_MAX);
 	if (nargs > 1)
 		aux = aux->next;
-	if (nargs == 1 || (nargs > 1
+	else if (nargs == 1 || (nargs > 1
 			&& ft_strncmp(((t_node *)aux->content)->prompts, "~", 2) == 0))
 	{
 		env->oldpwd = env->pwd;
@@ -42,12 +42,12 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		else
 		{
 			i = 0;
-			while (*env->pwd)
+			while (env->pwd[i])
 			{
-				tmp[i] = *env->pwd;
+				tmp[i] = env->pwd[i];
 				i++;
-				env->pwd++;
 			}
+			tmp[i] = '\0';
 			env->pwd = env->oldpwd;
 			env->oldpwd = tmp;
 			chdir(env->pwd);
@@ -102,16 +102,12 @@ char	**ft_change_env(t_env *env)
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
 			tmpenv[i] = ft_strjoin("PWD=", env->pwd);
 		else if (ft_strncmp("OLDPWD", env->envp[i], 6) == 0)
-			ok = i;
+			tmpenv[i] = ft_strjoin("OLDPWD=", env->oldpwd);
 		else
 			tmpenv[i] = ft_strdup(env->envp[i]);
 		i++;
 	}
-	if (ok > 0)
-		tmpenv[ok] = ft_strjoin("OLDPWD=", env->oldpwd);
-	else if (ok == 0)
-		tmpenv[i] = ft_strjoin("OLDPWD=", env->oldpwd);
-	tmpenv[++i] = NULL;
+	tmpenv[i] = NULL;
 	ft_freearray(env->envp);
 	return (tmpenv);
 }

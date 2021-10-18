@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:39:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:09:31 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:17:53 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,8 @@ void		execute_export(t_cmd_info *cmd_info, t_env *env)
 	tmp = cmd_info->command_list->next;
 	while (tmp)
 	{
-		env->envp = add_string_to_array(env->envp, ((t_node *)tmp->content)->prompts);
+		env->envp = add_string_to_array(env->envp,
+				((t_node *)tmp->content)->prompts);
 		tmp = tmp->next;
 	}
 }

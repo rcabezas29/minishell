@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
+#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/18 13:17:42 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/10/18 14:05:20 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,7 @@ LIBFT = libft
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #3 -fsanitize=address
 
 all: $(NAME)
 

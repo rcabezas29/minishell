@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environments.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 13:22:12 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:10:14 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	**add_basic_envs(char **envp)
 	{
 		dst[i] = ft_strdup(envp[i]);
 		i++;
+		dst[i] = NULL;
 	}
 	if (!find_oldpwd(envp))
 	{
@@ -73,7 +74,6 @@ char	**add_basic_envs(char **envp)
 		dst[i] = ft_strdup("SHLVL=1");
 		i++;
 	}
-	dst[i] = NULL;
 	return (dst);
 }
 
@@ -96,6 +96,8 @@ void	take_envs(char	**envp, t_env *env)
 			env->home = ft_strchr2(envp[i], '=');
 		if (ft_strncmp("PWD=", envp[i], 4) == 0)
 			env->pwd = ft_strchr2(envp[i], '=');
+		if (ft_strncmp("OLDPWD", envp[i], 7) == 0)
+			env->oldpwd = NULL;
 		i++;
 	}
 }
