@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:04:57 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:35:35 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <minishell.h>
 
 #include <minishell.h>
 
@@ -49,21 +47,6 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	return (ret);
 }
 
-void	ft_freearray(char **array)
-{
-	int		i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	array = NULL;
-}
-
 void	execute_paths(t_list *tmp, t_env *env)
 {
 	char	*path;
@@ -84,7 +67,7 @@ void	execute_paths(t_list *tmp, t_env *env)
 		waitpid(pid, &j, 0);
 		free(path);
 		path = NULL;
-		ft_freearray(exeggutor);
+		ft_freematrix(exeggutor);
 	}
 }
 
@@ -155,6 +138,7 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 	t_list	*aux;
 
 	aux = cmd_info->command_list;
+	ft_strdowncase(((t_node *)aux->content)->prompts);
 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "echo"))
 		execute_echo(cmd_info);
 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))

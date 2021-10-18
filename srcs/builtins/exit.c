@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/18 12:09:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:40:48 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_cleanmemory(t_cmd_info *cmd_info, t_env *env)
 {
 	ft_lstclear(&cmd_info->command_list, del);
-	ft_freearray(env->paths);
+	ft_freematrix(env->paths);
 	free(env);
 	free(cmd_info->command_list);
 	free(cmd_info);

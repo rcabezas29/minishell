@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:39:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 14:17:53 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:38:55 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,13 @@ static int	check_env(char *env, char **list)
 	return (0);
 }
 
-int		double_ptr_len(char	**arr)
-{
-	int	i;
-	
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
-
 char			**double_ptr_dup(char **arr)
 {
 	int		i;
 	char	**ret;
 
 	i = 0;
-	ret = malloc(sizeof(char *) * (double_ptr_len(arr) + 1));
+	ret = malloc(sizeof(char *) * (ft_matrixlen(arr) + 1));
 	while (arr[i])
 	{
 		ret[i] = ft_strdup(arr[i]);
@@ -61,7 +51,7 @@ char	**order_envs(char **envs)
 
 	ordered = double_ptr_dup(envs);
 	i  = 0;
-	while (i < double_ptr_len(envs))
+	while (i < ft_matrixlen(envs))
 	{
 		j = 1;
 		while (ordered[j])
@@ -97,7 +87,7 @@ void		print_envs_export(char	**envs)
 		else
 			printf("=\"\"");
 		printf("\n");
-		free_double_ptr(split);
+		ft_freematrix(split);
 		i++;
 	}
 }
@@ -108,7 +98,7 @@ char	**add_string_to_array(char **arr, char *str)
 	char	**split;
 	int		i;
 
-	ret = malloc(sizeof(char *) * (double_ptr_len(arr) + 2));
+	ret = malloc(sizeof(char *) * (ft_matrixlen(arr) + 2));
 	i = 0;
 	while (arr[i])
 	{
@@ -117,7 +107,7 @@ char	**add_string_to_array(char **arr, char *str)
 			ret[i] = ft_strdup(str);
 		else
 			ret[i] = ft_strdup(arr[i]);
-		free_double_ptr(split);
+		ft_freematrix(split);
 		i++;
 		ret[i] = NULL;
 	}
@@ -127,7 +117,7 @@ char	**add_string_to_array(char **arr, char *str)
 		i++;
 	}
 	ret[i] = NULL;
-	free_double_ptr(arr);
+	ft_freematrix(arr);
 	arr = NULL;
 	return (ret);
 }

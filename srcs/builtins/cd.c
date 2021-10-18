@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 15:50:22 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/18 16:40:22 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,6 @@ char	**ft_change_env(t_env *env)
 		i++;
 	}
 	tmpenv[i] = NULL;
-	ft_freearray(env->envp);
+	ft_freematrix(env->envp);
 	return (tmpenv);
 }
