@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:39:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 10:17:04 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/19 21:10:30 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	**order_envs(char **envs)
 		}
 		i++;
 	}
-	ft_freematrix(envs);
 	return (ordered);
 }
 
