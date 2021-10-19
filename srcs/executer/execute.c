@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 16:35:35 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 11:41:11 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,22 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	return (ret);
 }
 
-void	execute_paths(t_list *tmp, t_env *env)
+int		execute_paths(t_list *tmp, t_env *env)
 {
 	char	*path;
 	int		pid;
 	char	**exeggutor;
 	int		j;
+	int		ret;
 
+	ret =  0;
 	path = cmd_path(env, (char *)((t_node *)tmp->content)->prompts);
 	exeggutor = assign_arguments_for_execve(tmp);
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(path, exeggutor, env->envp);
-		exit(0);
+		ret = execve(path, exeggutor, env->envp);
+		exit(ret);
 	}
 	else
 	{
@@ -69,6 +71,7 @@ void	execute_paths(t_list *tmp, t_env *env)
 		path = NULL;
 		ft_freematrix(exeggutor);
 	}
+	return (j % 255);
 }
 
 void	execute(t_cmd_info *cmd_info, t_env *env)
@@ -86,7 +89,7 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 				execute_builtins(cmd_info, env);
 			else
 			{
-				execute_paths(tmp, env);
+				cmd_info->return_code = execute_paths(tmp, env);
 				break ;
 			}
 		}
@@ -144,14 +147,13 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))
 		execute_cd(cmd_info, env);
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "pwd"))
-		execute_pwd(cmd_info);
+		execute_pwd();
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "env"))
-		execute_env(env);
+		execute_env(cmd_info, env);
  	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "export"))
  		execute_export(cmd_info, env);
 	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "unset"))
 		execute_unset(cmd_info, env);
  	else if (!ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
  		execute_exit(cmd_info, env);
-	//	perror("command not found");
 }

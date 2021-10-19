@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:09:50 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/19 12:02:20 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static char	*check_nums_in_unset(t_list *list)
+{
+	t_list	*aux;
+
+	aux = list;
+	if (aux->next)
+		aux = aux->next;
+	while (aux)
+	{
+		if (ft_isdigit(((t_node *)aux->content)->prompts[0]))
+			return (((t_node *)aux->content)->prompts);
+		aux = aux->next;
+	}
+	return (NULL);
+}
 
 static void	remove_env(t_env *env, char *erased)
 {
@@ -37,7 +53,8 @@ static char	**save_envs(t_list	*list)
 	char	**ret;
 	int		i;
 
-	ret = (char **)malloc(sizeof(char *) + 1);
+	i = count_arguments(list);
+	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (list)
 	{
@@ -45,6 +62,7 @@ static char	**save_envs(t_list	*list)
 		list = list->next;
 		i++;
 	}
+	ret[i] = NULL;
 	return (ret);
 }
 
@@ -67,9 +85,17 @@ void	execute_unset(t_cmd_info *cmd_info, t_env *env)
 	int		i;
 	char	**variables;
 	t_list	*tmp;
+	char	*error;
 
 	i = 0;
-	tmp = cmd_info->command_list->next;
+	tmp = cmd_info->command_list;
+	error = check_nums_in_unset(tmp);
+	if (error)
+	{
+		printf("`%s\': not a valid identifier\n", error);
+		cmd_info->return_code = 1;
+		return ;
+	}
 	variables = save_envs(tmp);
 	while (env->envp[i])
 	{

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:05:41 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/19 10:45:33 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
+static char	*parse_simple_chars(t_env *env, char *prompt, int *i, t_cmd_info *cmd_info)
 {
 	char	*word;
 	int		j;
@@ -42,7 +42,7 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 			while (prompt[*i] && prompt[*i] != '\"')
 			{
 				if (prompt[*i] == '$')
-					expand_dollars(env, prompt, i, &word, &j);
+					expand_dollars(env, prompt, i, &word, &j, cmd_info);
 				word = ft_realloc(word, (ft_strlen(word) + 2));
 				word[j] = prompt[*i];
 				j++;
@@ -59,11 +59,11 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 			if (prompt[*i] == '$')
 			{
 				if (prompt[*i + 1] != '\'' && prompt[*i + 1] != '\"')
-					expand_dollars(env, prompt, i, &word, &j);
+					expand_dollars(env, prompt, i, &word, &j, cmd_info);
 				else
 				{
 					(*i)++;
-					word = ft_strjoin(word, parse_quotes(env, prompt, i, prompt[*i]));
+					word = ft_strjoin(word, parse_quotes(env, prompt, i, prompt[*i], cmd_info));
 					return (word);
 				}
 			}
@@ -77,7 +77,7 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i)
 	return (word);
 }
 
-char	*parse_quotes(t_env *env, char *prompt, int *i, char c)
+char	*parse_quotes(t_env *env, char *prompt, int *i, char c, t_cmd_info *cmd_info)
 {
 	char	*word;
 	int		j;
@@ -89,7 +89,7 @@ char	*parse_quotes(t_env *env, char *prompt, int *i, char c)
 	while (prompt[*i] != c && prompt[*i + 1] && prompt[*i + 1] != ' ')
 	{
 		if (prompt[*i] == '$' && c == '\"')
-			expand_dollars(env, prompt, i, &word, &j);
+			expand_dollars(env, prompt, i, &word, &j, cmd_info);
 		if (prompt[*i] == c)
 			return (word);
 		word = ft_realloc(word, (ft_strlen(word) + 2));
@@ -115,17 +115,17 @@ void	parse(t_env *env, t_cmd_info *cmd_info, char *prompt)
 			i++;
 		if (prompt[i] == '\'')
 		{
-			word = parse_quotes(env, prompt, &i, '\'');
+			word = parse_quotes(env, prompt, &i, '\'', cmd_info);
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		else if (prompt[i] == '\"')
 		{
-			word = parse_quotes(env, prompt, &i, '\"');
+			word = parse_quotes(env, prompt, &i, '\"', cmd_info);
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		else
 		{
-			word = parse_simple_chars(env, prompt, &i);
+			word = parse_simple_chars(env, prompt, &i, cmd_info);
 			add_word_to_list(&cmd_info->command_list, cmd_info, word);
 		}
 		free(word);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollars.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 12:06:07 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/19 10:47:36 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,28 @@ static int	check_envi(t_env *env, char *variable)
 	return (0);
 }
 
-void	expand_dollars(t_env *env, char *prompt, int *i, char **word, int *j)
+void	expand_dollars(t_env *env, char *prompt, int *i, char **word, int *j, t_cmd_info *cmd_info)
 {
 	char	*variable;
 	char	*aux;
 	int		k;
 
 	variable = malloc(sizeof(char));
-	if (!ft_isalnum(prompt[*i + 1]))
+	if (!ft_isalnum(prompt[*i + 1]) && prompt[*i + 1] != '?')
 		return ;
 	(*i)++;
-	if (ft_isdigit(prompt[*i]))
+	if (prompt[*i] == '?')
+	{
+		aux = ft_strdup(*word);
+		free(*word);
+		*word = NULL;
+		*word = ft_strjoin(aux, ft_itoa(cmd_info->return_code));
+		free(aux);
+		aux = NULL;
+		(*j) += ft_strlen(ft_itoa(cmd_info->return_code));
+		(*i)++;
+	}
+	else if (ft_isdigit(prompt[*i]))
 	{
 		if (prompt[*i] == '0')
 		{
