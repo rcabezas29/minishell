@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:39:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 16:38:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 10:17:04 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ char	**order_envs(char **envs)
 		{
 			if (ft_strcmp(ordered[j - 1], ordered[j]) > 0)
 			{
-				tmp = ft_strdup(ordered[j - 1]);
-				ordered[j - 1] = ft_strdup(ordered[j]);
-				ordered[j] = ft_strdup(tmp);
-				free(tmp);
+				tmp = ordered[j - 1];
+				ordered[j - 1] = ordered[j];
+				ordered[j] = tmp;
 			}
 			j++;
 		}
 		i++;
 	}
+	ft_freematrix(envs);
 	return (ordered);
 }
 
@@ -90,6 +90,7 @@ void		print_envs_export(char	**envs)
 		ft_freematrix(split);
 		i++;
 	}
+	ft_freematrix(ordered);
 }
 
 char	**add_string_to_array(char **arr, char *str)
