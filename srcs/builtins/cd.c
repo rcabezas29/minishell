@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 16:40:22 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 10:11:55 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	getcwd(env->pwd, FILENAME_MAX);
 	if (nargs > 1)
 		aux = aux->next;
-	else if (nargs == 1 || (nargs > 1
+	if (nargs == 1 || (nargs > 1
 			&& ft_strncmp(((t_node *)aux->content)->prompts, "~", 2) == 0))
 	{
 		env->oldpwd = env->pwd;
