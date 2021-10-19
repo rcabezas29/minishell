@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 12:02:20 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 21:18:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	execute_unset(t_cmd_info *cmd_info, t_env *env)
 			remove_env(env, env->envp[i]);
 		i++;
 	}
+	ft_freematrix(variables);
 }

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 10:45:33 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 21:31:26 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i, t_cmd_info *cm
 				word[j] = '\0';
 				(*i)++;
 			}
-			if (prompt[*i] != '\"')
+			if (prompt[*i] == '\"')
 				(*i)++;
 		}
 		else
