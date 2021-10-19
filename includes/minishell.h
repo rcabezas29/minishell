@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 11:40:27 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 22:04:32 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,6 @@ char		**assign_arguments_for_execve(t_list *tmp);
 int			execute_paths(t_list *tmp, t_env *env);
 void		ft_freearray(char **array);
 int			count_arguments(t_list *tmp);
-
-
-int			double_ptr_len(char	**arr);
 
 //builtins
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);

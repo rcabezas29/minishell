@@ -6,16 +6,16 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/19 21:10:07 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 21:53:58 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int		alpha_in_string(char *str)
+int	alpha_in_string(char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i])
 	{
@@ -55,7 +55,8 @@ void	execute_exit(t_cmd_info *cmd_info, t_env *env)
 	}
 	if (alpha_in_string(((t_node *)aux->next->content)->prompts))
 	{
-		printf("%s: numeric argument required", ((t_node *)aux->next->content)->prompts);
+		printf("%s: numeric argument required",
+			((t_node *)aux->next->content)->prompts);
 		ft_cleanmemory(cmd_info, env);
 		exit(255);
 	}

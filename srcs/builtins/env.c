@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:38:39 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 11:34:36 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 21:53:19 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	execute_env(t_cmd_info *cmd_info, t_env *env)
 	tmp = cmd_info->command_list;
 	if (count_arguments(tmp) > 1)
 	{
-		printf("%s: No such file or directory\n", ((t_node *)tmp->next->content)->prompts);
+		printf("%s: No such file or directory\n",
+			((t_node *)tmp->next->content)->prompts);
 		cmd_info->return_code = 127;
 	}
 	else

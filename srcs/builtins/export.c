@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:39:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 21:10:30 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/19 22:03:46 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,6 @@ static int	check_env(char *env, char **list)
 	return (0);
 }
 
-char			**double_ptr_dup(char **arr)
-{
-	int		i;
-	char	**ret;
-
-	i = 0;
-	ret = malloc(sizeof(char *) * (ft_matrixlen(arr) + 1));
-	while (arr[i])
-	{
-		ret[i] = ft_strdup(arr[i]);
-		i++;
-		ret[i] = NULL;
-	}
-	return (ret);
-}
-
 char	**order_envs(char **envs)
 {
 	char	**ordered;
@@ -49,8 +33,8 @@ char	**order_envs(char **envs)
 	int		i;
 	int		j;
 
-	ordered = double_ptr_dup(envs);
-	i  = 0;
+	ordered = ft_matrixdup(envs);
+	i = 0;
 	while (i < ft_matrixlen(envs))
 	{
 		j = 1;
@@ -69,12 +53,12 @@ char	**order_envs(char **envs)
 	return (ordered);
 }
 
-void		print_envs_export(char	**envs)
+void	print_envs_export(char	**envs)
 {
 	int		i;
 	char	**ordered;
 	char	**split;
-	
+
 	ordered = order_envs(envs);
 	i = 0;
 	while (ordered[i])
@@ -103,7 +87,8 @@ char	**add_string_to_array(char **arr, char *str)
 	while (arr[i])
 	{
 		split = ft_split(arr[i], '=');
-		if (!ft_strncmp(split[0], str, ft_strlen(split[0])) && ft_strchr(str, '='))
+		if (!ft_strncmp(split[0], str, ft_strlen(split[0]))
+			&& ft_strchr(str, '='))
 			ret[i] = ft_strdup(str);
 		else
 			ret[i] = ft_strdup(arr[i]);
@@ -122,7 +107,7 @@ char	**add_string_to_array(char **arr, char *str)
 	return (ret);
 }
 
-void		execute_export(t_cmd_info *cmd_info, t_env *env)
+void	execute_export(t_cmd_info *cmd_info, t_env *env)
 {
 	t_list	*tmp;
 
