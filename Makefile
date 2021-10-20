@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
+#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/20 10:52:10 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/10/20 12:23:32 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ REDIRECT_DIR = redirections/
 
 SRCS_PARSER = parse.c dollars.c
 
-SRCS_EXEC = execute.c
+SRCS_EXEC = execute.c execute2.c
 
 SRCS_ENV = environments.c find_initial_envs.c
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 22:04:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/20 12:22:59 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,15 @@ char		*parse_quotes(t_env *env, char *prompt, int *i, char c, t_cmd_info *cmd_in
 
 //execute.c
 void		execute(t_cmd_info *cmd_info, t_env *env);
-char		*cmd_path(t_env *env, char *cmd);
 char		**assign_arguments_for_execve(t_list *tmp);
 int			execute_paths(t_list *tmp, t_env *env);
 void		ft_freearray(char **array);
 int			count_arguments(t_list *tmp);
+char		*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env);
+
+//execute2.c
+char		*cmd_path(t_env *env, char *cmd);
+void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
 
 //builtins
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
