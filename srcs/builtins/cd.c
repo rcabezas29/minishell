@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 10:11:55 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/20 11:03:45 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 	{
 		if (!env->oldpwd)
 		{
-			perror("cd: OLDPWD not set");
+			printf("cd: OLDPWD not set\n");
+			cmd_info->return_code = 1;
 			return ;
 		}
 		else
@@ -59,7 +60,9 @@ void	execute_cd(t_cmd_info *cmd_info, t_env *env)
 		ft_bzero(tmp, FILENAME_MAX);
 		if (open(((t_node *)aux->content)->prompts, O_RDONLY) < 0)
 		{
-			perror("no such file or directory");
+			printf("minishell: cd: %s: No such file or directory\n",
+				((t_node *)aux->content)->prompts);
+			cmd_info->return_code = 1;
 			return ;
 		}
 		env->oldpwd = env->pwd;
@@ -94,7 +97,7 @@ char	**ft_change_env(t_env *env)
 	char	**tmpenv;
 
 	ok = 0;
-	i = ft_arraylines(env->envp);
+	i = ft_matrixlen(env->envp);
 	tmpenv = (char **)malloc(sizeof(char *) * (i + 2));
 	i = 0;
 	while (env->envp[i])
