@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/27 11:39:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 22:03:46 by rcabezas         ###   ########.fr       */
+/*   Created: 2021/10/20 10:39:24 by rcabezas          #+#    #+#             */
+/*   Updated: 2021/10/20 10:44:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,23 @@ char	**order_envs(char **envs)
 	return (ordered);
 }
 
-void	print_envs_export(char	**envs)
+void		print_envs_export(char  **envs)
 {
-	int		i;
+	int	 i;
 	char	**ordered;
-	char	**split;
-
+	char	*name;
+	char	*value;
 	ordered = order_envs(envs);
 	i = 0;
 	while (ordered[i])
 	{
-		split = ft_split(ordered[i], '=');
-		printf("%s", split[0]);
-		if (split[1])
-			printf("=\"%s\"", split[1]);
+		name = ft_strtok(ordered[i], '=');
+		value = ft_strchr2(ordered[i], '=');
+		if (value)
+			printf("%s=\"%s\"\n", name, value);
 		else
-			printf("=\"\"");
-		printf("\n");
-		ft_freematrix(split);
+			printf("%s=\"\"\n", name);
+		free (name);
 		i++;
 	}
 	ft_freematrix(ordered);
@@ -79,21 +78,24 @@ void	print_envs_export(char	**envs)
 char	**add_string_to_array(char **arr, char *str)
 {
 	char	**ret;
-	char	**split;
+	char	*name;
+	char	*aux;
 	int		i;
 
 	ret = malloc(sizeof(char *) * (ft_matrixlen(arr) + 2));
 	i = 0;
 	while (arr[i])
 	{
-		split = ft_split(arr[i], '=');
-		if (!ft_strncmp(split[0], str, ft_strlen(split[0]))
+		aux = ft_strtok(arr[i], '=');
+		name = ft_strjoin(aux, "=");
+		if (!ft_strncmp(name, str, ft_strlen(name))
 			&& ft_strchr(str, '='))
 			ret[i] = ft_strdup(str);
 		else
 			ret[i] = ft_strdup(arr[i]);
-		ft_freematrix(split);
 		i++;
+		free(name);
+		free(aux);
 		ret[i] = NULL;
 	}
 	if (!check_env(str, ret))
