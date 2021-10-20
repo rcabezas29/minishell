@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 21:31:26 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/20 11:22:34 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static char	*parse_simple_chars(t_env *env, char *prompt, int *i, t_cmd_info *cmd_info)
 {
 	char	*word;
+	char	*aux1;
+	char	*aux2;
 	int		j;
 
 	j = 0;
@@ -63,7 +65,12 @@ static char	*parse_simple_chars(t_env *env, char *prompt, int *i, t_cmd_info *cm
 				else
 				{
 					(*i)++;
-					word = ft_strjoin(word, parse_quotes(env, prompt, i, prompt[*i], cmd_info));
+					aux1 = ft_strdup(word);
+					free(word);
+					aux2 = parse_quotes(env, prompt, i, prompt[*i], cmd_info);
+					word = ft_strjoin(aux1, aux2);
+					free(aux1);
+					free(aux2);
 					return (word);
 				}
 			}
