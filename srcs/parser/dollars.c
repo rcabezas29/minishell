@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/20 11:28:06 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 12:03:02 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ static char	*copy_expanded_env(t_env *env, char *variable, int *j)
 {
 	int		i;
 	char	*ret;
+	char	*var;
 
 	i = 0;
 	ret = NULL;
 	while (env->envp[i])
 	{
-		if (!ft_strncmp(env->envp[i], variable, ft_strlen(variable)))
+		var = ft_strtok(env->envp[i], '=');
+		if (!ft_strcmp(var, variable))
 		{
 			ret = ft_strdup(&env->envp[i][ft_strlen(variable) + 1]);
 			break ;
@@ -35,76 +37,62 @@ static char	*copy_expanded_env(t_env *env, char *variable, int *j)
 
 static int	check_envi(t_env *env, char *variable)
 {
-	int	i;
+	int		i;
+	char	*var;
 
 	i = 0;
 	while (env->envp[i])
 	{
-		if (!ft_strncmp(env->envp[i], variable, ft_strlen(variable)))
+		var = ft_strtok(env->envp[i], '=');
+		if (!ft_strcmp(var, variable))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-void	expand_dollars(t_env *env, char *prompt, int *i, char **word, int *j, t_cmd_info *cmd_info)
+void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info)
 {
 	char	*variable;
-	char	*aux;
 	int		k;
 
 	variable = malloc(sizeof(char));
-	if (!ft_isalnum(prompt[*i + 1]) && prompt[*i + 1] != '?')
+	if (!ft_isalnum(p->prompt[p->i + 1]) && p->prompt[p->i + 1] != '?' && p->prompt[p->i + 1] != '_')
 		return ;
-	(*i)++;
-	if (prompt[*i] == '?')
+	p->i++;
+	if (p->prompt[p->i] == '?')
 	{
-		aux = ft_strdup(*word);
-		free(*word);
-		*word = NULL;
-		*word = ft_strjoin(aux, ft_itoa(cmd_info->return_code));
-		free(aux);
-		aux = NULL;
+		p->word = ft_itoa(cmd_info->return_code);
 		(*j) += ft_strlen(ft_itoa(cmd_info->return_code));
-		(*i)++;
+		p->i++;
 	}
-	else if (ft_isdigit(prompt[*i]))
+	else if (ft_isdigit(p->prompt[p->i]))
 	{
-		if (prompt[*i] == '0')
+		if (p->prompt[p->i] == '0')
 		{
-			aux = ft_strdup(*word);
-			free(*word);
-			*word = NULL;
-			*word = ft_strjoin(aux, "minishell");
-			free(aux);
-			aux = NULL;
+			p->word = ft_strdup("minishell");
 			(*j) += ft_strlen("minishell");
-			(*i)++;
+			p->i++;
 		}
-		(*i)++;
+		p->i++;
 		return ;
 	}
-	else if (ft_isalpha(prompt[*i]))
+	else if (ft_isalpha(p->prompt[p->i]) || p->prompt[p->i] == '_')
 	{
 		k = 0;
-		while (ft_isalnum(prompt[*i]))
+		while (ft_isalnum(p->prompt[p->i]) || p->prompt[p->i] == '_')
 		{
 			variable = ft_realloc(variable, (ft_strlen(variable) + 1));
-			variable[k] = prompt[*i];
+			variable[k] = p->prompt[p->i];
 			k++;
 			variable[k] = '\0';
-			(*i)++;
+			p->i++;
 		}
 		if (check_envi(env, variable))
 		{
-			aux = ft_strdup(*word);
-			free(*word);
 			variable = copy_expanded_env(env, variable, j);
-			*word = ft_strjoin(aux, variable);
-			free(aux);
+			p->word = ft_strjoin(p->word, variable);
 		}
-		else
-			(*j) += ft_strlen(variable);
 	}
 	free(variable);
 	variable = NULL;

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/20 11:03:00 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/21 13:22:45 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,17 @@ char	**add_basic_envs(char **envp)
 	while (envp[i])
 	{
 		dst[i] = ft_strdup(envp[i]);
-		i++;
-		dst[i] = NULL;
+		dst[++i] = NULL;
 	}
 	if (!find_oldpwd(envp))
-	{
-		dst[i] = ft_strdup("OLDPWD");
-		i++;
-	}
+		dst[i++] = ft_strdup("OLDPWD");
 	if (!find_pwd(envp))
 	{
 		getcwd(buff, sizeof(buff));
-		dst[i] = ft_strjoin("PWD=", buff);
-		i++;
+		dst[i++] = ft_strjoin("PWD=", buff);
 	}
 	if (!find_shlvl(envp))
-	{
-		dst[i] = ft_strdup("SHLVL=1");
-		i++;
-	}
+		dst[i++] = ft_strdup("SHLVL=1");
 	dst[i] = NULL;
 	return (dst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/20 12:22:59 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:38:49 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,18 @@ typedef struct s_node
 	int		built_in;
 }	t_node;
 
+typedef struct s_parser
+{
+	int		i;
+	char	*word;
+	char	*prompt;
+}	t_parser;
+
 //minishell.h
 int			main(int argc, char **argv, char **envp);
 void		del(void *node);
 void		leaks(void);
+char		*memory_main(t_env *env, char **envp);
 
 //environments.c
 char		*ft_strchr2(const char *str, char c);
@@ -75,10 +83,11 @@ int			find_shlvl(char **envs);
 
 //parse.c
 void		parse(t_env *env, t_cmd_info *cmd_info, char *prompt);
+void		parse_simple_chars(t_env *env, t_parser *p, t_cmd_info *cmd_info);
 void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
 void		analyze_prompt(t_cmd_info *cmd_info);
 void		check_builtins(t_cmd_info *cmd_info);
-char		*parse_quotes(t_env *env, char *prompt, int *i, char c, t_cmd_info *cmd_info);
+void		parse_quotes(t_env *env, t_parser *p, char c, t_cmd_info *cmd_info);
 
 //execute.c
 void		execute(t_cmd_info *cmd_info, t_env *env);
@@ -101,8 +110,7 @@ void		execute_export(t_cmd_info *cmd_info, t_env *env);
 void		execute_unset(t_cmd_info *cmd_info, t_env *env);
 
 //dolar
-void		expand_dollars(t_env *env, char *prompt, int *i,
-				char **word, int *j, t_cmd_info *cmd_info);
+void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info);
 
 //cd
 // void		manage_points(char *arg, t_env *env);

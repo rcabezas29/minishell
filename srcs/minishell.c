@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 10:28:53 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 12:26:25 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ void	del(void *node)
 	free((t_node *)node);
 }
 
+char	*memory_main(t_env *env, char **envp)
+{
+	char	*prom;
+
+	take_envs(envp, env);
+	sig_init();
+	prom = readline("\033[0;32mminishell - \033[0;0m");
+	if (!prom)
+		exit(0);
+	if (prom[0] != '\0')
+		add_history(prom);
+	return (prom);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*env;
@@ -54,13 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	argv = NULL;
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	take_envs(envp, env);
-	sig_init();
-	prompt = readline("\033[0;32mminishell - \033[0;0m");
-	if (!prompt)
-		exit(0);
-	if (prompt[0] != '\0')
-		add_history(prompt);
+	prompt = memory_main(env, envp);
 	while (1)
 	{
 		if (prompt[0] != '\0')
@@ -68,7 +76,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			parse(env, cmd_info, prompt);
 			analyze_prompt(cmd_info);
-			//print_list(cmd_info);
 			execute(cmd_info, env);
 			ft_lstclear(&cmd_info->command_list, del);
 		}

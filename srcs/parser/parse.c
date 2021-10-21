@@ -6,138 +6,127 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/20 11:22:34 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:23:51 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*parse_simple_chars(t_env *env, char *prompt, int *i, t_cmd_info *cmd_info)
+void	parse_simple_chars(t_env *env, t_parser *p, t_cmd_info *cmd_info)
 {
-	char	*word;
-	char	*aux1;
-	char	*aux2;
 	int		j;
 
 	j = 0;
-	word = malloc(sizeof(char));
-	word[0] = '\0';
-	while (prompt[*i] != '\0' && prompt[*i] != ' ')
+	while (p->prompt[p->i] != '\0' && p->prompt[p->i] != ' ')
 	{
-		if (prompt[*i] == '\'')
+		if (p->prompt[p->i] == '\'')
 		{
-			(*i)++;
-			while (prompt[*i] && prompt[*i] != '\'')
+			p->i++;
+			while (p->prompt[p->i] && p->prompt[p->i] != '\'')
 			{
-				word = ft_realloc(word, (ft_strlen(word) + 2));
-				word[j] = prompt[*i];
+				p->word = ft_realloc(p->word, (ft_strlen(p->word) + 2));
+				p->word[j] = p->prompt[p->i];
 				j++;
-				word[j] = '\0';
-				(*i)++;
+				p->word[j] = '\0';
+				p->i++;
 			}
-			if (prompt[*i] != '\'')
-				(*i)++;
+			if (p->prompt[p->i] != '\'')
+				p->i++;
 		}
-		else if (prompt[*i] == '\"')
+		else if (p->prompt[p->i] == '\"')
 		{
-			(*i)++;
-			while (prompt[*i] && prompt[*i] != '\"')
+			p->i++;
+			while (p->prompt[p->i] && p->prompt[p->i] != '\"')
 			{
-				if (prompt[*i] == '$')
-					expand_dollars(env, prompt, i, &word, &j, cmd_info);
-				word = ft_realloc(word, (ft_strlen(word) + 2));
-				word[j] = prompt[*i];
+				if (p->prompt[p->i] == '$')
+					expand_dollars(env, p, &j, cmd_info);
+				if (p->prompt[p->i] == '$')
+					continue ;
+				if (p->prompt[p->i] == '\"')
+					p->i++;
+				p->word = ft_realloc(p->word, (ft_strlen(p->word) + 2));
+				p->word[j] = p->prompt[p->i];
 				j++;
-				word[j] = '\0';
-				(*i)++;
+				p->word[j] = '\0';
+				p->i++;
 			}
-			if (prompt[*i] == '\"')
-				(*i)++;
 		}
 		else
 		{
-			if (!prompt[*i])
+			if (!p->prompt[p->i])
 				break ;
-			if (prompt[*i] == '$')
+			if (p->prompt[p->i] == '$')
 			{
-				if (prompt[*i + 1] != '\'' && prompt[*i + 1] != '\"')
-					expand_dollars(env, prompt, i, &word, &j, cmd_info);
+				if (p->prompt[p->i + 1] != '\'' && p->prompt[p->i + 1] != '\"')
+					expand_dollars(env, p, &j, cmd_info);
 				else
 				{
-					(*i)++;
-					aux1 = ft_strdup(word);
-					free(word);
-					aux2 = parse_quotes(env, prompt, i, prompt[*i], cmd_info);
-					word = ft_strjoin(aux1, aux2);
-					free(aux1);
-					free(aux2);
-					return (word);
+					p->i++;
+					parse_quotes(env, p, p->prompt[p->i], cmd_info);
+					return ;
 				}
+				if (p->prompt[p->i] == '$' && (p->prompt[p->i + 1] && p->prompt[p->i + 1] != '\"' && p->prompt[p->i + 1] != '\''))
+					continue ;
 			}
-			word = ft_realloc(word, (ft_strlen(word) + 2));
-			word[j] = prompt[*i];
+			p->word = ft_realloc(p->word, (ft_strlen(p->word) + 2));
+			p->word[j] = p->prompt[p->i];
 			j++;
-			word[j] = '\0';
-			(*i)++;
+			p->word[j] = '\0';
+			p->i++;
 		}
 	}
-	return (word);
 }
 
-char	*parse_quotes(t_env *env, char *prompt, int *i, char c, t_cmd_info *cmd_info)
+void	parse_quotes(t_env *env, t_parser *p, char c, t_cmd_info *cmd_info)
 {
-	char	*word;
 	int		j;
 
-	(*i)++;
+	p->i++;
 	j = 0;
-	word = malloc(sizeof(char));
-	word[0] = '\0';
-	while (prompt[*i] != c && prompt[*i + 1] && prompt[*i + 1] != ' ')
+	while (p->prompt[p->i] != c && p->prompt[p->i + 1])
 	{
-		if (prompt[*i] == '$' && c == '\"')
-			expand_dollars(env, prompt, i, &word, &j, cmd_info);
-		if (prompt[*i] == c)
-			return (word);
-		word = ft_realloc(word, (ft_strlen(word) + 2));
-		word[j] = prompt[*i];
+		if (p->prompt[p->i] == '$' && c == '\"')
+			expand_dollars(env, p, &j, cmd_info);
+		if (p->prompt[p->i] == c)
+			return ;
+		p->word = ft_realloc(p->word, (ft_strlen(p->word) + 2));
+		p->word[j] = p->prompt[p->i];
 		j++;
-		word[j] = '\0';
-		(*i)++;
+		p->word[j] = '\0';
+		p->i++;
 	}
-	return (word);
 }
 
 void	parse(t_env *env, t_cmd_info *cmd_info, char *prompt)
 {
-	int		i;
-	char	*word;
-	int		prompt_len;
+	t_parser	*p;
+	int			prompt_len;
 
-	i = 0;
+	p = ft_calloc(sizeof(t_parser), 1);
+	p->prompt = ft_strdup(prompt);
 	prompt_len = (int)ft_strlen(prompt);
-	while (i < prompt_len)
+	while (p->i < prompt_len)
 	{
-		while (prompt[i] == ' ')
-			i++;
-		if (prompt[i] == '\'')
+		p->word = ft_calloc(sizeof(char), 1);
+		while (prompt[p->i] == ' ')
+			p->i++;
+		if (prompt[p->i] == '\'')
 		{
-			word = parse_quotes(env, prompt, &i, '\'', cmd_info);
-			add_word_to_list(&cmd_info->command_list, cmd_info, word);
+			parse_quotes(env, p, '\'', cmd_info);
+			add_word_to_list(&cmd_info->command_list, cmd_info, p->word);
 		}
-		else if (prompt[i] == '\"')
+		else if (prompt[p->i] == '\"')
 		{
-			word = parse_quotes(env, prompt, &i, '\"', cmd_info);
-			add_word_to_list(&cmd_info->command_list, cmd_info, word);
+			parse_quotes(env, p, '\"', cmd_info);
+			add_word_to_list(&cmd_info->command_list, cmd_info, p->word);
 		}
 		else
 		{
-			word = parse_simple_chars(env, prompt, &i, cmd_info);
-			add_word_to_list(&cmd_info->command_list, cmd_info, word);
+			parse_simple_chars(env, p, cmd_info);
+			add_word_to_list(&cmd_info->command_list, cmd_info, p->word);
 		}
-		free(word);
-		word = NULL;
-		i++;
+		free(p->word);
+		p->i++;
 	}
 	free(prompt);
 	prompt = NULL;
@@ -147,7 +136,7 @@ void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word)
 {
 	t_node	*node;
 
-	node = calloc(sizeof(t_node), 1);
+	node = ft_calloc(sizeof(t_node), 1);
 	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<<", 2))
 		node->types = HERE_DOC;

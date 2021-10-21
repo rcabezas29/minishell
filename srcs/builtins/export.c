@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 10:39:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/20 10:44:17 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 13:33:24 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ char	**order_envs(char **envs)
 	return (ordered);
 }
 
-void		print_envs_export(char  **envs)
+void	print_envs_export(char **envs)
 {
-	int	 i;
+	int		i;
 	char	**ordered;
 	char	*name;
 	char	*value;
+
 	ordered = order_envs(envs);
 	i = 0;
 	while (ordered[i])
@@ -82,27 +83,22 @@ char	**add_string_to_array(char **arr, char *str)
 	char	*aux;
 	int		i;
 
-	ret = malloc(sizeof(char *) * (ft_matrixlen(arr) + 2));
 	i = 0;
+	ret = malloc(sizeof(char *) * (ft_matrixlen(arr) + 2));
 	while (arr[i])
 	{
 		aux = ft_strtok(arr[i], '=');
 		name = ft_strjoin(aux, "=");
-		if (!ft_strncmp(name, str, ft_strlen(name))
-			&& ft_strchr(str, '='))
+		if (!ft_strncmp(name, str, ft_strlen(name)) && ft_strchr(str, '='))
 			ret[i] = ft_strdup(str);
 		else
 			ret[i] = ft_strdup(arr[i]);
-		i++;
+		ret[++i] = NULL;
 		free(name);
 		free(aux);
-		ret[i] = NULL;
 	}
 	if (!check_env(str, ret))
-	{
-		ret[i] = ft_strdup(str);
-		i++;
-	}
+		ret[i++] = ft_strdup(str);
 	ret[i] = NULL;
 	ft_freematrix(arr);
 	arr = NULL;
