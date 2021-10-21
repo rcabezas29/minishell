@@ -6,11 +6,40 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:34:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 10:37:05 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 18:47:09 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	print_after_know_flag(int n, t_list *tmp)
+{
+	if (n == 1)
+	{
+		while (tmp && ((t_node *)tmp->content)->types == 0)
+		{
+			printf("%s", ((t_node *)tmp->content)->prompts);
+			if (tmp->next)
+				printf(" ");
+			tmp = tmp->next;
+		}
+	}
+	else
+	{
+		while (tmp && ((t_node *)tmp->content)->types == 0)
+		{
+			printf("%s ", ((t_node *)tmp->content)->prompts);
+			tmp = tmp->next;
+		}
+		printf("\n");
+	}
+}
+
+int	flag_to_one(t_list **tmp)
+{
+	*tmp = (*tmp)->next;
+	return (1);
+}
 
 void	execute_echo(t_cmd_info *cmd_info)
 {
@@ -34,28 +63,7 @@ void	execute_echo(t_cmd_info *cmd_info)
 		if (((t_node *)tmp->content)->prompts[i + 1])
 			break ;
 		else
-		{
-			n = 1;
-			tmp = tmp->next;
-		}
+			n = flag_to_one(&tmp);
 	}
-	if (n == 1)
-	{
-		while (tmp && ((t_node *)tmp->content)->types == 0)
-		{
-			printf("%s", ((t_node *)tmp->content)->prompts);
-			if (tmp->next)
-				printf(" ");
-			tmp = tmp->next;
-		}
-	}
-	else
-	{
-		while (tmp && ((t_node *)tmp->content)->types == 0)
-		{
-			printf("%s ", ((t_node *)tmp->content)->prompts);
-			tmp = tmp->next;
-		}
-		printf("\n");
-	}
+	print_after_know_flag(n, tmp);
 }

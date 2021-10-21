@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/19 21:53:58 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 18:57:42 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,37 +38,42 @@ void	ft_cleanmemory(t_cmd_info *cmd_info, t_env *env)
 	atexit(leaks);
 }
 
+void	alpha_exit(t_cmd_info *cmd_info, t_env *env, char *alpha)
+{
+	printf("%s: numeric argument required", alpha);
+	ft_cleanmemory(cmd_info, env);
+	exit(255);
+}
+
+void	normal_exit(t_cmd_info *cmd_info, t_env *env, char *n)
+{
+	int	ret;
+
+	ret = ft_atoi(n);
+	ft_cleanmemory(cmd_info, env);
+	exit(ret);
+}
+
 void	execute_exit(t_cmd_info *cmd_info, t_env *env)
 {
 	t_list	*aux;
 	int		nargs;
-	int		ret;
 
 	printf("exit\n");
 	aux = cmd_info->command_list;
 	nargs = count_arguments(aux);
-	ret = 0;
 	if (nargs == 1)
 	{
 		ft_cleanmemory(cmd_info, env);
 		exit(0);
 	}
 	if (alpha_in_string(((t_node *)aux->next->content)->prompts))
-	{
-		printf("%s: numeric argument required",
-			((t_node *)aux->next->content)->prompts);
-		ft_cleanmemory(cmd_info, env);
-		exit(255);
-	}
+		alpha_exit(cmd_info, env, ((t_node *)aux->next->content)->prompts);
 	if (count_arguments(aux) > 2)
 	{
 		printf("exit: too many arguments\n");
 		cmd_info->return_code = 1;
 	}
 	else
-	{
-		ret = ft_atoi(((t_node *)aux->next->content)->prompts);
-		ft_cleanmemory(cmd_info, env);
-		exit(ret);
-	}
+		normal_exit(cmd_info, env, ((t_node *)aux->next->content)->prompts);
 }

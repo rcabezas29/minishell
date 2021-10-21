@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/21 12:03:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/21 16:57:56 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,43 @@ static int	check_envi(t_env *env, char *variable)
 	return (0);
 }
 
+void	dollar_variables(t_parser *p, t_env *env, int *j)
+{
+	int		k;
+	char	*variable;
+
+	k = 0;
+	variable = malloc(sizeof(char));
+	while (ft_isalnum(p->prompt[p->i]) || p->prompt[p->i] == '_')
+	{
+		variable = ft_realloc(variable, (ft_strlen(variable) + 1));
+		variable[k] = p->prompt[p->i];
+		k++;
+		variable[k] = '\0';
+		p->i++;
+	}
+	if (check_envi(env, variable))
+	{
+		variable = copy_expanded_env(env, variable, j);
+		p->word = ft_strjoin(p->word, variable);
+	}
+}
+
+void	expand_dollar_digit(t_parser *p, int *j)
+{
+	if (p->prompt[p->i] == '0')
+	{
+		p->word = ft_strdup("minishell");
+		(*j) += ft_strlen("minishell");
+		p->i++;
+	}
+	p->i++;
+}
+
 void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info)
 {
-	char	*variable;
-	int		k;
-
-	variable = malloc(sizeof(char));
-	if (!ft_isalnum(p->prompt[p->i + 1]) && p->prompt[p->i + 1] != '?' && p->prompt[p->i + 1] != '_')
+	if (!ft_isalnum(p->prompt[p->i + 1])
+		&& p->prompt[p->i + 1] != '?' && p->prompt[p->i + 1] != '_')
 		return ;
 	p->i++;
 	if (p->prompt[p->i] == '?')
@@ -67,33 +97,7 @@ void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info)
 		p->i++;
 	}
 	else if (ft_isdigit(p->prompt[p->i]))
-	{
-		if (p->prompt[p->i] == '0')
-		{
-			p->word = ft_strdup("minishell");
-			(*j) += ft_strlen("minishell");
-			p->i++;
-		}
-		p->i++;
-		return ;
-	}
+		expand_dollar_digit(p, j);
 	else if (ft_isalpha(p->prompt[p->i]) || p->prompt[p->i] == '_')
-	{
-		k = 0;
-		while (ft_isalnum(p->prompt[p->i]) || p->prompt[p->i] == '_')
-		{
-			variable = ft_realloc(variable, (ft_strlen(variable) + 1));
-			variable[k] = p->prompt[p->i];
-			k++;
-			variable[k] = '\0';
-			p->i++;
-		}
-		if (check_envi(env, variable))
-		{
-			variable = copy_expanded_env(env, variable, j);
-			p->word = ft_strjoin(p->word, variable);
-		}
-	}
-	free(variable);
-	variable = NULL;
+		dollar_variables(p, env, j);
 }
