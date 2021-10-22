@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 11:44:24 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/22 13:43:26 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	lexer(t_env *env, t_cmd_info *cmd_info, char *prompt)
 		word_analyzer(p, env, cmd_info);
 	free(prompt);
 	prompt = NULL;
+	free(p->prompt);
+	p->prompt = NULL;
+	free (p);
 }
 
 void	check_builtins(t_cmd_info *cmd_info)
