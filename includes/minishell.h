@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 11:46:15 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:31:11 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,16 @@ void		expand_dollars(t_env *env, t_parser *p,
 				int *j, t_cmd_info *cmd_info);
 
 //cd
-// void		manage_points(char *arg, t_env *env);
-// void		ft_createcdpath(char **tmp, t_env *env);
-char		*ft_strextract(const char *str);
-char		**ft_change_env(t_env *env);
+
+
 void		execute_cd(t_cmd_info *cmd_info, t_env *env);
+void		cd_alone(t_env *env);
+void		cd_path(t_env *env, t_list *aux, t_cmd_info *cmd_info);
+void		cd_guion(t_env *env, t_cmd_info *cmd_info);
+
+//cd_2
+void		ft_take_envs_free(t_env *env);
+char		**ft_change_env(t_env *env);
 
 //signal
 void		sig_init(void);
