@@ -6,13 +6,13 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/20 19:08:57 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/10/22 11:46:57 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_MS = minishell.c $(PARSER_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS) $(REDIRECT_SRCS)
+SRCS_MS = minishell.c $(LEX_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS) $(REDIRECT_SRCS)
 
 INCLUDES = includes/
 
@@ -22,7 +22,7 @@ ENV_DIR = env/
 
 EXEC_DIR = executer/
 
-PARSER_DIR = parser/
+LEX_DIR = lexer/
 
 BUILTINS_DIR = builtins/
 
@@ -30,7 +30,7 @@ SIG_DIR = signals/
 
 REDIRECT_DIR = redirections/
 
-SRCS_PARSER = parse.c dollars.c
+SRCS_LEX = lexer.c dollars.c quotes.c words.c
 
 SRCS_EXEC = execute.c execute2.c
 
@@ -46,7 +46,7 @@ SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 
 ENV_SRCS = $(addprefix $(ENV_DIR), $(SRCS_ENV))
 
-PARSER_SRCS = $(addprefix $(PARSER_DIR), $(SRCS_PARSER))
+LEX_SRCS = $(addprefix $(LEX_DIR), $(SRCS_LEX))
 
 EXEC_SRCS = $(addprefix $(EXEC_DIR), $(SRCS_EXEC))
 

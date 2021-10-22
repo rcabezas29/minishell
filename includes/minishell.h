@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/21 16:40:13 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/22 11:46:15 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,22 @@ int			find_oldpwd(char **envs);
 int			find_pwd(char **envs);
 int			find_shlvl(char **envs);
 
-//parse.c
-void		parse(t_env *env, t_cmd_info *cmd_info, char *prompt);
-void		parse_simple_chars(t_env *env, t_parser *p, t_cmd_info *cmd_info);
-void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
-void		analyze_prompt(t_cmd_info *cmd_info);
+//lexer.c
+void		lexer(t_env *env, t_cmd_info *cmd_info, char *prompt);
+void		parse_simple_chars(t_env *env, t_parser *p,
+				t_cmd_info *cmd_info, int j);
 void		check_builtins(t_cmd_info *cmd_info);
+void		set_next_char(t_parser *p, int *j);
+
+//words.c
+void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
+void		word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info);
+
+//quotes.c
 void		parse_quotes(t_env *env, t_parser *p, char c, t_cmd_info *cmd_info);
+void		double_quotes_after_char(t_parser *p, t_env *env,
+				t_cmd_info *cmd_info, int *j);
+void		simple_quotes_after_char(t_parser *p, int *j);
 
 //execute.c
 void		execute(t_cmd_info *cmd_info, t_env *env);
@@ -100,6 +109,7 @@ char		*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env);
 //execute2.c
 char		*cmd_path(t_env *env, char *cmd);
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
+void		analyze_prompt(t_cmd_info *cmd_info);
 
 //builtins
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
@@ -110,7 +120,8 @@ void		execute_export(t_cmd_info *cmd_info, t_env *env);
 void		execute_unset(t_cmd_info *cmd_info, t_env *env);
 
 //dolar
-void		expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info);
+void		expand_dollars(t_env *env, t_parser *p,
+				int *j, t_cmd_info *cmd_info);
 
 //cd
 // void		manage_points(char *arg, t_env *env);
