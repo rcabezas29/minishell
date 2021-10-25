@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 14:31:11 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:39:28 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ char		*memory_main(t_env *env, char **envp);
 char		*ft_strchr2(const char *str, char c);
 void		take_envs(char	**envp, t_env *env);
 void		add_slash_to_path(t_env *env);
-int			ft_arraylines(char **str);
 
+//find_initial_envs
 int			find_initial_envs(char **envs);
 int			find_oldpwd(char **envs);
 int			find_pwd(char **envs);

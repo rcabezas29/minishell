@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 14:32:16 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/25 10:09:50 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ void	cd_guion(t_env *env, t_cmd_info *cmd_info)
 
 void	cd_path(t_env *env, t_list *aux, t_cmd_info *cmd_info)
 {
-	char	*tmp;
+	char	tmp[FILENAME_MAX];
 
-	tmp = NULL;
 	if (open(((t_node *)aux->content)->prompts, O_RDONLY) < 0)
 	{
 		printf("minishell: cd: %s: No such file or directory\n",
@@ -57,9 +56,7 @@ void	cd_path(t_env *env, t_list *aux, t_cmd_info *cmd_info)
 		cmd_info->return_code = 1;
 		return ;
 	}
-	tmp = ft_strdup(env->pwd);
-	env->oldpwd = ft_strdup(tmp);
-	free (tmp);
+	env->oldpwd = ft_strdup(env->pwd);
 	chdir((char *)((t_node *)aux->content)->prompts);
 	getcwd(tmp, FILENAME_MAX);
 	env->pwd = ft_strdup(tmp);

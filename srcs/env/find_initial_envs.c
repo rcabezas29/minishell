@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_initial_envs.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 10:15:47 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/18 13:21:51 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/22 13:55:37 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	find_initial_envs(char **envs)
 	x = 0;
 	while (envs[i])
 	{
-		if (!ft_strncmp("OLDPWD", envs[i], 6))
+		if (!ft_strncmp("OLDPWD", envs[i], 7))
 			x++;
-		else if (!ft_strncmp("PWD", envs[i], 3))
+		else if (!ft_strncmp("PWD=", envs[i], 4))
 			x++;
-		else if (!ft_strncmp("SHLVL", envs[i], 5))
+		else if (!ft_strncmp("SHLVL=", envs[i], 6))
 			x++;
 		i++;
 	}
