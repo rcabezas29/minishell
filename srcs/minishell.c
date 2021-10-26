@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 10:08:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/26 16:23:33 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	del(void *node)
 
 char	*memory_main(t_env *env, char **envp)
 {
-	char	*prom;
+	char			*prom;
 
 	take_envs(envp, env);
 	sig_init();
@@ -60,9 +60,9 @@ char	*memory_main(t_env *env, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env		*env;
-	t_cmd_info	*cmd_info;
-	char		*prompt;
+	t_env			*env;
+	t_cmd_info		*cmd_info;
+	char			*prompt;
 
 	argc = 0;
 	argv = NULL;
