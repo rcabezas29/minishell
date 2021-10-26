@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/22 11:35:11 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/26 13:11:25 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		/////// primer argumento redirecciones
 		aux = aux->next;
 		((t_node *)aux->content)->types = FILE_NAME ;
+		ft_manageredirections(cmd_info);
 		if (aux->next)
 			aux = aux->next;
 	}
@@ -76,9 +77,9 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		if (((t_node *)aux->content)->types > 1
 			&& ((t_node *)aux->content)->types < 6)
 		{
-			ft_redirections(cmd_info);
 			aux = aux->next;
 			((t_node *)aux->content)->types = FILE_NAME;
+			ft_manageredirections(cmd_info);
 		}
 		else if (((t_node *)aux->content)->types == 0)
 		{

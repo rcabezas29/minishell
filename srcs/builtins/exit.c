@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/21 18:57:42 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/26 13:20:01 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_cleanmemory(t_cmd_info *cmd_info, t_env *env)
 	ft_freematrix(env->envp);
 	free(env);
 	free(cmd_info->command_list);
+	free(cmd_info->line);
 	free(cmd_info);
 	clear_history();
 	atexit(leaks);

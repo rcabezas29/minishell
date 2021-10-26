@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 14:39:28 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/26 13:36:47 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_cmd_info
 {
 	int		return_code;
 	int		no_pipes;
+	char	*line;
 	t_list	*command_list;
 }	t_cmd_info;
 
@@ -55,6 +56,7 @@ typedef struct s_node
 	char	*prompts;
 	t_type	types;
 	int		built_in;
+	int		comillas;
 }	t_node;
 
 typedef struct s_parser
@@ -137,9 +139,14 @@ char		**ft_change_env(t_env *env);
 
 //signal
 void		sig_init(void);
+void		sig_init2(void);
 
 //redireccion
-void		ft_redirections(t_cmd_info *cmd_info);
+void		ft_indirection(t_cmd_info *cmd_info, char *entry);
+void		ft_redirection(t_cmd_info *cmd_info, char *entry);
+void		ft_append(t_cmd_info *cmd_info, char *entry);
+void		ft_heredoc(t_cmd_info *cmd_info, char *entry);
+void		ft_manageredirections(t_cmd_info *cmd_info);
 
 //exit
 void		ft_cleanmemory(t_cmd_info *cmd_info, t_env *env);
