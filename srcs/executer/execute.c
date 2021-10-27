@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/27 09:21:38 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/27 10:28:08 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 {
 	int				i;
 	t_list			*tmp;
-	struct termios	old;
+
 
 	i = 0;
 	tmp = cmd_info->command_list;
-	tcgetattr(0, &old);
+
 	while (i <= cmd_info->no_pipes)
 	{
 		if (((t_node *)tmp->content)->types == 0)
@@ -105,7 +105,7 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 		}
 		i++;
 	}
-	tcsetattr(0, TCSADRAIN, &old);
+	
 }
 
 char	*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env)

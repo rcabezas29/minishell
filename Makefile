@@ -6,7 +6,7 @@
 #    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/27 09:44:40 by fballest         ###   ########.fr        #
+#    Updated: 2021/10/27 10:27:09 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ GREEN = \033[1;32m
 RESET = \033[0m
 
 %.o: %.c
-	@gcc $(CFLAGS) -I $(INCLUDES) -I/Users/$(USER)/.brew/opt/readline/include -o $@ -c $<
+	@gcc $(CFLAGS) -I $(INCLUDES) -I/sgoinfre/students/$(USER)/homebrew/opt/readline/include -o $@ -c $<
 
 all: $(NAME)
 
@@ -79,7 +79,7 @@ $(NAME): $(OBJS)
 	@echo "$(BLUE)==========CREATING LIBFT==========$(RESET)"
 	@make -C $(LIBFT)
 	@echo "$(BLUE)========CREATING MINISHELL========$(RESET)"
-	@gcc $(CFLAGS) -I $(INCLUDES) -lreadline -L/Users/$(USER)/.brew/opt/readline/lib $(LIBFT)/libft.a $(OBJS) -o $(NAME)
+	@gcc $(CFLAGS) -I $(INCLUDES) -lreadline -L/sgoinfre/students/$(USER)/homebrew/opt/readline $(LIBFT)/libft.a $(OBJS) -o $(NAME)
 	@echo "$(GREEN)=============WELLDONE=============$(RESET)"
 
 clean:

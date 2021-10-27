@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 16:50:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/27 09:51:50 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/27 10:37:18 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ static void	sig_int(int sig)
 static void	sig_quit(int sig)
 {
 	(void)sig;
-	rl_on_new_line();
-	rl_redisplay();
+	printf("\r\n");
+	//rl_on_new_line();
+	//rl_redisplay();
 	return ;
 }
 
