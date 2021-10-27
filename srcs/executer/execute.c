@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/26 16:21:34 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/27 09:21:38 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 		}
 		i++;
 	}
-	tcsetattr(0, TCSANOW, &old);
+	tcsetattr(0, TCSADRAIN, &old);
 }
 
 char	*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env)
