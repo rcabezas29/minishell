@@ -6,7 +6,7 @@
 #    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/27 10:27:09 by fballest         ###   ########.fr        #
+#    Updated: 2021/10/27 12:15:37 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ $(NAME): $(OBJS)
 	@echo "$(BLUE)==========CREATING LIBFT==========$(RESET)"
 	@make -C $(LIBFT)
 	@echo "$(BLUE)========CREATING MINISHELL========$(RESET)"
-	@gcc $(CFLAGS) -I $(INCLUDES) -lreadline -L/sgoinfre/students/$(USER)/homebrew/opt/readline $(LIBFT)/libft.a $(OBJS) -o $(NAME)
+	@gcc $(CFLAGS) -I $(INCLUDES) -lreadline -L/sgoinfre/students/$(USER)/homebrew/opt/readline/lib $(LIBFT)/libft.a $(OBJS) -o $(NAME)
 	@echo "$(GREEN)=============WELLDONE=============$(RESET)"
 
 clean:
