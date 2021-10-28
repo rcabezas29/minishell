@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/26 13:11:25 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 15:45:16 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 		execute_exit(cmd_info, env);
 }
 
-
 void	analyze_prompt(t_cmd_info *cmd_info)
 {
 	t_list	*aux;
@@ -67,7 +66,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 	{
 		/////// primer argumento redirecciones
 		aux = aux->next;
-		((t_node *)aux->content)->types = FILE_NAME ;
+		((t_node *)aux->content)->types = FILE_NAME;
 		ft_manageredirections(cmd_info);
 		if (aux->next)
 			aux = aux->next;

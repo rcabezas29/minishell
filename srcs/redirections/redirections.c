@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/28 12:11:38 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 15:26:04 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	ft_heredoc_buc(char *file, int fd)
 		tmp = readline("> ");
 		if (tmp[0] != '\0')
 		{
-			
+			//INCLUIR FUNCION PARA EXPANSION VARIABLES DE ENTORNO
 			if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
 			{
 				free(tmp);
@@ -71,6 +71,14 @@ void	ft_heredoc(t_cmd_info *cmd_info, char *file)
 	close (fd);
 }
 
+void	ft_indirection(t_cmd_info *cmd_info, char *file)
+{
+	int		fd;
+
+	if (!access(file, R_OK))
+		fd = open(file, S_IRUSR);
+}
+
 void	ft_manageredirections(t_cmd_info *cmd_info)
 {
 	t_list	*tmp;
@@ -78,8 +86,8 @@ void	ft_manageredirections(t_cmd_info *cmd_info)
 	tmp = cmd_info->command_list;
 	while (tmp && ((t_node *)tmp->content)->types != 1)
 	{
-		// if (((t_node *)tmp->content)->types == 2)
-		// 	ft_indirection(cmd_info);
+		if (((t_node *)tmp->content)->types == 2)
+			ft_indirection(cmd_info, ((t_node *)tmp->content)->prompts);
 		// else if (((t_node *)tmp->content)->types == 3)
 		// 	ft_redirection(cmd_info);
 		if (((t_node *)tmp->content)->types == 4)
