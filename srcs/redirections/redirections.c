@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/28 11:06:05 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 12:11:38 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	ft_heredoc_buc(char *file, int fd)
 		tmp = readline("> ");
 		if (tmp[0] != '\0')
 		{
+			
 			if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
 			{
 				free(tmp);

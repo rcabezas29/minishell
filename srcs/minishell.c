@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/27 10:40:28 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:21:21 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ void	del(void *node)
 	free((t_node *)node);
 }
 
-char	*memory_main(t_env *env, char **envp)
+char	*memory_main(int argc, char **argv, t_env *env, char **envp)
 {
 	char			*prom;
 
+	argc = 0;
+	argv = NULL;
 	take_envs(envp, env);
 	sig_init();
 	prom = readline("\033[0;32mminishell - \033[0;0m");
@@ -63,12 +65,12 @@ int	main(int argc, char **argv, char **envp)
 	t_env			*env;
 	t_cmd_info		*cmd_info;
 	char			*prompt;
+	struct termios	old;
 
-	argc = 0;
-	argv = NULL;
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	prompt = memory_main(env, envp);
+	tcgetattr(0, &old);
+	prompt = memory_main(argc, argv, env, envp);
 	while (1)
 	{
 		if (prompt[0] != '\0')
@@ -79,9 +81,10 @@ int	main(int argc, char **argv, char **envp)
 			execute(cmd_info, env);
 			ft_lstclear(&cmd_info->command_list, del);
 		}
+		else
+			free (prompt);
+		tcsetattr(0, TCSANOW, &old);
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
-		if (!prompt)
-			exit(0);
 	}
 	return (0);
 }

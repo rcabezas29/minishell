@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/28 10:15:35 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:21:25 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_parser
 int			main(int argc, char **argv, char **envp);
 void		del(void *node);
 void		leaks(void);
-char		*memory_main(t_env *env, char **envp);
+char		*memory_main(int argc, char **argv, t_env *env, char **envp);
 
 //environments.c
 char		*ft_strchr2(const char *str, char c);

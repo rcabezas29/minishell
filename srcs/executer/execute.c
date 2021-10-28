@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/27 12:30:36 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 14:27:19 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,6 @@ char	**assign_arguments_for_execve(t_list *tmp)
 	return (ret);
 }
 
-// static void	sig_int_son(int sig)
-// {
-// 	if (sig == SIGINT || sig == SIGQUIT)
-// 		exit (0);
-// }
-
 int	execute_paths(t_list *tmp, t_env *env)
 {
 	char			*path;
@@ -68,6 +62,8 @@ int	execute_paths(t_list *tmp, t_env *env)
 	if (pid == 0)
 	{
 		ret = execve(path, exeggutor, env->envp);
+		ft_freematrix(exeggutor);
+		free(path);
 		exit(ret);
 	}
 	else
