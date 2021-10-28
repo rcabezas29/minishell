@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/26 13:41:12 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 11:06:05 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,44 +26,48 @@
 // {
 
 // }
-
-void	ft_heredoc(t_cmd_info *cmd_info, char *file)
+static void	ft_heredoc_buc(char *file, int fd)
 {
-	t_list	*aux;
-	char	*aux2;
 	char	*tmp;
-	int		fd;
 
-	aux = cmd_info->command_list;
-	fd = 0;
-	if (cmd_info->line)
-		free(cmd_info->line);
-	cmd_info->line = ft_strdup("");
 	while (1)
 	{
 		tmp = readline("> ");
 		if (tmp[0] != '\0')
 		{
-			if (ft_strncmp(file, tmp, ft_strlen(tmp)))
-			{
-				aux2 = ft_strjoin(tmp, "\n");
-				free(tmp);
-				tmp = NULL;
-				tmp = ft_strdup(cmd_info->line);
-				free(cmd_info->line);
-				cmd_info->line = ft_strjoin(tmp, aux2);
-				free (aux2);
-				aux2 = NULL;
-				free (tmp);
-				tmp = NULL;
-			}
-			else
+			if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
 			{
 				free(tmp);
 				break ;
 			}
+			else
+				write(fd, tmp, ft_strlen(tmp));
+			free (tmp);
+			write (fd, "\n", 1);
 		}
 	}
+}
+
+void	ft_heredoc(t_cmd_info *cmd_info, char *file)
+{
+	char	*tmp;
+	char	pwd[FILENAME_MAX];
+	int		fd;
+
+	if (cmd_info->file)
+	{
+		unlink(cmd_info->file);
+		free(cmd_info->file);
+	}
+	getcwd(pwd, FILENAME_MAX);
+	tmp = ft_strjoin(pwd, "/");
+	cmd_info->file = ft_strjoin(tmp, file);
+	free (tmp);
+	fd = open(cmd_info->file, O_RDWR | O_CREAT, S_IRWXU | O_TRUNC);
+	if (fd < 0)
+		return ;
+	ft_heredoc_buc(file, fd);
+	close (fd);
 }
 
 void	ft_manageredirections(t_cmd_info *cmd_info)

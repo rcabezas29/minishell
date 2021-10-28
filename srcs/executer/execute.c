@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/27 12:29:52 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/27 12:30:36 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int	execute_paths(t_list *tmp, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
-		// signal(SIGINT, sig_int_son);
-		// signal(SIGQUIT, sig_int_son);
 		ret = execve(path, exeggutor, env->envp);
 		exit(ret);
 	}

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/26 15:24:23 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/28 10:15:35 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_cmd_info
 {
 	int		return_code;
 	int		no_pipes;
-	char	*line;
+	char	*file;
 	t_list	*command_list;
 }	t_cmd_info;
 
