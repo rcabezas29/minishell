@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/29 10:31:48 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/29 20:26:05 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	ft_indirection(t_cmd_info *cmd_info, char *file)
 	// 		if (((t_node *)aux->content)->comillas == 1)
 	// 			check_argtoexpand()
 	// 	}
-
 	// }
 }
 

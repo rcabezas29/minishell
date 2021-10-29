@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/29 19:28:45 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/29 20:25:24 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*check_nums_in_unset(t_list *list)
 {
 	t_list	*aux;
- 
+
 	aux = list;
 	if (aux->next)
 		aux = aux->next;
