@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/28 15:26:04 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/29 10:31:48 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,25 @@ void	ft_heredoc(t_cmd_info *cmd_info, char *file)
 
 void	ft_indirection(t_cmd_info *cmd_info, char *file)
 {
+	t_list	*aux;
 	int		fd;
 
+	aux = cmd_info->command_list;
 	if (!access(file, R_OK))
 		fd = open(file, S_IRUSR);
+	// while (((t_node *)aux->content)->prompts
+	// 	&& ft_strncmp("<", ((t_node *)aux->content)->prompts))
+	// {
+	// 	if (ft_strncmp("<", ft_strncmp("<", ((t_node *)aux->content)->prompts)))
+	// 		aux = aux->next;
+	// 	else
+	// 	{
+	// 		aux = aux->next;
+	// 		if (((t_node *)aux->content)->comillas == 1)
+	// 			check_argtoexpand()
+	// 	}
+
+	// }
 }
 
 void	ft_manageredirections(t_cmd_info *cmd_info)

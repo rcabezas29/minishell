@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/19 21:18:44 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/10/29 13:23:49 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,32 @@ static char	*check_nums_in_unset(t_list *list)
 	return (NULL);
 }
 
-static void	remove_env(t_env *env, char *erased)
+static char	**remove_env(t_env *env, char *erased)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	**newenv;
 
 	i = 0;
-	while (env->envp[i])
+	j = 0;
+	i = ft_matrixlen(env->envp);
+	newenv = (char **)malloc(sizeof(char *) * i);
+	i = 0;
+	while (env->envp[j])
 	{
-		if (!ft_strcmp(env->envp[i], erased))
+		if (!ft_strncmp(env->envp[j], erased, ft_strlen(erased)))
 		{
-			while (env->envp[i + 1])
-			{
-				env->envp[i] = ft_strdup(env->envp[i + 1]);
-				i++;
-			}
+			free (env->envp[j]);
+			j++;
 		}
-		i++;
+		else
+		{
+			newenv[i++] = ft_strdup(env->envp[j++]);
+			free (env->envp[j - 1]);
+		}
 	}
-	env->envp[i - 1] = NULL;
+	free (env->envp);
+	return (newenv);
 }
 
 static char	**save_envs(t_list	*list)
@@ -73,7 +81,7 @@ static int	check_env(char *env, char **list)
 	i = 0;
 	while (list[i])
 	{
-		if (!ft_strncmp(env, list[i], ft_strlen(list[i])))
+		if (!ft_strncmp(env, list[i], ft_strlen(env)))
 			return (1);
 		i++;
 	}
@@ -97,11 +105,14 @@ void	execute_unset(t_cmd_info *cmd_info, t_env *env)
 		return ;
 	}
 	variables = save_envs(tmp);
-	while (env->envp[i])
+	while (variables[i + 1])
 	{
-		if (check_env(env->envp[i], variables))
-			remove_env(env, env->envp[i]);
+		if (check_env(variables[i + 1], env->envp))
+		{
+			env->envp = remove_env(env, variables[i + 1]);
+		}
 		i++;
 	}
+	take_envs(env->envp, env);
 	ft_freematrix(variables);
 }

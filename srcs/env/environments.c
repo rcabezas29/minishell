@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 14:38:42 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/29 13:34:21 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	take_envs(char	**envp, t_env *env)
 	int		i;
 
 	i = 0;
-	env->envp = add_basic_envs(envp);
+	if (!env->envp)
+		env->envp = add_basic_envs(envp);
 	while (envp[i])
 	{
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
@@ -82,6 +83,11 @@ void	take_envs(char	**envp, t_env *env)
 		if (ft_strncmp("OLDPWD", envp[i], 7) == 0)
 			env->oldpwd = NULL;
 		i++;
+	}
+	if (env->paths[0] == '\0')
+	{
+		env->paths = NULL;
+		
 	}
 }
 
