@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/29 13:23:49 by fballest         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:04:42 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*check_nums_in_unset(t_list *list)
 {
 	t_list	*aux;
-
+ 
 	aux = list;
 	if (aux->next)
 		aux = aux->next;
@@ -113,6 +113,5 @@ void	execute_unset(t_cmd_info *cmd_info, t_env *env)
 		}
 		i++;
 	}
-	take_envs(env->envp, env);
 	ft_freematrix(variables);
 }

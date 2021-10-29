@@ -84,11 +84,6 @@ void	take_envs(char	**envp, t_env *env)
 			env->oldpwd = NULL;
 		i++;
 	}
-	if (env->paths[0] == '\0')
-	{
-		env->paths = NULL;
-		
-	}
 }
 
 void	add_slash_to_path(t_env *env)
