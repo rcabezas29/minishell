@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/02 09:54:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/02 12:40:38 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_cmd_info
 {
 	int		return_code;
 	int		no_pipes;
-	char	*file;
+	char	*line;
 	t_list	*command_list;
 }	t_cmd_info;
 
@@ -59,6 +59,8 @@ typedef struct s_node
 	t_type	types;
 	int		built_in;
 	int		comillas;
+	int		fd_in;
+	int		fd_out;
 }	t_node;
 
 typedef struct s_parser
@@ -220,7 +222,8 @@ void		sig_init(void);
 ** static void	ft_heredoc_buc(char *file, int fd);
 */
 void		ft_heredoc(t_cmd_info *cmd_info, char *file);
-void		ft_indirection(t_cmd_info *cmd_info, char *file);
+int			ft_indirection(char *filename, t_cmd_info *cmd_info);
+int			ft_redirection(char *filename, t_cmd_info *cmd_info);
 void		ft_manageredirections(t_cmd_info *cmd_info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/29 19:29:23 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/02 12:44:42 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 			ft_manageredirections(cmd_info);
 		}
 		else if (((t_node *)aux->content)->types == 0)
-		{
 			check_builtins(cmd_info);
-		}
 		aux = aux->next;
 	}
 }
