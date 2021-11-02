@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/29 20:21:51 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/02 09:54:24 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef struct s_parser
 }	t_parser;
 
 /*
-/* MINISHELL.C
-/* OJO BORRAR LEAKS Y PRINT_LIST
+** MINISHELL.C
+** OJO BORRAR LEAKS Y PRINT_LIST
 */
 void		leaks(void);
 void		print_list(t_cmd_info *cmd_info);
@@ -79,7 +79,7 @@ char		*memory_main(int argc, char **argv, t_env *env, char **envp);
 int			main(int argc, char **argv, char **envp);
 
 /*
-/* ENV/ENVIROMENTS.C
+** ENV/ENVIROMENTS.C
 */
 char		*ft_strchr2(const char *str, char c);
 char		**add_basic_envs(char **envp);
@@ -87,7 +87,7 @@ void		take_envs(char	**envp, t_env *env);
 void		add_slash_to_path(t_env *env);
 
 /*
-/* ENV/FIND_INITIAL_ENVS.C
+** ENV/FIND_INITIAL_ENVS.C
 */
 int			find_initial_envs(char **envs);
 int			find_oldpwd(char **envs);
@@ -95,7 +95,7 @@ int			find_pwd(char **envs);
 int			find_shlvl(char **envs);
 
 /*
-/* LEXER/LEXER.C
+** LEXER/LEXER.C
 */
 void		set_next_char(t_parser *p, int *j);
 int			check_dollar_to_print(t_parser *p);
@@ -105,13 +105,13 @@ void		lexer(t_env *env, t_cmd_info *cmd_info, char *prompt);
 void		check_builtins(t_cmd_info *cmd_info);
 
 /*
-/* LEXER/WORDS.C
+** LEXER/WORDS.C
 */
 void		word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info);
 void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
 
 /*
-/* LEXER/QUOTES.C
+** LEXER/QUOTES.C
 */
 void		parse_quotes(t_env *env, t_parser *p, char c, t_cmd_info *cmd_info);
 void		simple_quotes_after_char(t_parser *p, int *j);
@@ -119,10 +119,10 @@ void		double_quotes_after_char(t_parser *p, t_env *env,
 				t_cmd_info *cmd_info, int *j);
 
 /*
-/* LEXER/DOLLAR.C
-/* Also include this static funtions:
-/* static char	*copy_expanded_env(t_env *env, char *variable, int *j);
-/* static int	check_envi(t_env *env, char *variable);
+** LEXER/DOLLAR.C
+** Also include this static funtions:
+** static char	*copy_expanded_env(t_env *env, char *variable, int *j);
+** static int	check_envi(t_env *env, char *variable);
 */
 void		dollar_variables(t_parser *p, t_env *env, int *j);
 void		expand_dollar_digit(t_parser *p, int *j);
@@ -130,7 +130,7 @@ void		expand_dollars(t_env *env, t_parser *p,
 				int *j, t_cmd_info *cmd_info);
 
 /*
-/* EXECUTER/EXECUTE.C
+** EXECUTER/EXECUTE.C
 */
 int			count_arguments(t_list *tmp);
 char		**assign_arguments_for_execve(t_list *tmp);
@@ -139,14 +139,14 @@ void		execute(t_cmd_info *cmd_info, t_env *env);
 char		*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env);
 
 /*
-/* EXECUTER/EXECUTE2.C
+** EXECUTER/EXECUTE2.C
 */
 char		*cmd_path(t_env *env, char *cmd);
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
 void		analyze_prompt(t_cmd_info *cmd_info);
 
 /*
-/* BUILTINS/CD.C
+** BUILTINS/CD.C
 */
 void		cd_alone(t_env *env);
 void		cd_guion(t_env *env, t_cmd_info *cmd_info);
@@ -154,25 +154,25 @@ void		cd_path(t_env *env, t_list *aux, t_cmd_info *cmd_info);
 void		execute_cd(t_cmd_info *cmd_info, t_env *env);
 
 /*
-/* BUILTINS/CD_2.C
+** BUILTINS/CD_2.C
 */
 void		ft_take_envs_free(t_env *env);
 char		**ft_change_env(t_env *env);
 
 /*
-/* BUILTINS/ECHO.C
+** BUILTINS/ECHO.C
 */
 void		print_after_know_flag(int n, t_list *tmp);
 int			flag_to_one(t_list **tmp);
 void		execute_echo(t_cmd_info *cmd_info);
 
 /*
-/* BUILTINS/ENV.C
+** BUILTINS/ENV.C
 */
 void		execute_env(t_cmd_info *cmd_info, t_env *env);
 
 /*
-/* BUILTINS/EXIT.C
+** BUILTINS/EXIT.C
 */
 int			alpha_in_string(char *str);
 void		ft_cleanmemory(t_cmd_info *cmd_info, t_env *env);
@@ -181,9 +181,9 @@ void		normal_exit(t_cmd_info *cmd_info, t_env *env, char *n);
 void		execute_exit(t_cmd_info *cmd_info, t_env *env);
 
 /*
-/* BUILTINS/EXPORT.C
-/* Also include this static funtion:
-/* static int	check_env(char *env, char **list);
+** BUILTINS/EXPORT.C
+** Also include this static funtion:
+** static int	check_env(char *env, char **list);
 */
 char		**order_envs(char **envs);
 void		print_envs_export(char **envs);
@@ -191,32 +191,33 @@ char		**add_string_to_array(char **arr, char *str);
 void		execute_export(t_cmd_info *cmd_info, t_env *env);
 
 /*
-/* BUILTINS/PWD.C
+** BUILTINS/PWD.C
 */
 void		execute_pwd(void);
 
 /*
-/* BUILTINS/UNSET.C
-/* Also include this static funtions:
-/* static char	*check_nums_in_unset(t_list *list);
-/* static char	**remove_env(t_env *env, char *erased);
-/* static char	**save_envs(t_list	*list);
-/* static int	check_env(char *env, char **list);
+** BUILTINS/UNSET.C
+** Also include this static funtions:
+** static char	*check_nums_in_unset(t_list *list);
+** static char	**remove_env(t_env *env, char *erased);
+** static char	**save_envs(t_list	*list);
+** static int	check_env(char *env, char **list);
 */
 void		execute_unset(t_cmd_info *cmd_info, t_env *env);
 
 /*
-/* SIGNAL/SIGNAL.C
-/* Also include this static funtions:
-/* static void	sig_int(int sig);
-/* static void	sig_quit(int sig);
+** SIGNAL/SIGNAL.C
+** Also include this static funtions:
+** static void	sig_int(int sig);
+** static void	sig_quit(int sig);
 */
+void		son_signal(void);
 void		sig_init(void);
 
 /*
-/* REDIRECTIONS/REDIRECTION.C
-/* Also include this static funtions:
-/* static void	ft_heredoc_buc(char *file, int fd);
+** REDIRECTIONS/REDIRECTION.C
+** Also include this static funtions:
+** static void	ft_heredoc_buc(char *file, int fd);
 */
 void		ft_heredoc(t_cmd_info *cmd_info, char *file);
 void		ft_indirection(t_cmd_info *cmd_info, char *file);

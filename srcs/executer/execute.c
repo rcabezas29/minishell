@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/28 14:31:27 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/02 09:51:24 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	execute_paths(t_list *tmp, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
+		son_signal();
 		ret = execve(path, exeggutor, env->envp);
 		ft_freematrix(exeggutor);
 		free(path);
