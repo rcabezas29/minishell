@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/02 09:51:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/10 09:13:49 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,18 @@ int	execute_paths(t_list *tmp, t_env *env)
 
 void	execute(t_cmd_info *cmd_info, t_env *env)
 {
-	int				i;
-	t_list			*tmp;
+	int		i;
+	pid_t	pid;
+	char	*hola;
 
 	i = 0;
-	tmp = cmd_info->command_list;
-	while (i <= cmd_info->no_pipes)
+	pid = 0;
+	cmd_info->return_code = 0;
+	hola = env->home;
+	/*while (i < cmd_info->no_pipes)
 	{
-		if (((t_node *)tmp->content)->types == 0)
-		{
-			if (((t_node *)tmp->content)->built_in == 1)
-				execute_builtins(cmd_info, env);
-			else
-			{
-				cmd_info->return_code = execute_paths(tmp, env);
-				break ;
-			}
-		}
-		i++;
-	}
+		fork
+	}*/
 }
 
 char	*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env)

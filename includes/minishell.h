@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/02 12:40:38 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/10 09:24:23 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,21 @@ typedef struct s_env
 	char	**paths;
 }	t_env;
 
+typedef struct s_exe
+{
+	int		fd_in;
+	char	*cmd;
+	char	**args;
+	int		fd_out;
+}	t_exe;
+
 typedef struct s_cmd_info
 {
 	int		return_code;
 	int		no_pipes;
 	char	*line;
 	t_list	*command_list;
+	t_exe	*exe;
 }	t_cmd_info;
 
 typedef struct s_node
@@ -101,7 +110,7 @@ int			find_shlvl(char **envs);
 */
 void		set_next_char(t_parser *p, int *j);
 int			check_dollar_to_print(t_parser *p);
-void		parse_simple_chars(t_env *env, t_parser *p,
+int			parse_simple_chars(t_env *env, t_parser *p,
 				t_cmd_info *cmd_info, int j);
 void		lexer(t_env *env, t_cmd_info *cmd_info, char *prompt);
 void		check_builtins(t_cmd_info *cmd_info);
@@ -110,7 +119,7 @@ void		check_builtins(t_cmd_info *cmd_info);
 ** LEXER/WORDS.C
 */
 void		word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info);
-void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word);
+void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word, int comillas);
 
 /*
 ** LEXER/QUOTES.C
@@ -145,7 +154,7 @@ char		*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env);
 */
 char		*cmd_path(t_env *env, char *cmd);
 void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
-void		analyze_prompt(t_cmd_info *cmd_info);
+void		analyze_prompt(t_cmd_info *cmd_info, t_env *env);
 
 /*
 ** BUILTINS/CD.C
@@ -221,9 +230,14 @@ void		sig_init(void);
 ** Also include this static funtions:
 ** static void	ft_heredoc_buc(char *file, int fd);
 */
-void		ft_heredoc(t_cmd_info *cmd_info, char *file);
+char		*fill_env(char *dollar, t_env *env);
+void		ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);
 int			ft_redirection(char *filename, t_cmd_info *cmd_info);
-void		ft_manageredirections(t_cmd_info *cmd_info);
+void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
 
+/*
+** PARSER/PARSER.C
+*/
+void		parser(t_cmd_info *cmd_info);
 #endif

@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
+#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/10/29 18:24:25 by fballest         ###   ########.fr        #
+#    Updated: 2021/11/05 15:25:14 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRCS_MS = minishell.c $(LEX_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS) $(REDIRECT_SRCS)
+SRCS_MS = minishell.c $(LEX_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS) $(REDIRECT_SRCS) $(PARSER_SRCS)
 
 INCLUDES = includes/
 
@@ -24,6 +24,8 @@ EXEC_DIR = executer/
 
 LEX_DIR = lexer/
 
+PARSER_DIR = parser/
+
 BUILTINS_DIR = builtins/
 
 SIG_DIR = signals/
@@ -31,6 +33,8 @@ SIG_DIR = signals/
 REDIRECT_DIR = redirections/
 
 SRCS_LEX = lexer.c dollars.c quotes.c words.c
+
+SRCS_PARSER = parser.c
 
 SRCS_EXEC = execute.c execute2.c
 
@@ -48,6 +52,8 @@ ENV_SRCS = $(addprefix $(ENV_DIR), $(SRCS_ENV))
 
 LEX_SRCS = $(addprefix $(LEX_DIR), $(SRCS_LEX))
 
+PARSER_SRCS = $(addprefix $(PARSER_DIR), $(SRCS_PARSER))
+
 EXEC_SRCS = $(addprefix $(EXEC_DIR), $(SRCS_EXEC))
 
 BUILTINS_SRCS = $(addprefix $(BUILTINS_DIR), $(SRCS_BUILTINS))
@@ -62,7 +68,7 @@ LIBFT = libft
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -g #3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 BLUE = \033[0;34m
 

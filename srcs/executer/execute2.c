@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/02 12:44:42 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/09 18:20:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*cmd_path(t_env *env, char *cmd)
 	return (path);
 }
 
-void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
+void	execute_builtins(t_cmd_info *cmd_info, t_env *env) //fd_in & fd_out
 {
 	t_list	*aux;
 
@@ -54,7 +54,7 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 		execute_exit(cmd_info, env);
 }
 
-void	analyze_prompt(t_cmd_info *cmd_info)
+void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 {
 	t_list	*aux;
 
@@ -67,7 +67,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		/////// primer argumento redirecciones
 		aux = aux->next;
 		((t_node *)aux->content)->types = FILE_NAME;
-		ft_manageredirections(cmd_info);
+		ft_manageredirections(cmd_info, env);
 		if (aux->next)
 			aux = aux->next;
 	}
@@ -78,7 +78,7 @@ void	analyze_prompt(t_cmd_info *cmd_info)
 		{
 			aux = aux->next;
 			((t_node *)aux->content)->types = FILE_NAME;
-			ft_manageredirections(cmd_info);
+			ft_manageredirections(cmd_info, env);
 		}
 		else if (((t_node *)aux->content)->types == 0)
 			check_builtins(cmd_info);

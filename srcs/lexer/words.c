@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   words.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:43:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/28 15:58:56 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/10 09:25:22 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,34 @@
 
 void	word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info)
 {
+	int	comillas;
+
+	comillas = 0;
 	p->word = ft_calloc(sizeof(char), 1);
 	while (p->prompt[p->i] == ' ')
 		p->i++;
 	if (p->prompt[p->i] == '\'')
 	{
+		comillas = 1;
 		parse_quotes(env, p, '\'', cmd_info);
-		add_word_to_list(&cmd_info->command_list, cmd_info, p->word);
+		add_word_to_list(&cmd_info->command_list, cmd_info, p->word, comillas);
 	}
 	else if (p->prompt[p->i] == '\"')
 	{
+		comillas = 2;
 		parse_quotes(env, p, '\"', cmd_info);
-		add_word_to_list(&cmd_info->command_list, cmd_info, p->word);
+		add_word_to_list(&cmd_info->command_list, cmd_info, p->word, comillas);
 	}
 	else
 	{
-		parse_simple_chars(env, p, cmd_info, 0);
-		add_word_to_list(&cmd_info->command_list, cmd_info, p->word);
+		comillas = parse_simple_chars(env, p, cmd_info, 0);
+		add_word_to_list(&cmd_info->command_list, cmd_info, p->word, comillas);
 	}
 	free(p->word);
 	p->i++;
 }
 
-void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word)
+void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word, int comillas)
 {
 	t_node	*node;
 
@@ -56,6 +61,10 @@ void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word)
 		cmd_info->no_pipes++;
 	}
 	else
+	{
 		node->types = ARGUMENT;
+		if (comillas > 0)
+			node->comillas = comillas;
+	}
 	ft_lstadd_back(list, ft_lstnew(node));
 }
