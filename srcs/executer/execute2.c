@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/09 18:20:16 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:35:15 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	execute_builtins(t_cmd_info *cmd_info, t_env *env) //fd_in & fd_out
 	t_list	*aux;
 
 	aux = cmd_info->command_list;
-	ft_strdowncase(((t_node *)aux->content)->prompts);
 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "echo"))
 		execute_echo(cmd_info);
 	if (!ft_strcmp(((t_node *)aux->content)->prompts, "cd"))
@@ -80,8 +79,6 @@ void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 			((t_node *)aux->content)->types = FILE_NAME;
 			ft_manageredirections(cmd_info, env);
 		}
-		else if (((t_node *)aux->content)->types == 0)
-			check_builtins(cmd_info);
 		aux = aux->next;
 	}
 }

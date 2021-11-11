@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/10 09:24:23 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:33:31 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_node
 {
 	char	*prompts;
 	t_type	types;
-	int		built_in;
 	int		comillas;
 	int		fd_in;
 	int		fd_out;
@@ -113,7 +112,6 @@ int			check_dollar_to_print(t_parser *p);
 int			parse_simple_chars(t_env *env, t_parser *p,
 				t_cmd_info *cmd_info, int j);
 void		lexer(t_env *env, t_cmd_info *cmd_info, char *prompt);
-void		check_builtins(t_cmd_info *cmd_info);
 
 /*
 ** LEXER/WORDS.C
@@ -240,4 +238,10 @@ void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
 ** PARSER/PARSER.C
 */
 void		parser(t_cmd_info *cmd_info);
+
+/*
+** EXECUTER/SIMPLE_COMMANDS.C
+*/
+void	execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
+int		check_builtin(char *cmd);
 #endif

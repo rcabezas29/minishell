@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/10 09:22:01 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:33:38 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,4 @@ void	lexer(t_env *env, t_cmd_info *cmd_info, char *prompt)
 	free(p->prompt);
 	p->prompt = NULL;
 	free (p);
-}
-
-void	check_builtins(t_cmd_info *cmd_info)
-{
-	t_list	*aux;
-
-	aux = cmd_info->command_list;
-	if (!ft_strcmp(((t_node *)aux->content)->prompts, "echo")
-		|| !ft_strcmp(((t_node *)aux->content)->prompts, "cd")
-		|| !ft_strcmp(((t_node *)aux->content)->prompts, "pwd")
-		|| !ft_strcmp(((t_node *)aux->content)->prompts, "env")
-		|| !ft_strcmp(((t_node *)aux->content)->prompts, "export")
-		|| !ft_strcmp(((t_node *)aux->content)->prompts, "unset")
-		|| !ft_strcmp(((t_node *)aux->content)->prompts, "exit"))
-		((t_node *)aux->content)->built_in = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/10 09:13:49 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:35:31 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,9 @@ int	execute_paths(t_list *tmp, t_env *env)
 
 void	execute(t_cmd_info *cmd_info, t_env *env)
 {
-	int		i;
-	pid_t	pid;
-	char	*hola;
-
-	i = 0;
-	pid = 0;
-	cmd_info->return_code = 0;
-	hola = env->home;
-	/*while (i < cmd_info->no_pipes)
-	{
-		fork
-	}*/
+	if (cmd_info->no_pipes == 0)
+		execute_simple_commands(cmd_info, env);
+	
 }
 
 char	*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env)

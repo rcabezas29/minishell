@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/10 09:10:41 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/11 10:36:48 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	print_list(t_cmd_info *cmd_info)
 		{
 			printf("%s\n", ((t_node *)tmp->content)->prompts);
 			printf("%u\n", ((t_node *)tmp->content)->types);
-			printf("%d\n", ((t_node *)tmp->content)->built_in);
 			printf("----------------------------------------\n");
 		}
 		tmp = tmp->next;
@@ -40,7 +39,6 @@ void	del(void *node)
 	free(((t_node *)node)->prompts);
 	((t_node *)node)->prompts = NULL;
 	((t_node *)node)->types = 0;
-	((t_node *)node)->built_in = 0;
 	free((t_node *)node);
 }
 
@@ -91,8 +89,8 @@ int	main(int argc, char **argv, char **envp)
 			lexer(env, cmd_info, prompt);
 			analyze_prompt(cmd_info, env);
 			parser(cmd_info);
-			print_exe(cmd_info->exe);
-			//execute(cmd_info, env);
+			//print_exe(cmd_info->exe);
+			execute(cmd_info, env);
 			ft_lstclear(&cmd_info->command_list, del);
 		}
 		else
