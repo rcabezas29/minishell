@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/11 10:33:31 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/11 20:47:48 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,6 @@ void		parser(t_cmd_info *cmd_info);
 /*
 ** EXECUTER/SIMPLE_COMMANDS.C
 */
-void	execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
+int		execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
 int		check_builtin(char *cmd);
 #endif
