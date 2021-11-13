@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/11/11 10:36:22 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/11/13 12:37:36 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS_LEX = lexer.c dollars.c quotes.c words.c
 
 SRCS_PARSER = parser.c
 
-SRCS_EXEC = execute.c execute2.c simple_commands.c
+SRCS_EXEC = execute.c execute2.c simple_commands.c #pipes.c pipe_execution.c
 
 SRCS_ENV = environments.c find_initial_envs.c
 

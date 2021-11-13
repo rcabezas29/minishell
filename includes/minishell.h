@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/11 20:47:48 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 12:39:45 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/includes/libft.h"
+
+#define READ_END 0
+#define WRITE_END 1
 
 typedef enum s_type
 {
@@ -244,4 +247,16 @@ void		parser(t_cmd_info *cmd_info);
 */
 int		execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
 int		check_builtin(char *cmd);
+
+/*
+** EXECUTER/PIPES.C
+*/
+int		execute_pipes(t_cmd_info *cmd_info, t_env *env);
+
+/*
+** EXECUTER/PIPE_EXECUTION.C
+*/
+void	execute_first_pipe(t_exe exe, t_env *env, int fd[]);
+void	execute_last_pipe(t_exe exe, t_env *env, int fd[]);
+void	execute_between_pipes(t_exe exe, t_env *env, int read_fd[], int write_fd[]);
 #endif
