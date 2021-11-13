@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:20:35 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:26:24 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,18 @@ int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 		{
 			if (i == 0)
 				close(fd[0][WRITE_END]);
-			if (i == cmd_info->no_pipes)
+			else if (i == cmd_info->no_pipes)
 			{
 				close(fd[i - 1][READ_END]);
 				dup2(saved_stdin, STDIN_FILENO);
 				close(saved_stdin);
 				dup2(saved_stdout, STDOUT_FILENO);
 				close(saved_stdout);
+			}
+			else
+			{
+				close(fd[i - 1][READ_END]);
+				close(fd[i][WRITE_END]);
 			}
 			i++;
 			cmd_info->return_code = waiting_room();
