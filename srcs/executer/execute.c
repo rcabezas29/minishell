@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 15:54:54 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:35:26 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,9 @@ char	**assign_arguments_for_execve(t_list *tmp)
 void	execute(t_cmd_info *cmd_info, t_env *env)
 {
 	if (cmd_info->no_pipes == 0)
-		cmd_info->return_code =  execute_simple_commands(cmd_info, env);
+		cmd_info->return_code = execute_simple_commands(cmd_info, env);
 	else
 		cmd_info->return_code = execute_pipes(cmd_info, env);
-	
 }
 
 char	*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env)

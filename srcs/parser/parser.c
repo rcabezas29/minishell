@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:27:54 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 11:33:23 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:40:06 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static void	fill_exe(t_cmd_info *cmd_info)
 		{
 			if (((t_node *)tmp->content)->types == ARGUMENT && arg == 0)
 			{
-				cmd_info->exe[i].cmd = ft_strdup(((t_node *)tmp->content)->prompts);
+				cmd_info->exe[i].cmd =
+					ft_strdup(((t_node *)tmp->content)->prompts);
 				arg = 1;
 			}
 			else if (((t_node *)tmp->content)->types == ARGUMENT && arg == 1)

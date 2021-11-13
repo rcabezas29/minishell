@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 12:27:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:28:43 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:37:10 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	execute_last_pipe(t_exe exe, t_env *env, int fd[])
 	execve(path, exeggutor, env->envp);
 }
 
-void	execute_between_pipes(t_exe exe, t_env *env, int read_fd[], int write_fd[])
+void	execute_between_pipes(t_exe exe, t_env *env, int read_fd[],
+			int write_fd[])
 {
 	char	*path;
 	char	**exeggutor;

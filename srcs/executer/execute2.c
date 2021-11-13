@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/11 10:35:15 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:36:34 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*cmd_path(t_env *env, char *cmd)
 	return (path);
 }
 
-void	execute_builtins(t_cmd_info *cmd_info, t_env *env) //fd_in & fd_out
+void	execute_builtins(t_cmd_info *cmd_info, t_env *env)
 {
 	t_list	*aux;
 
@@ -63,7 +63,6 @@ void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 	if (((t_node *)aux->content)->types > 1
 		&& ((t_node *)aux->content)->types < 6)
 	{
-		/////// primer argumento redirecciones
 		aux = aux->next;
 		((t_node *)aux->content)->types = FILE_NAME;
 		ft_manageredirections(cmd_info, env);

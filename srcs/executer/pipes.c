@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:26:24 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:38:08 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	waiting_room(void)
 {
 	int	j;
-	
+
 	j = 0;
 	waitpid(-1, &j, 0);
 	waitpid(-1, &j, 0);
@@ -30,7 +30,7 @@ int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 	int		saved_stdout;
 	int		saved_stdin;
 
-	i  = 0;
+	i = 0;
 	fd = malloc(sizeof(int *) * cmd_info->no_pipes);
 	while (i < cmd_info->no_pipes)
 	{
@@ -40,7 +40,7 @@ int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 	}
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
-	i  = 0;
+	i = 0;
 	while (i <= cmd_info->no_pipes)
 	{
 		pid = fork();

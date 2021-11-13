@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:43:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/10 09:25:22 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:39:47 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info)
 	p->i++;
 }
 
-void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word, int comillas)
+void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
+			int comillas)
 {
 	t_node	*node;
 

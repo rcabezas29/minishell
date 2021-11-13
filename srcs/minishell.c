@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 15:59:58 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:34:19 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,6 @@ char	*memory_main(int argc, char **argv, t_env *env, char **envp)
 	return (prom);
 }
 
-void	print_exe(t_exe *exe)
-{
-	int	i;
-
-	i = 0;
-	while (i < 2)
-	{
-		printf("FD_IN %i\nCMD %s\nARG %s\nFD_OUT %i\n", exe[i].fd_in, exe[i].cmd, exe[i].args[0], exe[i].fd_out);
-		i++;
-	}
-}
-
 void	reset_values(t_cmd_info *cmd_info)
 {
 	ft_lstclear(&cmd_info->command_list, del);
@@ -98,7 +86,6 @@ int	main(int argc, char **argv, char **envp)
 			lexer(env, cmd_info, prompt);
 			analyze_prompt(cmd_info, env);
 			parser(cmd_info);
-			//print_exe(cmd_info->exe);
 			execute(cmd_info, env);
 		}
 		else

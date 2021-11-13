@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 14:43:06 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:38:34 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**assign_arguments_with_cmd(t_exe exe)
 	return (exeggutor);
 }
 
-int		check_builtin(char *cmd)
+int	check_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo")
 		|| !ft_strcmp(cmd, "cd")

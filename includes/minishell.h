@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:04:42 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 21:33:54 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <readline/history.h>
 # include "../libft/includes/libft.h"
 
-#define READ_END 0
-#define WRITE_END 1
+# define READ_END 0
+# define WRITE_END 1
 
 typedef enum s_type
 {
@@ -120,7 +120,8 @@ void		lexer(t_env *env, t_cmd_info *cmd_info, char *prompt);
 ** LEXER/WORDS.C
 */
 void		word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info);
-void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word, int comillas);
+void		add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
+				int comillas);
 
 /*
 ** LEXER/QUOTES.C
@@ -245,19 +246,20 @@ void		parser(t_cmd_info *cmd_info);
 /*
 ** EXECUTER/SIMPLE_COMMANDS.C
 */
-int		execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
-char	**assign_arguments_with_cmd(t_exe exe);
-int		check_builtin(char *cmd);
+int			execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
+char		**assign_arguments_with_cmd(t_exe exe);
+int			check_builtin(char *cmd);
 
 /*
 ** EXECUTER/PIPES.C
 */
-int		execute_pipes(t_cmd_info *cmd_info, t_env *env);
+int			execute_pipes(t_cmd_info *cmd_info, t_env *env);
 
 /*
 ** EXECUTER/PIPE_EXECUTION.C
 */
-void	execute_first_pipe(t_exe exe, t_env *env, int fd[]);
-void	execute_last_pipe(t_exe exe, t_env *env, int fd[]);
-void	execute_between_pipes(t_exe exe, t_env *env, int read_fd[], int write_fd[]);
+void		execute_first_pipe(t_exe exe, t_env *env, int fd[]);
+void		execute_last_pipe(t_exe exe, t_env *env, int fd[]);
+void		execute_between_pipes(t_exe exe, t_env *env, int read_fd[],
+				int write_fd[]);
 #endif
