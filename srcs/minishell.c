@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/11 10:36:48 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 15:59:58 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ void	print_exe(t_exe *exe)
 	}
 }
 
+void	reset_values(t_cmd_info *cmd_info)
+{
+	ft_lstclear(&cmd_info->command_list, del);
+	free(cmd_info->exe);
+	cmd_info->exe = NULL;
+	cmd_info->no_pipes = 0;
+	cmd_info->return_code = 0;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env			*env;
@@ -91,11 +100,11 @@ int	main(int argc, char **argv, char **envp)
 			parser(cmd_info);
 			//print_exe(cmd_info->exe);
 			execute(cmd_info, env);
-			ft_lstclear(&cmd_info->command_list, del);
 		}
 		else
 			free (prompt);
 		tcsetattr(0, TCSANOW, &old);
+		reset_values(cmd_info);
 		prompt = readline("\033[0;32mminishell - \033[0;0m");
 	}
 	return (0);

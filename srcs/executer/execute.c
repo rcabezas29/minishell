@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 09:57:59 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/13 15:54:54 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	execute(t_cmd_info *cmd_info, t_env *env)
 {
 	if (cmd_info->no_pipes == 0)
 		cmd_info->return_code =  execute_simple_commands(cmd_info, env);
-	//else
-	//	cmd_info->return_code = execute_pipes(cmd_info, env);
+	else
+		cmd_info->return_code = execute_pipes(cmd_info, env);
 	
 }
 
