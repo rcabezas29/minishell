@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 12:27:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 10:30:44 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/14 13:32:11 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,26 @@ void	execute_first_pipe(t_exe exe, t_env *env, int fd[])
 {
 	char	*path;
 	char	**exeggutor;
+	int		saved_stdin;
+	int		saved_stdout;
 
-		
-	dup2(fd[WRITE_END], STDOUT_FILENO);
-	close(fd[WRITE_END]);
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+	if (exe.fd_in)
+	{
+		dup2(exe.fd_in, STDIN_FILENO);
+		close(exe.fd_in);
+	}
+	if (exe.fd_out)
+	{
+		dup2(exe.fd_out, STDOUT_FILENO);
+		close(exe.fd_out);
+	}
+	else
+	{
+		dup2(fd[WRITE_END], STDOUT_FILENO);
+		close(fd[WRITE_END]);
+	}
 	if (check_builtin(exe.cmd))
 	{
 		execute_builtins(exe, env);
@@ -36,6 +52,21 @@ void	execute_last_pipe(t_exe exe, t_env *env, int fd[])
 	char	**exeggutor;
 	int		return_code;
 
+	if (exe.fd_out)
+	{
+		dup2(exe.fd_out, STDOUT_FILENO);
+		close(exe.fd_out);
+	}
+	if (exe.fd_in)
+	{
+		dup2(exe.fd_in, STDIN_FILENO);
+		close(exe.fd_in);
+	}
+	else
+	{
+		dup2(fd[WRITE_END], STDOUT_FILENO);
+		close(fd[WRITE_END]);
+	}
 	dup2(fd[READ_END], STDIN_FILENO);
 	close(fd[READ_END]);
 	if (check_builtin(exe.cmd))
