@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:34:19 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/14 11:23:41 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ int	main(int argc, char **argv, char **envp)
 	t_env			*env;
 	t_cmd_info		*cmd_info;
 	char			*prompt;
-	struct termios	old;
+	//struct termios	old;
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	tcgetattr(0, &old);
+	//tcgetattr(0, &old);
 	prompt = memory_main(argc, argv, env, envp);
 	while (1)
 	{
@@ -90,9 +90,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			free (prompt);
-		tcsetattr(0, TCSANOW, &old);
+		//tcsetattr(0, TCSANOW, &old);
 		reset_values(cmd_info);
-		prompt = readline("\033[0;32mminishell - \033[0;0m");
+		prompt = memory_main(argc, argv, env, envp);
 	}
 	return (0);
 }

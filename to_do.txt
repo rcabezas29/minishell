@@ -5,3 +5,6 @@ cd ...
 >>
 cd return
 exit free (necesario?)
+cd_alone (env -i minishell)
+acabar en redireccion o pipe
+$?

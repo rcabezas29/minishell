@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 14:31:34 by fballest          #+#    #+#             */
-/*   Updated: 2021/10/25 09:55:43 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:35:14 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_take_envs_free(t_env *env)
 	int		i;
 
 	i = 0;
-	free (env->pwd);
-	free (env->oldpwd);
 	while (env->envp[i])
 	{
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
