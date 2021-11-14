@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 10:39:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/21 13:33:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:21:01 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,20 +105,21 @@ char	**add_string_to_array(char **arr, char *str)
 	return (ret);
 }
 
-void	execute_export(t_cmd_info *cmd_info, t_env *env)
+int	execute_export(t_exe exe, t_env *env)
 {
-	t_list	*tmp;
+	int	i;
 
-	if (count_arguments(cmd_info->command_list) == 1)
+	if (ft_matrixlen(exe.args) == 0)
 	{
 		print_envs_export(env->envp);
-		return ;
+		return (0);
 	}
-	tmp = cmd_info->command_list->next;
-	while (tmp)
+	i = 0;
+	while (exe.args[i])
 	{
 		env->envp = add_string_to_array(env->envp,
-				((t_node *)tmp->content)->prompts);
-		tmp = tmp->next;
+				exe.args[i]);
+		i++;
 	}
+	return (0);
 }

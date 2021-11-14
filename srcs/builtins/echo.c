@@ -6,64 +6,64 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:34:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/21 18:47:09 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:08:37 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	print_after_know_flag(int n, t_list *tmp)
+void	print_after_know_flag(int n, t_exe exe)
 {
+	int	i;
+
 	if (n == 1)
 	{
-		while (tmp && ((t_node *)tmp->content)->types == 0)
+		i = 0;
+		while (exe.args[i])
 		{
-			printf("%s", ((t_node *)tmp->content)->prompts);
-			if (tmp->next)
+			printf("%s", exe.args[i]);
+			if (exe.args[i + 1])
 				printf(" ");
-			tmp = tmp->next;
+			i++;
 		}
 	}
 	else
 	{
-		while (tmp && ((t_node *)tmp->content)->types == 0)
+		i = 0;
+		while (exe.args[i])
 		{
-			printf("%s ", ((t_node *)tmp->content)->prompts);
-			tmp = tmp->next;
+			printf("%s ", exe.args[i]);
+			i++;
 		}
 		printf("\n");
 	}
 }
 
-int	flag_to_one(t_list **tmp)
+int	execute_echo(t_exe exe)
 {
-	*tmp = (*tmp)->next;
-	return (1);
-}
-
-void	execute_echo(t_cmd_info *cmd_info)
-{
-	t_list	*tmp;
 	int		i;
+	int		j;
 	int		n;
 
-	if (!cmd_info->command_list->next)
+	if (!exe.args)
 	{
 		printf("\n");
-		return ;
+		return (0);
 	}
-	tmp = cmd_info->command_list->next;
 	n = 0;
-	while (tmp && !ft_strncmp(((t_node *)tmp->content)->prompts, "-n", 2))
+	i = 0;
+	while (exe.args[i] && !ft_strncmp(exe.args[i], "-n", 2))
 	{
-		i = 1;
-		while (((t_node *)tmp->content)->prompts[i + 1]
-			&& ((t_node *)tmp->content)->prompts[i + 1] == 'n')
-			i++;
-		if (((t_node *)tmp->content)->prompts[i + 1])
+		j = 1;
+		while (exe.args[i][j + 1]
+			&& (exe.args[i][j + 1] == 'n'))
+			j++;
+		if (exe.args[i][j + 1])
 			break ;
 		else
-			n = flag_to_one(&tmp);
+			n = 1;
+		i++;
 	}
-	print_after_know_flag(n, tmp);
+	print_after_know_flag(n, exe);
+	return (0);
 }

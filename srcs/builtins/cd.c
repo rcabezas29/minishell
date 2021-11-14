@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/25 10:09:50 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:18:48 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	cd_alone(t_env *env)
 	free(tmp);
 }
 
-void	cd_guion(t_env *env, t_cmd_info *cmd_info)
+int	cd_guion(t_env *env)
 {
 	char	*tmp;
 
@@ -31,8 +31,7 @@ void	cd_guion(t_env *env, t_cmd_info *cmd_info)
 	if (!env->oldpwd)
 	{
 		printf("cd: OLDPWD not set\n");
-		cmd_info->return_code = 1;
-		return ;
+		return (1);
 	}
 	else
 	{
@@ -42,46 +41,41 @@ void	cd_guion(t_env *env, t_cmd_info *cmd_info)
 		free (tmp);
 		chdir(env->pwd);
 		printf("%s\n", env->pwd);
+		return (0);
 	}
 }
 
-void	cd_path(t_env *env, t_list *aux, t_cmd_info *cmd_info)
+int	cd_path(t_env *env, t_exe exe)
 {
 	char	tmp[FILENAME_MAX];
 
-	if (open(((t_node *)aux->content)->prompts, O_RDONLY) < 0)
+	if (open(exe.args[0], O_RDONLY) < 0)
 	{
-		printf("minishell: cd: %s: No such file or directory\n",
-			((t_node *)aux->content)->prompts);
-		cmd_info->return_code = 1;
-		return ;
+		printf("minishell: cd: %s: No such file or directory\n", exe.args[0]);
+		return (1);
 	}
 	env->oldpwd = ft_strdup(env->pwd);
-	chdir((char *)((t_node *)aux->content)->prompts);
+	chdir(exe.args[0]);
 	getcwd(tmp, FILENAME_MAX);
 	env->pwd = ft_strdup(tmp);
+	return (0);
 }
 
-void	execute_cd(t_cmd_info *cmd_info, t_env *env)
+int		execute_cd(t_exe exe, t_env *env)
 {
-	t_list	*aux;
 	int		nargs;
-	char	*tmp;	
 
-	aux = cmd_info->command_list;
-	nargs = count_arguments(aux);
-	tmp = NULL;
+	nargs = ft_matrixlen(exe.args);
 	getcwd(env->pwd, FILENAME_MAX);
-	if (nargs > 1)
-		aux = aux->next;
-	if (nargs == 1 || (nargs > 1
-			&& ft_strncmp(((t_node *)aux->content)->prompts, "~", 2) == 0))
+	if (nargs == 0 || (nargs > 0
+			&& ft_strncmp(exe.args[0], "~", 2) == 0))
 		cd_alone(env);
 	else if (nargs > 1
-		&& ft_strncmp(((t_node *)aux->content)->prompts, "-", 2) == 0)
-		cd_guion(env, cmd_info);
+		&& ft_strncmp(exe.args[0], "-", 2) == 0)
+		return (cd_guion(env));
 	else
-		cd_path(env, aux, cmd_info);
+		cd_path(env, exe);
 	env->envp = ft_change_env(env);
 	ft_take_envs_free(env);
+	return (0);
 }

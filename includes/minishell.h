@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:33:54 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:23:01 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,16 +155,16 @@ char		*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env);
 ** EXECUTER/EXECUTE2.C
 */
 char		*cmd_path(t_env *env, char *cmd);
-void		execute_builtins(t_cmd_info *cmd_info, t_env *env);
+int			execute_builtins(t_exe exe, t_env *env);
 void		analyze_prompt(t_cmd_info *cmd_info, t_env *env);
 
 /*
 ** BUILTINS/CD.C
 */
 void		cd_alone(t_env *env);
-void		cd_guion(t_env *env, t_cmd_info *cmd_info);
-void		cd_path(t_env *env, t_list *aux, t_cmd_info *cmd_info);
-void		execute_cd(t_cmd_info *cmd_info, t_env *env);
+int			cd_guion(t_env *env);
+int			cd_path(t_env *env, t_exe exe);
+int			execute_cd(t_exe exe, t_env *env);
 
 /*
 ** BUILTINS/CD_2.C
@@ -175,23 +175,22 @@ char		**ft_change_env(t_env *env);
 /*
 ** BUILTINS/ECHO.C
 */
-void		print_after_know_flag(int n, t_list *tmp);
+void		print_after_know_flag(int n, t_exe exe);
 int			flag_to_one(t_list **tmp);
-void		execute_echo(t_cmd_info *cmd_info);
+int			execute_echo(t_exe exe);
 
 /*
 ** BUILTINS/ENV.C
 */
-void		execute_env(t_cmd_info *cmd_info, t_env *env);
+int			execute_env(t_exe exe, t_env *env);
 
 /*
 ** BUILTINS/EXIT.C
 */
 int			alpha_in_string(char *str);
-void		ft_cleanmemory(t_cmd_info *cmd_info, t_env *env);
-void		alpha_exit(t_cmd_info *cmd_info, t_env *env, char *alpha);
-void		normal_exit(t_cmd_info *cmd_info, t_env *env, char *n);
-void		execute_exit(t_cmd_info *cmd_info, t_env *env);
+void		alpha_exit(char *alpha);
+void		normal_exit(char *n);
+int			execute_exit(t_exe exe);
 
 /*
 ** BUILTINS/EXPORT.C
@@ -201,12 +200,12 @@ void		execute_exit(t_cmd_info *cmd_info, t_env *env);
 char		**order_envs(char **envs);
 void		print_envs_export(char **envs);
 char		**add_string_to_array(char **arr, char *str);
-void		execute_export(t_cmd_info *cmd_info, t_env *env);
+int			execute_export(t_exe exe, t_env *env);
 
 /*
 ** BUILTINS/PWD.C
 */
-void		execute_pwd(void);
+int			execute_pwd(void);
 
 /*
 ** BUILTINS/UNSET.C
@@ -216,7 +215,7 @@ void		execute_pwd(void);
 ** static char	**save_envs(t_list	*list);
 ** static int	check_env(char *env, char **list);
 */
-void		execute_unset(t_cmd_info *cmd_info, t_env *env);
+int			execute_unset(t_exe exe, t_env *env);
 
 /*
 ** SIGNAL/SIGNAL.C

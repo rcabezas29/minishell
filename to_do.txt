@@ -3,3 +3,5 @@ x>y
 echo $"$'$PWD'"
 cd ...
 >>
+cd return
+exit free (necesario?)

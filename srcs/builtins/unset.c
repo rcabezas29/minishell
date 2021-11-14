@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/29 20:25:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/14 10:09:24 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*check_nums_in_unset(t_list *list)
+static char	*check_nums_in_unset(char **args)
 {
-	t_list	*aux;
+	int	i;
 
-	aux = list;
-	if (aux->next)
-		aux = aux->next;
-	while (aux)
+	i = 0;
+	while (args[i])
 	{
-		if (ft_isdigit(((t_node *)aux->content)->prompts[0]))
-			return (((t_node *)aux->content)->prompts);
-		aux = aux->next;
+		if (ft_isdigit(args[i][0]))
+			return (args[i]);
+		i++;
 	}
 	return (NULL);
 }
@@ -56,18 +54,17 @@ static char	**remove_env(t_env *env, char *erased)
 	return (newenv);
 }
 
-static char	**save_envs(t_list	*list)
+static char	**save_envs(char **args)
 {
 	char	**ret;
 	int		i;
 
-	i = count_arguments(list);
-	ret = (char **)malloc(sizeof(char *) * (i + 1));
+	i = ft_matrixlen(args);
+	ret = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (list)
+	while (args[i])
 	{
-		ret[i] = ft_strdup(((t_node *)list->content)->prompts);
-		list = list->next;
+		ret[i] = ft_strdup(args[i]);
 		i++;
 	}
 	ret[i] = NULL;
@@ -88,23 +85,20 @@ static int	check_env(char *env, char **list)
 	return (0);
 }
 
-void	execute_unset(t_cmd_info *cmd_info, t_env *env)
+int	execute_unset(t_exe exe, t_env *env)
 {
 	int		i;
 	char	**variables;
-	t_list	*tmp;
 	char	*error;
 
 	i = 0;
-	tmp = cmd_info->command_list;
-	error = check_nums_in_unset(tmp);
+	error = check_nums_in_unset(exe.args);
 	if (error)
 	{
 		printf("`%s\': not a valid identifier\n", error);
-		cmd_info->return_code = 1;
-		return ;
+		return (1);
 	}
-	variables = save_envs(tmp);
+	variables = save_envs(exe.args);
 	while (variables[i + 1])
 	{
 		if (check_env(variables[i + 1], env->envp))
@@ -114,4 +108,5 @@ void	execute_unset(t_cmd_info *cmd_info, t_env *env)
 		i++;
 	}
 	ft_freematrix(variables);
+	return (0);
 }
