@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 15:18:56 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:28:24 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			lexer(env, cmd_info, prompt);
 			analyze_prompt(cmd_info, env);
-			print_list(cmd_info);
 			parser(cmd_info);
 			execute(cmd_info, env);
 		}

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/15 15:20:53 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:32:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,10 @@ int	ft_append(char *filename, t_cmd_info *cmd_info)
 	int		fd;
 
 	fd = 0;
-	fd = open(filename, O_RDWR | O_CREAT, S_IRWXU | O_APPEND);
+	if (!access(filename, W_OK))
+		fd = open(filename, O_RDWR | O_APPEND);
+	else
+		fd = open(filename, O_RDWR | O_CREAT, S_IRWXU);
 	if (fd < 0)
 	{
 		printf("minishel: %s: ´%c'\n", "syntax error near unexpected token",
@@ -127,7 +130,7 @@ int	ft_indirection(char *filename, t_cmd_info *cmd_info)
 
 	fd = 0;
 	if (!access(filename, R_OK))
-		fd = open(filename, S_IRUSR);
+		fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
 		printf("%s:%s\n", filename, "No such file or directory");
@@ -141,7 +144,9 @@ int	ft_redirection(char *filename, t_cmd_info *cmd_info)
 	int		fd;
 
 	fd = 0;
-	fd = open(filename, O_RDWR | O_CREAT, S_IRWXU | O_TRUNC);
+	if (!access(filename, R_OK))
+		unlink(filename);
+	fd = open(filename, O_RDWR | O_CREAT, S_IRWXU);
 	if (fd < 0)
 	{
 		printf("minishel: %s: %c\n", "syntax error near unexpected token",
@@ -157,7 +162,7 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 	t_list	*tmp;
 
 	tmp = cmd_info->command_list;
-	while (tmp) //solo tmp para gestionar todas
+	while (tmp)
 	{
 		if (((t_node *)tmp->content)->types == 2)
 		{
