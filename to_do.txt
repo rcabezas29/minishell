@@ -1,12 +1,9 @@
-echo "$"
 x>y
-echo $"$'$PWD'"
-cd ...
->>
 cd return
 exit free (necesario?)
 cd_alone (env -i minishell)
 acabar en redireccion o pipe
-$?
 redirecciones en el comando intermedio de pipes
-analyze_prompt
+eliminar variables de entorno
+lstat para ejecutar
+redirecciones a directorios

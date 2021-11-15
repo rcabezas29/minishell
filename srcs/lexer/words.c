@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:43:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:39:47 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:15:19 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
 
 	node = ft_calloc(sizeof(t_node), 1);
 	node->prompts = ft_strdup(word);
-	if (!ft_strncmp(word, "<<", 2))
+	if (!ft_strncmp(word, "<<", 2) && !comillas)
 		node->types = HERE_DOC;
-	else if (!ft_strncmp(word, ">>", 2))
+	else if (!ft_strncmp(word, ">>", 2) && !comillas)
 		node->types = APPEND;
-	else if (!ft_strncmp(word, "<", 1))
+	else if (!ft_strncmp(word, "<", 1) && !comillas)
 		node->types = INDIRECTION;
-	else if (!ft_strncmp(word, ">", 1))
+	else if (!ft_strncmp(word, ">", 1) && !comillas)
 		node->types = REDIRECTION;
-	else if (!ft_strncmp(word, "|", 1))
+	else if (!ft_strncmp(word, "|", 1) && !comillas)
 	{
 		node->types = PIPE;
 		cmd_info->no_pipes++;

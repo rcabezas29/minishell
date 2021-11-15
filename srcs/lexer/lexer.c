@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/11 10:33:38 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 14:49:04 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	set_next_char(t_parser *p, int *j)
 	p->word[*j] = p->prompt[p->i];
 	(*j)++;
 	p->word[*j] = '\0';
-	p->i++;
+	if (p->prompt[p->i])
+		p->i++;
 }
 
 int	check_dollar_to_print(t_parser *p)

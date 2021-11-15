@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 10:02:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/28 16:00:29 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/15 14:55:25 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ void	parse_quotes(t_env *env, t_parser *p, char c, t_cmd_info *cmd_info)
 	while (p->prompt[p->i] != c && p->prompt[p->i + 1])
 	{
 		if (p->prompt[p->i] == '$' && c == '\"')
-		{
 			expand_dollars(env, p, &j, cmd_info);
-			if (p->prompt[p->i] == '$')
-				continue ;
-		}
 		if (p->prompt[p->i] == c)
 			return ;
 		set_next_char(p, &j);

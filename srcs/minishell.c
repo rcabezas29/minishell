@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 13:40:06 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:18:56 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,30 @@ void	reset_values(t_cmd_info *cmd_info)
 	cmd_info->return_code = 0;
 }
 
+int	check_prompt(char **prompt)
+{
+	// int	s_quotes;
+	// int	d_quotes;
+	// int	i;
+	int	len;
+
+	len = ft_strlen(*prompt);
+	if ((*prompt)[len - 1] == '|' || (*prompt)[len - 1] == '>' || (*prompt)[len - 1] == '<')
+	{
+		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (0);
+	}
+	// i = 0;
+	// s_quotes = 0;
+	// d_quotes = 0;
+	// while ()
+	// {
+		
+	// }
+	// if ()
+	return (1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_env			*env;
@@ -82,9 +106,16 @@ int	main(int argc, char **argv, char **envp)
 	{
 		if (prompt[0] != '\0')
 		{
+			if (!check_prompt(&prompt))
+			{
+				free(prompt);
+				prompt = memory_main(argc, argv, env, envp);
+				continue ;
+			}
 			add_history(prompt);
 			lexer(env, cmd_info, prompt);
 			analyze_prompt(cmd_info, env);
+			print_list(cmd_info);
 			parser(cmd_info);
 			execute(cmd_info, env);
 		}

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 13:15:28 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:35:26 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 09:21:54 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env)
 	path = NULL;
 	if (open(cmd, O_RDONLY) >= 0)
 		return (cmd);
-	while (env->paths[i])
+	while (env->paths && env->paths[i])
 	{
 		tmp = ft_strjoin(env->paths[i], cmd);
 		check_path = open(tmp, O_RDONLY);

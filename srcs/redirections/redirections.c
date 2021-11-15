@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/09 18:47:09 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:20:53 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 	t_list	*tmp;
 
 	tmp = cmd_info->command_list;
-	while (tmp && ((t_node *)tmp->content)->types != 1) //solo tmp para gestionar todas
+	while (tmp) //solo tmp para gestionar todas
 	{
 		if (((t_node *)tmp->content)->types == 2)
 		{

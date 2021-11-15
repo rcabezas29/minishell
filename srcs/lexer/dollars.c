@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/22 11:11:15 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 14:33:29 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	dollar_variables(t_parser *p, t_env *env, int *j)
 	variable = malloc(sizeof(char));
 	while (ft_isalnum(p->prompt[p->i]) || p->prompt[p->i] == '_')
 	{
-		variable = ft_realloc(variable, (ft_strlen(variable) + 1));
+		variable = ft_realloc(variable, (ft_strlen(variable) + 2));
 		variable[k] = p->prompt[p->i];
 		k++;
 		variable[k] = '\0';
