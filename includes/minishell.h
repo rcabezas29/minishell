@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 12:52:42 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:27:37 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void		analyze_prompt(t_cmd_info *cmd_info, t_env *env);
 /*
 ** BUILTINS/CD.C
 */
-void		cd_alone(t_env *env);
+int			cd_alone(t_env *env);
 int			cd_guion(t_env *env);
 int			cd_path(t_env *env, t_exe exe);
 int			execute_cd(t_exe exe, t_env *env);

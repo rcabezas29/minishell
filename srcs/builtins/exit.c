@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/14 10:23:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:49:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	alpha_in_string(char *str)
 
 void	alpha_exit(char *alpha)
 {
-	printf("%s: numeric argument required", alpha);
+	printf("%s: numeric argument required\n", alpha);
 	exit(255);
 }
 

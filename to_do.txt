@@ -1,9 +1,7 @@
 x>y
 cd return
 exit free (necesario?)
-cd_alone (env -i minishell)
 acabar en redireccion o pipe
 redirecciones en el comando intermedio de pipes
 eliminar variables de entorno
 lstat para ejecutar
-redirecciones a directorios

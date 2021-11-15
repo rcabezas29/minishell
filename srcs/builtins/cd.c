@@ -6,21 +6,27 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 10:18:48 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:27:23 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	cd_alone(t_env *env)
+int	cd_alone(t_env *env)
 {
 	char	*tmp;
 
+	if (!env->home)
+	{
+		printf("minishell: cd: HOME not set\n");
+		return (1);
+	}
 	tmp = ft_strdup(env->pwd);
 	env->oldpwd = ft_strdup(tmp);
 	env->pwd = ft_strdup(env->home);
 	chdir(env->pwd);
 	free(tmp);
+	return (0);
 }
 
 int	cd_guion(t_env *env)
@@ -64,18 +70,19 @@ int	cd_path(t_env *env, t_exe exe)
 int		execute_cd(t_exe exe, t_env *env)
 {
 	int		nargs;
+	int		ret;
 
 	nargs = ft_matrixlen(exe.args);
 	getcwd(env->pwd, FILENAME_MAX);
 	if (nargs == 0 || (nargs > 0
 			&& ft_strncmp(exe.args[0], "~", 2) == 0))
-		cd_alone(env);
+		ret = cd_alone(env);
 	else if (nargs > 1
 		&& ft_strncmp(exe.args[0], "-", 2) == 0)
-		return (cd_guion(env));
+		ret = cd_guion(env);
 	else
-		cd_path(env, exe);
+		ret = cd_path(env, exe);
 	env->envp = ft_change_env(env);
 	ft_take_envs_free(env);
-	return (0);
+	return (ret);
 }

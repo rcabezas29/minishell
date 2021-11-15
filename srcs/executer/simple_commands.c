@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 11:28:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 15:53:32 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 	int				saved_stdin;
 	int				saved_stdout;
 
+	if (cmd_info->exe[0].fd_in < 0 || cmd_info->exe[0].fd_out < 0)
+		return (1);
 	if (!cmd_info->exe[0].cmd)
 		return (0);
 	manage_fds(cmd_info->exe[0], &saved_stdin, &saved_stdout);

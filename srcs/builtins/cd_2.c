@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 14:31:34 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/14 10:35:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 18:40:10 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**ft_change_env(t_env *env)
 
 	ok = 0;
 	i = ft_matrixlen(env->envp);
-	tmpenv = (char **)malloc(sizeof(char *) * (i + 1));
+	tmpenv = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (env->envp[i])
 	{
