@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 19:27:37 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:06:07 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int			execute_cd(t_exe exe, t_env *env);
 ** BUILTINS/CD_2.C
 */
 void		ft_take_envs_free(t_env *env);
-char		**ft_change_env(t_env *env);
+void		ft_change_env(t_env *env);
 
 /*
 ** BUILTINS/ECHO.C

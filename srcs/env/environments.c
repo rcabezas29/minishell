@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environments.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/10/29 13:34:21 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/15 19:56:14 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ char	**add_basic_envs(char **envp)
 
 	i = 0;
 	x = find_initial_envs(envp);
-	dst = (char **)malloc(sizeof(char *) * (ft_matrixlen(envp) + x));
+	dst = malloc(sizeof(char *) * (ft_matrixlen(envp) + x));
 	while (envp[i])
 	{
 		dst[i] = ft_strdup(envp[i]);
 		dst[++i] = NULL;
 	}
 	if (!find_oldpwd(envp))
+	{
 		dst[i++] = ft_strdup("OLDPWD");
+	}
 	if (!find_pwd(envp))
 	{
 		getcwd(buff, sizeof(buff));
@@ -66,7 +68,7 @@ void	take_envs(char	**envp, t_env *env)
 
 	i = 0;
 	if (!env->envp)
-		env->envp = add_basic_envs(envp);
+		envp = add_basic_envs(envp);
 	while (envp[i])
 	{
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)

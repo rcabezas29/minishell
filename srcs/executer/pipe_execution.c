@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 12:27:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 15:57:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 08:46:42 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,27 @@ void	execute_between_pipes(t_exe exe, t_env *env, int read_fd[],
 	char	**exeggutor;
 
 	if (exe.fd_in < 0 || exe.fd_out < 0)
-		exit(1) ;
-	dup2(read_fd[READ_END], STDIN_FILENO);
-	close(read_fd[READ_END]);
-	dup2(write_fd[WRITE_END], STDOUT_FILENO);
-	close(write_fd[WRITE_END]);
+		exit(1);
+	if (exe.fd_in)
+	{
+		dup2(exe.fd_in, STDIN_FILENO);
+		close(exe.fd_in);
+	}
+	else
+	{
+		dup2(read_fd[READ_END], STDIN_FILENO);
+		close(read_fd[READ_END]);
+	}
+	if (exe.fd_out)
+	{
+		dup2(exe.fd_out, STDOUT_FILENO);
+		close(exe.fd_out);
+	}
+	else
+	{
+		dup2(write_fd[WRITE_END], STDOUT_FILENO);
+		close(write_fd[WRITE_END]);
+	}
 	if (check_builtin(exe.cmd))
 	{
 		execute_builtins(exe, env);

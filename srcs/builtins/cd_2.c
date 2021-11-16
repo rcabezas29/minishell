@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 14:31:34 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/15 18:40:10 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:06:21 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_take_envs_free(t_env *env)
 	}
 }
 
-char	**ft_change_env(t_env *env)
+void	ft_change_env(t_env *env)
 {
 	int		i;
 	int		ok;
@@ -48,6 +48,6 @@ char	**ft_change_env(t_env *env)
 		i++;
 	}
 	tmpenv[i] = NULL;
+	env->envp = ft_matrixdup(tmpenv);
 	ft_freematrix(env->envp);
-	return (tmpenv);
 }

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 19:27:23 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/15 20:12:08 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,12 @@ int		execute_cd(t_exe exe, t_env *env)
 {
 	int		nargs;
 	int		ret;
+	char	*tmp;
 
+	tmp = NULL;
 	nargs = ft_matrixlen(exe.args);
-	getcwd(env->pwd, FILENAME_MAX);
+	getcwd(tmp, FILENAME_MAX);
+	env->pwd = ft_strdup(tmp);
 	if (nargs == 0 || (nargs > 0
 			&& ft_strncmp(exe.args[0], "~", 2) == 0))
 		ret = cd_alone(env);
@@ -82,7 +85,7 @@ int		execute_cd(t_exe exe, t_env *env)
 		ret = cd_guion(env);
 	else
 		ret = cd_path(env, exe);
-	env->envp = ft_change_env(env);
+	ft_change_env(env);
 	ft_take_envs_free(env);
 	return (ret);
 }
