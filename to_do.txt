@@ -1,6 +1,5 @@
 x>y
 exit free (necesario?)
 acabar en redireccion o pipe
-eliminar variables de entorno (cd)
 lstat para ejecutar
 redirecciones en errores

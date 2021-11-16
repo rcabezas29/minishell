@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 19:56:14 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 09:52:36 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	take_envs(char	**envp, t_env *env)
 	int		i;
 
 	i = 0;
-	if (!env->envp)
-		envp = add_basic_envs(envp);
+	if (!*envp)
+		env->envp = add_basic_envs(envp);
 	while (envp[i])
 	{
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
