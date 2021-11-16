@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/15 15:19:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 15:07:15 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*cmd_path(t_env *env, char *cmd)
 	if (!path)
 	{
 		tmp = ft_strjoin(cmd, ": command not found\n");
-		ft_putstr(tmp);
+		ft_putstr_fd(tmp, 2);
 		free(tmp);
 		tmp = NULL;
 		return (NULL);
@@ -59,7 +59,7 @@ void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 
 	aux = cmd_info->command_list;
 	if (((t_node *)aux->content)->types == 1)
-		perror("syntax error near unexpected token `|'\n");
+		write(2, "syntax error near unexpected token `|'\n", 40);
 	while (aux)
 	{
 		if (((t_node *)aux->content)->types > 1

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 10:09:24 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 15:06:08 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int	execute_unset(t_exe exe, t_env *env)
 	error = check_nums_in_unset(exe.args);
 	if (error)
 	{
-		printf("`%s\': not a valid identifier\n", error);
+		write(2, error, ft_strlen(error));
+		write(2, "`\': not a valid identifier\n", 28);
 		return (1);
 	}
 	variables = save_envs(exe.args);

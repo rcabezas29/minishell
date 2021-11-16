@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/16 08:55:53 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 09:58:38 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 	{
 		j = 0;
 		path = cmd_path(env, cmd_info->exe[0].cmd);
+		if (!path)
+		{
+			restore_fds(saved_stdin, saved_stdout);
+			return (cmd_info->return_code);
+		}
 		exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
 		pid = fork();
 		if (pid == 0)

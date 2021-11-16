@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/15 18:49:17 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 15:05:01 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	alpha_in_string(char *str)
 
 void	alpha_exit(char *alpha)
 {
-	printf("%s: numeric argument required\n", alpha);
+	write(2, alpha, ft_strlen(alpha));
+	write(2, ": numeric argument required\n", 29);
 	exit(255);
 }
 
@@ -52,7 +53,7 @@ int		execute_exit(t_exe exe)
 		alpha_exit(exe.args[0]);
 	if (nargs > 1)
 	{
-		printf("exit: too many arguments\n");
+		write(2, "exit: too many arguments\n", 26);
 		return (1);
 	}
 	else

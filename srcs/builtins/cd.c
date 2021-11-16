@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/16 09:41:32 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 15:01:27 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cd_alone(t_env *env)
 
 	if (!env->home)
 	{
-		printf("minishell: cd: HOME not set\n");
+		write(2, "minishell: cd: HOME not set\n", 28);
 		return (1);
 	}
 	tmp = ft_strdup(env->pwd);
@@ -36,7 +36,7 @@ int	cd_guion(t_env *env)
 	tmp = NULL;
 	if (!env->oldpwd)
 	{
-		printf("cd: OLDPWD not set\n");
+		write(2, "cd: OLDPWD not set\n", 19);
 		return (1);
 	}
 	else
@@ -57,7 +57,9 @@ int	cd_path(t_env *env, t_exe exe)
 
 	if (open(exe.args[0], O_RDONLY) < 0)
 	{
-		printf("minishell: cd: %s: No such file or directory\n", exe.args[0]);
+		write(2, "minishell: cd: ", 15);
+		write(2, exe.args[0], ft_strlen(exe.args[0]));
+		write(2, ": No such file or directory\n", 28);
 		return (1);
 	}
 	env->oldpwd = ft_strdup(env->pwd);

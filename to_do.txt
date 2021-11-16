@@ -1,5 +1,4 @@
 x>y
 exit free (necesario?)
 acabar en redireccion o pipe
-lstat para ejecutar
-redirecciones en errores
+"a""b"
