@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 15:28:24 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:36:14 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ void	del(void *node)
 	free((t_node *)node);
 }
 
-char	*memory_main(int argc, char **argv, t_env *env, char **envp)
+char	*memory_main(int argc, char **argv)
 {
 	char			*prom;
 
 	argc = 0;
 	argv = NULL;
-	take_envs(envp, env);
 	sig_init();
 	prom = readline("\033[0;32mminishell - \033[0;0m");
 	if (!prom)
@@ -69,9 +68,6 @@ void	reset_values(t_cmd_info *cmd_info)
 
 int	check_prompt(char **prompt)
 {
-	// int	s_quotes;
-	// int	d_quotes;
-	// int	i;
 	int	len;
 
 	len = ft_strlen(*prompt);
@@ -80,14 +76,6 @@ int	check_prompt(char **prompt)
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		return (0);
 	}
-	// i = 0;
-	// s_quotes = 0;
-	// d_quotes = 0;
-	// while ()
-	// {
-		
-	// }
-	// if ()
 	return (1);
 }
 
@@ -96,12 +84,11 @@ int	main(int argc, char **argv, char **envp)
 	t_env			*env;
 	t_cmd_info		*cmd_info;
 	char			*prompt;
-	//struct termios	old;
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	//tcgetattr(0, &old);
-	prompt = memory_main(argc, argv, env, envp);
+	take_envs(envp, env);
+	prompt = memory_main(argc, argv);
 	while (1)
 	{
 		if (prompt[0] != '\0')
@@ -109,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 			if (!check_prompt(&prompt))
 			{
 				free(prompt);
-				prompt = memory_main(argc, argv, env, envp);
+				prompt = memory_main(argc, argv);
 				continue ;
 			}
 			add_history(prompt);
@@ -120,9 +107,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			free (prompt);
-		//tcsetattr(0, TCSANOW, &old);
 		reset_values(cmd_info);
-		prompt = memory_main(argc, argv, env, envp);
+		prompt = memory_main(argc, argv);
 	}
 	return (0);
 }

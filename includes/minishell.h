@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 20:06:07 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:31:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_parser
 void		leaks(void);
 void		print_list(t_cmd_info *cmd_info);
 void		del(void *node);
-char		*memory_main(int argc, char **argv, t_env *env, char **envp);
+char		*memory_main(int argc, char **argv);
 int			main(int argc, char **argv, char **envp);
 
 /*
