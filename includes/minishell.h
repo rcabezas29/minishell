@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/16 19:31:16 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/17 15:48:25 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,13 @@ void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
 ** PARSER/PARSER.C
 */
 void		parser(t_cmd_info *cmd_info);
+
+/*
+** PARSER/PREPARSER.C
+*/
+char		*expand_mayorminor(char *prompt, int *i, int *j);
+int			check_end_prompt(char *prompt, t_cmd_info *cmd_info);
+char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
 
 /*
 ** EXECUTER/SIMPLE_COMMANDS.C

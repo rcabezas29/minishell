@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
+#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/11/16 18:54:32 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/11/17 15:40:14 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ REDIRECT_DIR = redirections/
 
 SRCS_LEX = lexer.c dollars.c quotes.c words.c
 
-SRCS_PARSER = parser.c
+SRCS_PARSER = parser.c preparser.c
 
 SRCS_EXEC = execute.c execute2.c simple_commands.c pipes.c pipe_execution.c
 
@@ -68,7 +68,7 @@ LIBFT = libft
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -g #3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 BLUE = \033[0;34m
 

@@ -1,6 +1,4 @@
-x>y SOLUCIONADO????
+< to_do.txt cat NO FUNCIONA
 exit free (necesario?)
-acabar en redireccion o pipe
-"a""b" SOLUCIONADO????
-bash-3.2$ echo hola>a || cat a
-echo hola>a ||| cat a SOLUCIONADO????
+bash-3.2$ echo hola>a || cat a DEBE FUNCIONAR
+echo hola>a ||| cat a DEBE DAR ERROR
