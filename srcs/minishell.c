@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/17 14:00:41 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/17 14:36:32 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char 	*expand_mayorminor(char *prompt, int *i, int *j)
 {
 	char	*tmp;
 	int		z;
+	int		y;
 
 	z = 0;
 	tmp = ft_strdup(prompt);
@@ -100,7 +101,11 @@ static char 	*expand_mayorminor(char *prompt, int *i, int *j)
 		while (z > 0)
 		{
 			if (tmp)
-				tmp = ft_realloc(tmp, (ft_strlen(tmp) + 5));
+			{
+				y = ft_strlen(tmp) + 5;
+				tmp = ft_realloc(tmp, y);
+				tmp[y - 1] = '\0';
+			}
 			else
 				tmp = ft_strdup(prompt);
 			tmp[(*j)++] = ' ';
@@ -123,8 +128,6 @@ static char 	*expand_mayorminor(char *prompt, int *i, int *j)
 			return (prompt);
 		}
 	}
-	free (prompt);
-	prompt = ft_strdup(tmp);
 	return (prompt);
 }
 
@@ -185,6 +188,7 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 		{
 			prompt = expand_mayorminor(prompt, &i, &j);
 			aux = ft_realloc(prompt, i + 1);
+			aux[i] = '\0';
 			if (!prompt)
 			{
 				cmd_info->return_code = 1;
