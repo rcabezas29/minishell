@@ -1,4 +1,7 @@
-< to_do.txt cat NO FUNCIONA
+< to_do.txt cat NO FUNCIONA SEGFAULT
 exit free (necesario?)
-bash-3.2$ echo hola>a || cat a DEBE FUNCIONAR
-echo hola>a ||| cat a DEBE DAR ERROR
+bash-3.2$ ls -la || wc -l DEBE FUNCIONAR DISTINTO DE ls -la | wc -l
+echo ls -la ||| wc -l DEBE DAR ERROR
+Eliminar leaks
+Adaptar a Norminette
+Pasar Tester
