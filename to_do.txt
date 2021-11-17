@@ -1,4 +1,6 @@
-x>y
+x>y SOLUCIONADO????
 exit free (necesario?)
 acabar en redireccion o pipe
-"a""b"
+"a""b" SOLUCIONADO????
+bash-3.2$ echo hola>a || cat a
+echo hola>a ||| cat a SOLUCIONADO????
