@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/16 15:06:08 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:43:54 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ static char	**remove_env(t_env *env, char *erased)
 	i = 0;
 	j = 0;
 	i = ft_matrixlen(env->envp);
-	newenv = (char **)malloc(sizeof(char *) * i);
+	newenv = malloc(sizeof(char *) * i);
 	i = 0;
 	while (env->envp[j])
 	{
 		if (!ft_strncmp(env->envp[j], erased, ft_strlen(erased)))
 		{
-			free (env->envp[j]);
+			free(env->envp[j]);
 			j++;
 		}
 		else
 		{
 			newenv[i++] = ft_strdup(env->envp[j++]);
-			free (env->envp[j - 1]);
+			free(env->envp[j - 1]);
 		}
 	}
 	free (env->envp);
@@ -91,7 +91,6 @@ int	execute_unset(t_exe exe, t_env *env)
 	char	**variables;
 	char	*error;
 
-	i = 0;
 	error = check_nums_in_unset(exe.args);
 	if (error)
 	{
@@ -100,12 +99,11 @@ int	execute_unset(t_exe exe, t_env *env)
 		return (1);
 	}
 	variables = save_envs(exe.args);
+	i = 0;
 	while (variables[i + 1])
 	{
 		if (check_env(variables[i + 1], env->envp))
-		{
 			env->envp = remove_env(env, variables[i + 1]);
-		}
 		i++;
 	}
 	ft_freematrix(variables);

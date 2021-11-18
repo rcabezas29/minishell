@@ -1,6 +1,4 @@
-< to_do.txt cat NO FUNCIONA SEGFAULT
 exit free (necesario?)
-bash-3.2$ ls -la || wc -l DEBE FUNCIONAR DISTINTO DE ls -la | wc -l
 echo ls -la ||| wc -l DEBE DAR ERROR
 Eliminar leaks
 Adaptar a Norminette

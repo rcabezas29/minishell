@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/17 15:42:21 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:20:18 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,23 @@ char	*memory_main(int argc, char **argv)
 	return (prom);
 }
 
+void	free_exe(t_cmd_info *cmd_info)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_info->no_pipes)
+	{
+		free(cmd_info->exe[i].cmd);
+		ft_freematrix(cmd_info->exe[i].args);
+		i++;
+	}
+}
+
 void	reset_values(t_cmd_info *cmd_info)
 {
 	ft_lstclear(&cmd_info->command_list, del);
+	free_exe(cmd_info);
 	free(cmd_info->exe);
 	cmd_info->exe = NULL;
 	cmd_info->no_pipes = 0;
