@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/17 15:42:17 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/18 09:48:40 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 	{
 		if (prompt[i] == '\'' && (d_quotes == 0 || !(d_quotes % 2)))
 		{
-			if (prompt[i + 1] != '\'')
+			if (prompt[i + 1] != '\'' || prompt[i + 1] != '\"')
 			{
 				s_quotes += 1;
 				aux[j++] = prompt[i++];
@@ -107,7 +107,7 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 		}
 		else if (prompt[i] == '\"' && (s_quotes == 0 || !(s_quotes % 2)))
 		{
-			if (prompt[i + 1] != '\"')
+			if (prompt[i + 1] != '\"' || prompt[i + 1] != '\'')
 			{
 				d_quotes += 1;
 				aux[j++] = prompt[i++];
