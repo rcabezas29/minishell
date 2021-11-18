@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/16 15:16:43 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/18 15:38:48 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,14 +181,12 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 		{
 			tmp = tmp->next;
 			ft_heredoc(((t_node *)tmp->content)->prompts, cmd_info, env);
-			break ;
 		}
 		else if (((t_node *)tmp->content)->types == 5)
 		{
 			tmp = tmp->next;
 			((t_node *)tmp->content)->fd_out
 				= ft_append(((t_node *)tmp->content)->prompts, cmd_info);
-			break ;
 		}
 		tmp = tmp->next;
 	}
