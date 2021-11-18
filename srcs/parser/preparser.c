@@ -3,60 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   preparser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/18 09:48:40 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/18 14:25:08 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+static int	expand_conditions(char *prompt, char *tmp, int **i, int **j)
+{
+	int		z;
+
+	z = 0;
+	if (prompt[(**i)] == '>' && prompt[(**i) + 1] == '>')
+		z = 2;
+	else if (prompt[(**i)] == '<' && prompt[(**i) + 1] == '<')
+		z = 2;
+	else if (prompt[(**i)] == '>')
+		z = 1;
+	else if (prompt[(**i)] == '<')
+		z = 1;
+	else
+		tmp[(**j)++] = prompt[(**i)++];
+	return (z);
+}
+
+static char	*check_tmpmemory(char *prompt, char *tmp, int *z, int *y)
+{
+	if (tmp)
+	{
+		(*y) = (ft_strlen(tmp) + (*z) + 3);
+		tmp = ft_realloc(tmp, (*y));
+		tmp[(*y) - 1] = '\0';
+	}
+	else
+		tmp = ft_strdup(prompt);
+	return (tmp);
+}
+
 char	*expand_mayorminor(char *prompt, int *i, int *j)
 {
 	char	*tmp;
-	int		z;
 	int		y;
+	int		z;
 
-	z = 0;
 	tmp = ft_strdup(prompt);
 	while (prompt[(*i)])
 	{
-		if (prompt[(*i)] == '>' && prompt[(*i) + 1] == '>')
-			z = 2;
-		else if (prompt[(*i)] == '<' && prompt[(*i) + 1] == '<')
-			z = 2;
-		else if (prompt[(*i)] == '>')
-			z = 1;
-		else if (prompt[(*i)] == '<')
-			z = 1;
-		else
-			tmp[(*j)++] = prompt[(*i)++];
+		z = expand_conditions(prompt, tmp, &i, &j);
 		while (z > 0)
 		{
-			if (tmp)
-			{
-				y = ft_strlen(tmp) + z + 2;
-				tmp = ft_realloc(tmp, y);
-				tmp[y - 1] = '\0';
-			}
-			else
-				tmp = ft_strdup(prompt);
+			tmp = check_tmpmemory(prompt, tmp, &z, &y);
 			tmp[(*j)++] = ' ';
 			while (z > 0)
 			{
-				tmp[(*j)++] = prompt[(*i)];
+				tmp[(*j)++] = prompt[(*i)++];
 				z--;
 			}
 			tmp[(*j)++] = ' ';
-			(*i)++;
-			z = (*i);
+			z = (*i)++;
 			while (prompt[z])
 				tmp[(*j)++] = prompt[z++];
 			tmp[(*j)] = '\0';
 			z = 0;
-			(*i) = (*i) + 2;
-			(*j) = (*i);
+			(*j) = (*i) + 2;
+			(*i) = (*j);
 			free (prompt);
 			return (tmp);
 		}
@@ -64,7 +77,7 @@ char	*expand_mayorminor(char *prompt, int *i, int *j)
 	return (prompt);
 }
 
-int		check_end_prompt(char *prompt, t_cmd_info *cmd_info)
+int	check_end_prompt(char *prompt, t_cmd_info *cmd_info)
 {
 	int		len;
 
@@ -97,20 +110,34 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 	{
 		if (prompt[i] == '\'' && (d_quotes == 0 || !(d_quotes % 2)))
 		{
-			if (prompt[i + 1] != '\'' || prompt[i + 1] != '\"')
+			if (prompt[i + 1] != '\'')
 			{
 				s_quotes += 1;
-				aux[j++] = prompt[i++];
+				if (prompt[i + 1] == '\"'
+					&& (s_quotes == 0 || !(s_quotes % 2)))
+				{
+					d_quotes += 1;
+					i += 2;
+				}
+				else
+					aux[j++] = prompt[i++];
 			}
 			else
 				i += 2;
 		}
 		else if (prompt[i] == '\"' && (s_quotes == 0 || !(s_quotes % 2)))
 		{
-			if (prompt[i + 1] != '\"' || prompt[i + 1] != '\'')
+			if (prompt[i + 1] != '\"')
 			{
 				d_quotes += 1;
-				aux[j++] = prompt[i++];
+				if (prompt[i + 1] == '\''
+					&& (d_quotes == 0 || !(d_quotes % 2)))
+				{
+					s_quotes += 1;
+					i += 2;
+				}
+				else
+					aux[j++] = prompt[i++];
 			}
 			else
 				i += 2;
@@ -122,7 +149,6 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 			prompt = expand_mayorminor(prompt, &i, &j);
 			free (aux);
 			aux = ft_strdup(prompt);
-			aux[i] = '\0';
 			if (!prompt)
 			{
 				cmd_info->return_code = 1;
