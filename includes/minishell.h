@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/17 15:48:25 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:45:02 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void		ft_change_env(t_env *env);
 /*
 ** BUILTINS/ECHO.C
 */
-void		print_after_know_flag(int n, t_exe exe);
+void		print_after_know_flag(int n, t_exe exe, int jump);
 int			flag_to_one(t_list **tmp);
 int			execute_echo(t_exe exe);
 

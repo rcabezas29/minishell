@@ -6,19 +6,19 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:34:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/14 10:08:37 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:44:12 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	print_after_know_flag(int n, t_exe exe)
+void	print_after_know_flag(int n, t_exe exe, int jump)
 {
 	int	i;
 
 	if (n == 1)
 	{
-		i = 0;
+		i = jump;
 		while (exe.args[i])
 		{
 			printf("%s", exe.args[i]);
@@ -64,6 +64,6 @@ int	execute_echo(t_exe exe)
 			n = 1;
 		i++;
 	}
-	print_after_know_flag(n, exe);
+	print_after_know_flag(n, exe, i);
 	return (0);
 }

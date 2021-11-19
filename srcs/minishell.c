@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/18 09:20:18 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/19 01:44:24 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	free_exe(t_cmd_info *cmd_info)
 	while (i < cmd_info->no_pipes)
 	{
 		free(cmd_info->exe[i].cmd);
-		ft_freematrix(cmd_info->exe[i].args);
+		if (cmd_info->exe[i].args)
+			ft_freematrix(cmd_info->exe[i].args);
 		i++;
 	}
 }
@@ -108,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 			execute(cmd_info, env);
 		}
 		else
-			free (prompt);
+			free(prompt);
 		reset_values(cmd_info);
 		prompt = memory_main(argc, argv);
 	}

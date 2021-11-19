@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:27:54 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/18 15:33:47 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:39:46 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	fill_exe(t_cmd_info *cmd_info)
 	t_list	*tmp;
 	int		i;
 	int		arg;
+	int		j;
 
 	tmp = cmd_info->command_list;
 	i = 0;
@@ -58,7 +59,12 @@ static void	fill_exe(t_cmd_info *cmd_info)
 				arg = 1;
 			}
 			else if (((t_node *)tmp->content)->types == ARGUMENT && arg == 1)
+			{
 				assign_arguments_from_list(tmp, cmd_info->exe, i);
+				j = 0;
+				while (j < count_arguments(tmp) - 1)
+					tmp = tmp->next;
+			}
 			else if (((t_node *)tmp->content)->types == FILE_NAME)
 				assign_fd_from_list(tmp, cmd_info->exe, i);
 			tmp = tmp->next;
