@@ -6,13 +6,13 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/19 09:39:43 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/19 17:47:33 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*fill_env(char *dollar, t_env *env)
+static char	*fill_env(char *dollar, t_env *env)
 {
 	int		i;
 	char	*tmp;
@@ -31,31 +31,71 @@ char	*fill_env(char *dollar, t_env *env)
 	return (tmp);
 }
 
+static char	*heredoc_expander(char *tmp, char *file, t_env *env)
+{
+	int		i;
+	int		j;
+	char	*str1;
+	char	*str2;
+	char	*exp_env;
 
-int	ft_heredoc_bucle(char *file, char *filename, t_cmd_info *cmd_info, int fd)
+	i = 0;
+	j = 0;
+	while (tmp[i])
+		if (tmp[i++] == '$')
+			j++;
+	while (j > 0)
+	{
+		if (j > 0)
+		{
+		str1 = ft_strtok(tmp, '$');
+		str2 = ft_strdup(ft_strchr(tmp, '$'));
+		exp_env = ft_strchr(str2, ' ');
+		exp_env = fill_env(exp_env, env);
+		free (tmp);
+		tmp = ft_strjoin(str1, exp_env);
+		free (exp_env);
+		str1 = ft_strdup(tmp);
+		free (tmp);
+		tmp = ft_strjoin(str1, str2);
+		free (str1);
+		free (str2);
+		}
+	j--;
+	}
+	return (tmp);
+}
+
+void	ft_heredoc_bucle(char *file, t_env *env, int comillas, int fd)
 {
 	char	*tmp;
+	char	*aux;
 
 	while (1)
 	{
 		tmp = readline("> ");
 		if (tmp[0] != '\0')
 		{
-			if (ft_strncmp(file, tmp, ft_strlen(tmp)))
+			if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
 			{
-			
+
 			}
-			else if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
+			else if (ft_strncmp(file, tmp, ft_strlen(file) + 1))
 			{
-			
+				if (comillas == 0)
+					aux = heredoc_expander(tmp, file, env);
+				else
+					aux = ft_strdup(tmp);
+				write (fd , aux, ft_strlen(aux));
+				write (fd ,'\n', 1);
+				free (aux);
 			}
-			else
-				return(fd);
 		}
+		free (tmp);
 	}
 }
 
-int	ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env)
+int	ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env, int comillas)
 {
 	char	*filename;
 	int		fd;
@@ -66,10 +106,12 @@ int	ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env)
 	fd = open(filename, O_RDWR | O_CREAT, S_IRWXU);
 	if (fd < 0)
 	{
-		cmd_info->return_code = (15);
+		cmd_info->return_code = errno;
+		perror("minishell: ");
 		return (0);
 	}
-	fd = ft_heredoc_bucle(file, filename, cmd_info, fd);
+	else
+		ft_heredoc_bucle(file, env, comillas, fd);
 	return (fd);
 }
 
@@ -150,7 +192,8 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 		{
 			tmp = tmp->next;
 			((t_node *)tmp->content)->fd_in
-				= ft_heredoc(((t_node *)tmp->content)->prompts, cmd_info, env);
+				= ft_heredoc(((t_node *)tmp->content)->prompts
+				, ((t_node *)tmp->content)->comillas, cmd_info, env);
 		}
 		else if (((t_node *)tmp->content)->types == 5)
 		{
