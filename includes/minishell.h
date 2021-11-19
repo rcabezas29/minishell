@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/18 23:45:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/19 09:12:47 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,7 @@ void		sig_init(void);
 ** static void	ft_heredoc_buc(char *file, int fd);
 */
 char		*fill_env(char *dollar, t_env *env);
-void		ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env);
+int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);
 int			ft_redirection(char *filename, t_cmd_info *cmd_info);
 void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
