@@ -1,5 +1,8 @@
 exit free (necesario?)
 echo ls -la ||| wc -l DEBE DAR ERROR
+echo $HOLA $HOLA $HOLA $PWD
 Eliminar leaks
 Adaptar a Norminette
 Pasar Tester
+HEREDOC
+Indirection last pipe

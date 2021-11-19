@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 12:27:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/16 08:46:42 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/19 02:34:59 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,9 @@ void	execute_last_pipe(t_exe exe, t_env *env, int fd[])
 	}
 	else
 	{
-		dup2(fd[WRITE_END], STDOUT_FILENO);
-		close(fd[WRITE_END]);
+		dup2(fd[READ_END], STDIN_FILENO);
+		close(fd[READ_END]);
 	}
-	dup2(fd[READ_END], STDIN_FILENO);
-	close(fd[READ_END]);
 	if (check_builtin(exe.cmd))
 	{
 		return_code = execute_builtins(exe, env);
