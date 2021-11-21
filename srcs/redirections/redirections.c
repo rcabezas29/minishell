@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/19 17:47:33 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/21 09:21:27 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*fill_env(char *dollar, t_env *env)
+char	*fill_env(char *dollar, t_env *env)
 {
 	int		i;
 	char	*tmp;
@@ -39,6 +39,7 @@ static char	*heredoc_expander(char *tmp, char *file, t_env *env)
 	char	*str2;
 	char	*exp_env;
 
+	file = NULL; ///////////////////////////////////////////////
 	i = 0;
 	j = 0;
 	while (tmp[i])
@@ -87,7 +88,7 @@ void	ft_heredoc_bucle(char *file, t_env *env, int comillas, int fd)
 				else
 					aux = ft_strdup(tmp);
 				write (fd , aux, ft_strlen(aux));
-				write (fd ,'\n', 1);
+				write (fd ,"\n", 1);
 				free (aux);
 			}
 		}
@@ -193,7 +194,7 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 			tmp = tmp->next;
 			((t_node *)tmp->content)->fd_in
 				= ft_heredoc(((t_node *)tmp->content)->prompts
-				, ((t_node *)tmp->content)->comillas, cmd_info, env);
+				, cmd_info, env, ((t_node *)tmp->content)->comillas);
 		}
 		else if (((t_node *)tmp->content)->types == 5)
 		{

@@ -6,11 +6,40 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/18 09:43:54 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/21 10:23:27 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static void	check_util_envs_for_unset(char *variable, t_env *env)
+{
+	if (!ft_strncmp(variable, "PWD", ft_strlen(variable)))
+	{
+		free(env->pwd);
+		env->pwd = NULL;
+	}
+	else if (!ft_strncmp(variable, "OLDPWD", ft_strlen(variable)))
+	{
+		free(env->oldpwd);
+		env->oldpwd = NULL;
+	}
+	else if (!ft_strncmp(variable, "PATH", ft_strlen(variable)))
+	{
+		ft_freematrix(env->paths);
+		env->paths = NULL;
+	}
+	else if (!ft_strncmp(variable, "HOME", ft_strlen(variable)))
+	{
+		free(env->home);
+		env->home = NULL;
+	}
+	else if (!ft_strncmp(variable, "USER", ft_strlen(variable)))
+	{
+		free(env->user);
+		env->user = NULL;
+	}
+}
 
 static char	*check_nums_in_unset(char **args)
 {
@@ -46,11 +75,14 @@ static char	**remove_env(t_env *env, char *erased)
 		}
 		else
 		{
-			newenv[i++] = ft_strdup(env->envp[j++]);
-			free(env->envp[j - 1]);
+			newenv[i] = ft_strdup(env->envp[j]);
+			free(env->envp[j]);
+			i++;
+			j++;
 		}
 	}
-	free (env->envp);
+	newenv[i] = NULL;
+	free(env->envp);
 	return (newenv);
 }
 
@@ -100,10 +132,11 @@ int	execute_unset(t_exe exe, t_env *env)
 	}
 	variables = save_envs(exe.args);
 	i = 0;
-	while (variables[i + 1])
+	while (variables[i])
 	{
-		if (check_env(variables[i + 1], env->envp))
-			env->envp = remove_env(env, variables[i + 1]);
+		check_util_envs_for_unset(variables[i], env);
+		if (check_env(variables[i], env->envp))
+			env->envp = remove_env(env, variables[i]);
 		i++;
 	}
 	ft_freematrix(variables);
