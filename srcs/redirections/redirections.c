@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/21 09:21:27 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:57:32 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,31 @@ char	*fill_env(char *dollar, t_env *env)
 
 	i = 0;
 	tmp = NULL;
-	while (env->envp[i])
+	if (ft_strcmp("", dollar))
 	{
-		if (!ft_strncmp(env->envp[i], dollar, ft_strlen(dollar)))
-			tmp = ft_strchr2(env->envp[i], '=');
-		i++;
+		while (env->envp[i])
+		{
+			if (!ft_strncmp(env->envp[i], dollar, ft_strlen(dollar)))
+				tmp = ft_strdup(ft_strchr2(env->envp[i], '='));
+			i++;
+		}
 	}
-	free (dollar);
 	if (!tmp)
-		return (NULL);
+		tmp = ft_strjoin("$", dollar);
+	free (dollar);
 	return (tmp);
 }
 
-static char	*heredoc_expander(char *tmp, char *file, t_env *env)
+static char	*heredoc_expander(char *tmp, t_env *env)
 {
 	int		i;
 	int		j;
+	int		z;
 	char	*str1;
 	char	*str2;
-	char	*exp_env;
 
-	file = NULL; ///////////////////////////////////////////////
+	str1 = ft_strdup("");
+	str2 = ft_strdup("");
 	i = 0;
 	j = 0;
 	while (tmp[i])
@@ -47,23 +51,48 @@ static char	*heredoc_expander(char *tmp, char *file, t_env *env)
 			j++;
 	while (j > 0)
 	{
-		if (j > 0)
+		i = 0;
+		while (j > 0 && tmp[i] && tmp[i] != '$')
 		{
-		str1 = ft_strtok(tmp, '$');
-		str2 = ft_strdup(ft_strchr(tmp, '$'));
-		exp_env = ft_strchr(str2, ' ');
-		exp_env = fill_env(exp_env, env);
-		free (tmp);
-		tmp = ft_strjoin(str1, exp_env);
-		free (exp_env);
-		str1 = ft_strdup(tmp);
+			str1 = ft_realloc(str1, (ft_strlen(str1) + 2));
+			str1[i] = tmp[i];
+			i++;
+			str1[i++] = '\0';
+		}
+		z = 0;
+		if (tmp[i] == '$' && (tmp[i + 1] != '\''
+				&& tmp[i + 1] != '\"' && tmp[i + 1] != ' '))
+		{
+			i++;
+			while (tmp[i] && (tmp[i] != '\'' && tmp[i] != '\"' && tmp[i] != ' '))
+			{
+				str2 = ft_realloc(str2, (ft_strlen(str2) + 2));
+				str2[z++] = tmp[i++];
+				str2[z] = '\0';
+			}
+			str2 = fill_env(str2, env);
+		}
+		else
+		{
+			while (tmp[i])
+				if ((tmp[i + 1] = '\'' && tmp[i + 1] != '\"' && tmp[i + 1] != ' '))
+					str2[z++] = tmp[i++];
+ 		}
+		z = 0;
+		while (str2[z] != '\0')
+			z++;
+		while (tmp[i])
+		{
+			str2 = ft_realloc(str2, (ft_strlen(str2) + 2));
+			str2[z++] = tmp[i++];
+			str2[z] = '\0';
+		}
 		free (tmp);
 		tmp = ft_strjoin(str1, str2);
-		free (str1);
-		free (str2);
-		}
-	j--;
+		j--;
 	}
+	free (str1);
+	free (str2);
 	return (tmp);
 }
 
@@ -78,22 +107,21 @@ void	ft_heredoc_bucle(char *file, t_env *env, int comillas, int fd)
 		if (tmp[0] != '\0')
 		{
 			if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
-			{
-
-			}
+				break ;
 			else if (ft_strncmp(file, tmp, ft_strlen(file) + 1))
 			{
 				if (comillas == 0)
-					aux = heredoc_expander(tmp, file, env);
+					aux = heredoc_expander(tmp, env);
 				else
 					aux = ft_strdup(tmp);
-				write (fd , aux, ft_strlen(aux));
-				write (fd ,"\n", 1);
+				write (1, aux, ft_strlen(aux));
+				write (1, "\n", 1);
 				free (aux);
 			}
 		}
-		free (tmp);
+		// free (tmp);
 	}
+	comillas = fd;
 }
 
 int	ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env, int comillas)
@@ -193,8 +221,8 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 		{
 			tmp = tmp->next;
 			((t_node *)tmp->content)->fd_in
-				= ft_heredoc(((t_node *)tmp->content)->prompts
-				, cmd_info, env, ((t_node *)tmp->content)->comillas);
+				= ft_heredoc(((t_node *)tmp->content)->prompts,
+					cmd_info, env, ((t_node *)tmp->content)->comillas);
 		}
 		else if (((t_node *)tmp->content)->types == 5)
 		{
