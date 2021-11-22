@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/16 19:14:39 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:46:59 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		return (1);
 	if (!cmd_info->exe[0].cmd)
 		return (0);
+	
 	manage_fds(cmd_info->exe[0], &saved_stdin, &saved_stdout);
 	if (check_builtin(cmd_info->exe[0].cmd))
 	{
@@ -92,7 +93,7 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		path = cmd_path(env, cmd_info->exe[0].cmd);
 		if (!path)
 		{
-			restore_fds(saved_stdin, saved_stdout);	
+			restore_fds(saved_stdin, saved_stdout);
 			return (cmd_info->return_code);
 		}
 		exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
@@ -101,9 +102,6 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		{
 			son_signal();
 			cmd_info->return_code = execve(path, exeggutor, env->envp);
-			ft_freematrix(exeggutor);
-			free(path);
-			exit(cmd_info->return_code);
 		}
 		else
 		{

@@ -6,16 +6,16 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/19 01:44:24 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:06:08 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	leaks(void)
+/*void	leaks(void)
 {
 	system("leaks minishell");
-}
+}*/
 
 void	print_list(t_cmd_info *cmd_info)
 {

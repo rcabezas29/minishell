@@ -6,19 +6,23 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/13 21:38:08 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/22 15:57:02 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	waiting_room(void)
+int	waiting_room(int no_pipes)
 {
+	int	i;
 	int	j;
 
-	j = 0;
-	waitpid(-1, &j, 0);
-	waitpid(-1, &j, 0);
+	i = 0;
+	while (i <= no_pipes)
+	{
+		waitpid(-1, &j, 0);
+		i++;
+	}
 	return (j);
 }
 
@@ -70,9 +74,9 @@ int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 				close(fd[i - 1][READ_END]);
 				close(fd[i][WRITE_END]);
 			}
-			i++;
-			cmd_info->return_code = waiting_room();
 		}
+		i++;
 	}
+	cmd_info->return_code = waiting_room(cmd_info->no_pipes);
 	return (cmd_info->return_code);
 }
