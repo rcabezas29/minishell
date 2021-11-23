@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/19 01:38:46 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:10:34 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	cd_path(t_env *env, t_exe exe)
 	return (0);
 }
 
-int		execute_cd(t_exe exe, t_env *env)
+int	execute_cd(t_exe exe, t_env *env)
 {
 	int		nargs;
 	int		ret;

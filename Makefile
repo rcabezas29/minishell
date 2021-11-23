@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
+#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/11/17 15:40:14 by fballest         ###   ########.fr        #
+#    Updated: 2021/11/23 10:14:00 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ SRCS_EXEC = execute.c execute2.c simple_commands.c pipes.c pipe_execution.c
 
 SRCS_ENV = environments.c find_initial_envs.c
 
-SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c cd_2.c export.c exit.c
+SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
 
 SRCS_SIG = signal.c
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_2.c                                             :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/22 14:31:34 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/19 01:34:12 by rcabezas         ###   ########.fr       */
+/*   Created: 2021/11/23 10:11:07 by rcabezas          #+#    #+#             */
+/*   Updated: 2021/11/23 10:14:50 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,35 @@ void	ft_change_env(t_env *env)
 	tmpenv[i] = NULL;
 	env->envp = ft_matrixdup(tmpenv);
 	ft_freematrix(tmpenv);
+}
+
+char	**remove_env(t_env *env, char *erased)
+{
+	int		i;
+	int		j;
+	char	**newenv;
+
+	i = 0;
+	j = 0;
+	i = ft_matrixlen(env->envp);
+	newenv = malloc(sizeof(char *) * i);
+	i = 0;
+	while (env->envp[j])
+	{
+		if (!ft_strncmp(env->envp[j], erased, ft_strlen(erased)))
+		{
+			free(env->envp[j]);
+			j++;
+		}
+		else
+		{
+			newenv[i] = ft_strdup(env->envp[j]);
+			free(env->envp[j]);
+			i++;
+			j++;
+		}
+	}
+	newenv[i] = NULL;
+	free(env->envp);
+	return (newenv);
 }

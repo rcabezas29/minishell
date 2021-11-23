@@ -6,33 +6,11 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/22 14:06:08 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:54:13 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-/*void	leaks(void)
-{
-	system("leaks minishell");
-}*/
-
-void	print_list(t_cmd_info *cmd_info)
-{
-	t_list	*tmp;
-
-	tmp = cmd_info->command_list;
-	while (tmp)
-	{
-		if (((t_node *)tmp->content))
-		{
-			printf("%s\n", ((t_node *)tmp->content)->prompts);
-			printf("%u\n", ((t_node *)tmp->content)->types);
-			printf("----------------------------------------\n");
-		}
-		tmp = tmp->next;
-	}
-}
 
 void	del(void *node)
 {
@@ -86,10 +64,12 @@ int	main(int argc, char **argv, char **envp)
 	t_env			*env;
 	t_cmd_info		*cmd_info;
 	char			*prompt;
+	struct termios	old;
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
 	take_envs(envp, env);
+	tcgetattr(0, &old);
 	prompt = memory_main(argc, argv);
 	while (1)
 	{
@@ -110,6 +90,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			free(prompt);
+		tcsetattr(0, TCSANOW, &old);
 		reset_values(cmd_info);
 		prompt = memory_main(argc, argv);
 	}

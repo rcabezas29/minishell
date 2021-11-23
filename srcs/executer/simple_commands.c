@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/23 10:03:16 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:47:12 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		return (1);
 	if (!cmd_info->exe[0].cmd)
 		return (0);
-	
 	manage_fds(cmd_info->exe[0], &saved_stdin, &saved_stdout);
 	if (check_builtin(cmd_info->exe[0].cmd))
 	{
@@ -105,6 +104,7 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		}
 		else
 		{
+			cancel_signals();
 			restore_fds(saved_stdin, saved_stdout);
 			waitpid(pid, &j, 0);
 		}

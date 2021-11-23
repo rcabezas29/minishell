@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/21 10:23:27 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:12:07 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,37 +53,6 @@ static char	*check_nums_in_unset(char **args)
 		i++;
 	}
 	return (NULL);
-}
-
-static char	**remove_env(t_env *env, char *erased)
-{
-	int		i;
-	int		j;
-	char	**newenv;
-
-	i = 0;
-	j = 0;
-	i = ft_matrixlen(env->envp);
-	newenv = malloc(sizeof(char *) * i);
-	i = 0;
-	while (env->envp[j])
-	{
-		if (!ft_strncmp(env->envp[j], erased, ft_strlen(erased)))
-		{
-			free(env->envp[j]);
-			j++;
-		}
-		else
-		{
-			newenv[i] = ft_strdup(env->envp[j]);
-			free(env->envp[j]);
-			i++;
-			j++;
-		}
-	}
-	newenv[i] = NULL;
-	free(env->envp);
-	return (newenv);
 }
 
 static char	**save_envs(char **args)

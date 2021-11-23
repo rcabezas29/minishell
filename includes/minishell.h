@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/22 13:14:57 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:49:21 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,15 @@ int			execute_pwd(void);
 */
 int			execute_unset(t_exe exe, t_env *env);
 
+
+/*
+** BUILTINS/BUILTIN_UTILS.C
+*/
+char	**remove_env(t_env *env, char *erased);
+void	ft_change_env(t_env *env);
+void	ft_take_envs_free(t_env *env);
+
+
 /*
 ** SIGNAL/SIGNAL.C
 ** Also include this static funtions:
@@ -225,6 +234,7 @@ int			execute_unset(t_exe exe, t_env *env);
 */
 void		son_signal(void);
 void		sig_init(void);
+void		cancel_signals(void);
 
 /*
 ** REDIRECTIONS/REDIRECTION.C
@@ -232,7 +242,8 @@ void		sig_init(void);
 ** static void	ft_heredoc_buc(char *file, int fd);
 */
 char		*fill_env(char *dollar, t_env *env);
-int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env, int comillas);
+int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env,
+				int comillas);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);
 int			ft_redirection(char *filename, t_cmd_info *cmd_info);
 void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);

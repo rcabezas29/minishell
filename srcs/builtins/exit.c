@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:13:53 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/16 15:05:01 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:10:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	normal_exit(char *n)
 	exit(ret);
 }
 
-int		execute_exit(t_exe exe)
+int	execute_exit(t_exe exe)
 {
 	int		nargs;
 

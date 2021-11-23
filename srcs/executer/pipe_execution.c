@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 12:27:12 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/19 02:34:59 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:16:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	execute_first_pipe(t_exe exe, t_env *env, int fd[])
 	int		saved_stdout;
 
 	if (exe.fd_in < 0 || exe.fd_out < 0)
-		exit(1) ;
+		exit(1);
 	saved_stdin = dup(STDIN_FILENO);
 	saved_stdout = dup(STDOUT_FILENO);
 	if (exe.fd_in)
@@ -55,7 +55,7 @@ void	execute_last_pipe(t_exe exe, t_env *env, int fd[])
 	int		return_code;
 
 	if (exe.fd_in < 0 || exe.fd_out < 0)
-		exit(1) ;
+		exit(1);
 	if (exe.fd_out)
 	{
 		dup2(exe.fd_out, STDOUT_FILENO);
