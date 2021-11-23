@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/22 15:46:59 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/23 10:03:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,13 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		if (pid == 0)
 		{
 			son_signal();
-			cmd_info->return_code = execve(path, exeggutor, env->envp);
+			execve(path, exeggutor, env->envp);
 		}
 		else
 		{
+			restore_fds(saved_stdin, saved_stdout);
 			waitpid(pid, &j, 0);
-			free(path);
-			path = NULL;
-			ft_freematrix(exeggutor);
 		}
-		restore_fds(saved_stdin, saved_stdout);
 		return (j % 256);
 	}
 }
