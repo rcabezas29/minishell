@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/23 14:16:57 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/24 16:19:38 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,12 @@ void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
 		else if (((t_node *)tmp->content)->types == 4)
 		{
 			tmp = tmp->next;
+			if (!ft_strlen(((t_node *)tmp->content)->prompts))
+            {
+                write (2, "minishell: Non-existing enviroment variable\n", 44);
+                cmd_info->return_code = 1;
+                continue ;
+            }
 			((t_node *)tmp->content)->fd_in
 				= ft_heredoc((char *)((t_node *)tmp->content)->prompts,
 					cmd_info, env, ((t_node *)tmp->content)->comillas);

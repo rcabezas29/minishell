@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 12:27:51 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 15:57:21 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	expand_dollar_digit(t_parser *p, int *j)
 
 void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info)
 {
-	if (!ft_isalnum(p->prompt[p->i + 1])
-		&& p->prompt[p->i + 1] != '?' && p->prompt[p->i + 1] != '_')
+	if ((!ft_isalnum(p->prompt[p->i + 1])
+		&& p->prompt[p->i + 1] != '?' && p->prompt[p->i + 1] != '_') || p->prompt[p->i + 1] == ' ')
 		return ;
 	p->i++;
 	if (p->prompt[p->i] == '?')
