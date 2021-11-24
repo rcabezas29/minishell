@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/23 18:00:39 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 11:58:28 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ int	check_builtin(char *cmd)
 	else
 		return (0);
 }
+
+// void	execute_execve_on_simple_commands()
+// {
+	
+// }
 
 int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 {

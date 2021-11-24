@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 14:49:04 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 12:26:23 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	set_next_char(t_parser *p, int *j)
 {
+	if (!p->prompt[p->i])
+		return ;
 	p->word = ft_realloc(p->word, (ft_strlen(p->word) + 2));
 	p->word[*j] = p->prompt[p->i];
 	(*j)++;
@@ -24,6 +26,8 @@ void	set_next_char(t_parser *p, int *j)
 
 int	check_dollar_to_print(t_parser *p)
 {
+	if (!p->prompt[p->i - 1] || !p->prompt[p->i])
+		return (0);
 	if (p->prompt[p->i] == '$'
 		&& (p->prompt[p->i + 1]
 			&& p->prompt[p->i + 1] != '\"'
