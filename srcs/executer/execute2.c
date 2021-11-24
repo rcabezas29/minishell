@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 12:19:36 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/24 10:27:45 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:32:32 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,4 @@ int	execute_builtins(t_exe exe, t_env *env)
 	else if (!ft_strcmp(exe.cmd, "exit"))
 		ret = execute_exit(exe);
 	return (ret);
-}
-
-void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
-{
-	t_list	*aux;
-
-	aux = cmd_info->command_list;
-	if (((t_node *)aux->content)->types == 1)
-		write(2, "syntax error near unexpected token `|'\n", 40);
-	while (aux)
-	{
-		if (((t_node *)aux->content)->types > 1
-			&& ((t_node *)aux->content)->types < 6)
-		{
-			aux = aux->next;
-			((t_node *)aux->content)->types = FILE_NAME;
-			ft_manageredirections(cmd_info, env);
-		}
-		aux = aux->next;
-	}
 }

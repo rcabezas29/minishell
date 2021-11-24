@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 13:26:39 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:31:04 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	waiting_room(int no_pipes)
 	return (j);
 }
 
-void	close_pipes(int	**fd, int saved_stdin, int saved_stdout, int i,
+void	close_pipes(int	**fd, int *saved_fds, int i,
 			t_cmd_info *cmd_info)
 {
 	if (i == 0)
@@ -34,10 +34,10 @@ void	close_pipes(int	**fd, int saved_stdin, int saved_stdout, int i,
 	else if (i == cmd_info->no_pipes)
 	{
 		close(fd[i - 1][READ_END]);
-		dup2(saved_stdin, STDIN_FILENO);
-		close(saved_stdin);
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdout);
+		dup2(saved_fds[STDIN_FILENO], STDIN_FILENO);
+		close(saved_fds[STDIN_FILENO]);
+		dup2(saved_fds[STDOUT_FILENO], STDOUT_FILENO);
+		close(saved_fds[STDOUT_FILENO]);
 	}
 	else
 	{
@@ -48,13 +48,12 @@ void	close_pipes(int	**fd, int saved_stdin, int saved_stdout, int i,
 
 void	pipe_execution(t_cmd_info *cmd_info, t_env *env, int **fd)
 {
-	int	saved_stdin;
-	int	saved_stdout;
+	int	saved_fds[2];
 	int	pid;
 	int	i;
 
-	saved_stdout = dup(STDOUT_FILENO);
-	saved_stdin = dup(STDIN_FILENO);
+	saved_fds[STDIN_FILENO] = dup(STDIN_FILENO);
+	saved_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
 	i = 0;
 	while (i <= cmd_info->no_pipes)
 	{
@@ -69,7 +68,7 @@ void	pipe_execution(t_cmd_info *cmd_info, t_env *env, int **fd)
 				execute_between_pipes(cmd_info->exe[i], env, fd[i - 1], fd[i]);
 		}
 		else
-			close_pipes(fd, saved_stdin, saved_stdout, i, cmd_info);
+			close_pipes(fd, saved_fds, i, cmd_info);
 		i++;
 	}
 }

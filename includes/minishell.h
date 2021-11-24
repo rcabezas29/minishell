@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 13:18:12 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 17:35:30 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ char		*cmd_path2(char *cmd, char *tmp, int check_path, t_env *env);
 */
 char		*cmd_path(t_env *env, char *cmd);
 int			execute_builtins(t_exe exe, t_env *env);
-void		analyze_prompt(t_cmd_info *cmd_info, t_env *env);
 
 /*
 ** BUILTINS/CD.C
@@ -265,6 +264,11 @@ void		parser(t_cmd_info *cmd_info);
 char		*expand_mayorminor(char *prompt, int *i, int *j);
 int			check_end_prompt(char *prompt, t_cmd_info *cmd_info);
 char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
+
+/*
+** PARSER/ANALYZER.C
+*/
+void		analyze_prompt(t_cmd_info *cmd_info, t_env *env);
 
 /*
 ** EXECUTER/SIMPLE_COMMANDS.C
