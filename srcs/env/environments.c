@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/19 01:32:23 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 11:02:53 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,23 @@ char	*ft_strchr2(const char *str, char c)
 	return (0);
 }
 
-char	**add_basic_envs(char **envp)
+void	getting_util_envs(char **envp, char **dst, int *i)
 {
 	char	buff[FILENAME_MAX];
+
+	if (!find_oldpwd(envp))
+		dst[(*i)++] = ft_strdup("OLDPWD");
+	if (!find_pwd(envp))
+	{
+		getcwd(buff, sizeof(buff));
+		dst[(*i)++] = ft_strjoin("PWD=", buff);
+	}
+	if (!find_shlvl(envp))
+		dst[(*i)++] = ft_strdup("SHLVL=1");
+}
+
+char	**add_basic_envs(char **envp)
+{
 	char	**dst;
 	int		i;
 	int		x;
@@ -47,17 +61,7 @@ char	**add_basic_envs(char **envp)
 		dst[i] = ft_strdup(envp[i]);
 		dst[++i] = NULL;
 	}
-	if (!find_oldpwd(envp))
-	{
-		dst[i++] = ft_strdup("OLDPWD");
-	}
-	if (!find_pwd(envp))
-	{
-		getcwd(buff, sizeof(buff));
-		dst[i++] = ft_strjoin("PWD=", buff);
-	}
-	if (!find_shlvl(envp))
-		dst[i++] = ft_strdup("SHLVL=1");
+	getting_util_envs(envp, dst, &i);
 	dst[i] = NULL;
 	return (dst);
 }

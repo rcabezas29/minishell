@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:11:07 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/23 10:14:50 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 10:56:36 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ void	ft_change_env(t_env *env)
 	ft_freematrix(tmpenv);
 }
 
+void	change_env_in_env_utils(char **newenv, t_env *env, int *i, int *j)
+{
+	newenv[(*i)] = ft_strdup(env->envp[(*j)]);
+	free(env->envp[(*j)]);
+	(*i)++;
+	(*j)++;
+}
+
 char	**remove_env(t_env *env, char *erased)
 {
 	int		i;
@@ -71,12 +79,7 @@ char	**remove_env(t_env *env, char *erased)
 			j++;
 		}
 		else
-		{
-			newenv[i] = ft_strdup(env->envp[j]);
-			free(env->envp[j]);
-			i++;
-			j++;
-		}
+			change_env_in_env_utils(newenv, env, &i, &j);
 	}
 	newenv[i] = NULL;
 	free(env->envp);

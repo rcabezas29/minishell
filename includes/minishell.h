@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/23 14:03:21 by fballest         ###   ########.fr       */
+/*   Updated: 2021/11/24 10:52:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,14 +217,12 @@ int			execute_pwd(void);
 */
 int			execute_unset(t_exe exe, t_env *env);
 
-
 /*
 ** BUILTINS/BUILTIN_UTILS.C
 */
-char	**remove_env(t_env *env, char *erased);
-void	ft_change_env(t_env *env);
-void	ft_take_envs_free(t_env *env);
-
+char		**remove_env(t_env *env, char *erased);
+void		ft_change_env(t_env *env);
+void		ft_take_envs_free(t_env *env);
 
 /*
 ** SIGNAL/SIGNAL.C
@@ -244,7 +242,8 @@ void		cancel_signals(void);
 char		*fill_env(char *dollar, t_env *env);
 int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env,
 				int comillas);
-void		ft_heredoc_bucle(const char *file, t_env *env, int comillas, int fd);
+void		ft_heredoc_bucle(const char *file, t_env *env, int comillas,
+				int fd);
 char		*heredoc_expander(const char *file, char *tmp, t_env *env);
 char		*fill_env(char *dollar, t_env *env);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);

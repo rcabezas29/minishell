@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/15 14:33:29 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 11:19:18 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	dollar_variables(t_parser *p, t_env *env, int *j)
 		variable = copy_expanded_env(env, variable, j);
 		p->word = ft_strjoin(p->word, variable);
 	}
+	else
+		p->i++;
 }
 
 void	expand_dollar_digit(t_parser *p, int *j)

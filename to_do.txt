@@ -3,4 +3,5 @@ echo $HOLA $HOLA $HOLA $PWD
 Eliminar leaks
 Adaptar a Norminette
 Pasar Tester
-HEREDOC
+$$
+<< $HOLA
