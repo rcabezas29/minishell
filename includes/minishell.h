@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 10:52:17 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:18:12 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,9 +230,13 @@ void		ft_take_envs_free(t_env *env);
 ** static void	sig_int(int sig);
 ** static void	sig_quit(int sig);
 */
-void		son_signal(void);
+void		child_signal(void);
 void		sig_init(void);
 void		cancel_signals(void);
+void		sig_int(int sig);
+void		sig_quit(int sig);
+void		not_sig_quit(int sig);
+void		not_sig_int(int sig);
 
 /*
 ** REDIRECTIONS/REDIRECTION.C
@@ -268,6 +272,11 @@ char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
 int			execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
 char		**assign_arguments_with_cmd(t_exe exe);
 int			check_builtin(char *cmd);
+
+/*
+** EXECUTER/MANAGE_FDS.C
+*/
+void		restore_fds(int saved_stdin, int saved_stdout);
 void		manage_fds(t_exe exe, int *fd_stdin, int *fd_stdout);
 
 /*

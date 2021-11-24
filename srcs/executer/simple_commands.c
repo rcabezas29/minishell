@@ -6,35 +6,11 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 11:58:28 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:16:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	restore_fds(int saved_stdin, int saved_stdout)
-{
-	dup2(saved_stdin, STDIN_FILENO);
-	close(saved_stdin);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
-}
-
-void	manage_fds(t_exe exe, int *fd_stdin, int *fd_stdout)
-{
-	*fd_stdin = dup(STDIN_FILENO);
-	*fd_stdout = dup(STDOUT_FILENO);
-	if (exe.fd_in)
-	{
-		dup2(exe.fd_in, STDIN_FILENO);
-		close(exe.fd_in);
-	}
-	if (exe.fd_out)
-	{
-		dup2(exe.fd_out, STDOUT_FILENO);
-		close(exe.fd_out);
-	}
-}
 
 char	**assign_arguments_with_cmd(t_exe exe)
 {
@@ -66,17 +42,36 @@ int	check_builtin(char *cmd)
 		return (0);
 }
 
-// void	execute_execve_on_simple_commands()
-// {
-	
-// }
+int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
+	int saved_stdin, int saved_stdout)
+{
+	char	*path;
+	int		pid;
+	int		j;
+	char	**exeggutor;
+
+	j = 0;
+	path = cmd_path(env, cmd_info->exe[0].cmd);
+	if (!path)
+	{
+		restore_fds(saved_stdin, saved_stdout);
+		return (cmd_info->return_code);
+	}
+	exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
+	child_signal();
+	pid = fork();
+	if (pid == 0)
+		execve(path, exeggutor, env->envp);
+	else
+	{
+		restore_fds(saved_stdin, saved_stdout);
+		waitpid(pid, &j, 0);
+	}
+	return (j % 256);
+}
 
 int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 {
-	char			*path;
-	int				pid;
-	char			**exeggutor;
-	int				j;
 	int				saved_stdin;
 	int				saved_stdout;
 
@@ -92,24 +87,6 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		return (cmd_info->return_code);
 	}
 	else
-	{
-		j = 0;
-		path = cmd_path(env, cmd_info->exe[0].cmd);
-		if (!path)
-		{
-			restore_fds(saved_stdin, saved_stdout);
-			return (cmd_info->return_code);
-		}
-		exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
-		son_signal();
-		pid = fork();
-		if (pid == 0)
-			execve(path, exeggutor, env->envp);
-		else
-		{
-			restore_fds(saved_stdin, saved_stdout);
-			waitpid(pid, &j, 0);
-		}
-		return (j % 256);
-	}
+		return (execute_execve_on_simple_commands(cmd_info, env,
+				saved_stdin, saved_stdout));
 }

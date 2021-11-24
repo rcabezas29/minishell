@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 11:19:45 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/24 13:26:39 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	waiting_room(int no_pipes)
 	return (j);
 }
 
-void	close_pipes(int	**fd, int saved_stdin, int saved_stdout, int i, t_cmd_info *cmd_info)
+void	close_pipes(int	**fd, int saved_stdin, int saved_stdout, int i,
+			t_cmd_info *cmd_info)
 {
 	if (i == 0)
 		close(fd[0][WRITE_END]);
@@ -45,22 +46,13 @@ void	close_pipes(int	**fd, int saved_stdin, int saved_stdout, int i, t_cmd_info 
 	}
 }
 
-int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
+void	pipe_execution(t_cmd_info *cmd_info, t_env *env, int **fd)
 {
-	int		i;
-	pid_t	pid;
-	int		**fd;
-	int		saved_stdout;
-	int		saved_stdin;
+	int	saved_stdin;
+	int	saved_stdout;
+	int	pid;
+	int	i;
 
-	i = 0;
-	fd = malloc(sizeof(int *) * cmd_info->no_pipes);
-	while (i < cmd_info->no_pipes)
-	{
-		fd[i] = malloc(sizeof(int) * 2);
-		pipe(fd[i]);
-		i++;
-	}
 	saved_stdout = dup(STDOUT_FILENO);
 	saved_stdin = dup(STDIN_FILENO);
 	i = 0;
@@ -80,6 +72,22 @@ int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 			close_pipes(fd, saved_stdin, saved_stdout, i, cmd_info);
 		i++;
 	}
+}
+
+int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
+{
+	int		i;
+	int		**fd;
+
+	fd = malloc(sizeof(int *) * cmd_info->no_pipes);
+	i = 0;
+	while (i < cmd_info->no_pipes)
+	{
+		fd[i] = malloc(sizeof(int) * 2);
+		pipe(fd[i]);
+		i++;
+	}
+	pipe_execution(cmd_info, env, fd);
 	cmd_info->return_code = waiting_room(cmd_info->no_pipes);
 	return (cmd_info->return_code);
 }
