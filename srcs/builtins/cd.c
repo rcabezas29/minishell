@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/23 10:10:34 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 10:50:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	cd_alone(t_env *env)
 	}
 	tmp = ft_strdup(env->pwd);
 	env->oldpwd = ft_strdup(tmp);
+	free(env->pwd);
 	env->pwd = ft_strdup(env->home);
 	chdir(env->pwd);
 	free(tmp);
@@ -65,6 +66,7 @@ int	cd_path(t_env *env, t_exe exe)
 	env->oldpwd = ft_strdup(env->pwd);
 	chdir(exe.args[0]);
 	getcwd(tmp, FILENAME_MAX);
+	free(env->pwd);
 	env->pwd = ft_strdup(tmp);
 	return (0);
 }

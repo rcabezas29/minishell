@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:11:07 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 10:56:36 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 10:46:25 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,15 @@ void	ft_take_envs_free(t_env *env)
 	while (env->envp[i])
 	{
 		if (ft_strncmp("PWD=", env->envp[i], 4) == 0)
+		{
+			free(env->pwd);
 			env->pwd = ft_strchr2(env->envp[i], '=');
+		}
 		if (ft_strncmp("OLDPWD=", env->envp[i], 7) == 0)
+		{
+			free(env->oldpwd);
 			env->oldpwd = ft_strchr2(env->envp[i], '=');
+		}
 		i++;
 	}
 }
@@ -48,6 +54,7 @@ void	ft_change_env(t_env *env)
 		i++;
 	}
 	tmpenv[i] = NULL;
+	ft_freematrix(env->envp);
 	env->envp = ft_matrixdup(tmpenv);
 	ft_freematrix(tmpenv);
 }
