@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 17:35:30 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 09:26:09 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,14 @@ char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
 ** PARSER/ANALYZER.C
 */
 void		analyze_prompt(t_cmd_info *cmd_info, t_env *env);
+
+/*
+** PARSER/ASSIGN_EXE.C
+*/
+void		assign_arguments_from_list(t_list *tmp, t_exe *exe, int n);
+void		assign_cmd_from_argument(t_cmd_info *cmd_info, t_list *tmp,
+				int *arg, int i);
+void		assign_fd_from_list(t_list *tmp, t_exe *exe, int n);
 
 /*
 ** EXECUTER/SIMPLE_COMMANDS.C
