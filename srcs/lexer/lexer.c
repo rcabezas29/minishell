@@ -6,11 +6,29 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 15:59:31 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 08:40:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	quotes_in_chars(t_parser *p, t_env *env, t_cmd_info *cmd_info, int *j)
+{
+	int	comillas;
+
+	comillas = 0;
+	if (p->prompt[p->i] == '\'')
+	{
+		simple_quotes_after_char(p, j);
+		comillas = 1;
+	}
+	else if (p->prompt[p->i] == '\"')
+	{
+		comillas = 2;
+		double_quotes_after_char(p, env, cmd_info, j);
+	}
+	return (comillas);
+}
 
 void	set_next_char(t_parser *p, int *j)
 {
@@ -44,16 +62,8 @@ int	parse_simple_chars(t_env *env, t_parser *p, t_cmd_info *cmd_info, int j)
 	comillas = 0;
 	while (p->prompt[p->i] != '\0' && p->prompt[p->i] != ' ')
 	{
-		if (p->prompt[p->i] == '\'')
-		{
-			simple_quotes_after_char(p, &j);
-			comillas = 1;
-		}
-		else if (p->prompt[p->i] == '\"')
-		{
-			comillas = 2;
-			double_quotes_after_char(p, env, cmd_info, &j);
-		}
+		if (p->prompt[p->i] == '\'' || p->prompt[p->i] == '\"')
+			comillas = quotes_in_chars(p, env, cmd_info, &j);
 		else
 		{
 			if (p->prompt[p->i] == '$')
@@ -62,8 +72,7 @@ int	parse_simple_chars(t_env *env, t_parser *p, t_cmd_info *cmd_info, int j)
 					expand_dollars(env, p, &j, cmd_info);
 				else
 				{
-					p->i++;
-					parse_quotes(env, p, p->prompt[p->i], cmd_info);
+					parse_quotes(env, p, p->prompt[++(p->i)], cmd_info);
 					return (comillas);
 				}
 				if (check_dollar_to_print(p))
