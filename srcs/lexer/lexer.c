@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 10:01:26 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/25 10:02:39 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 10:57:19 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	check_dollar_to_print(t_parser *p)
 		&& (p->prompt[p->i + 1]
 			&& p->prompt[p->i + 1] != '\"'
 			&& p->prompt[p->i + 1] != '\''
-			&& p->prompt[p->i + 1] != ' '))
+			&& p->prompt[p->i + 1] != ' '
+			&& p->prompt[p->i + 1] != '$'))
 		return (1);
 	return (0);
 }
