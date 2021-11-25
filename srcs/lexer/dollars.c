@@ -6,13 +6,13 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 10:42:46 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 17:41:38 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 13:10:56 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*copy_expanded_env(t_env *env, char *variable, int *j)
+char	*copy_expanded_env(t_env *env, char *variable, int *j)
 {
 	int		i;
 	char	*ret;
@@ -25,10 +25,12 @@ static char	*copy_expanded_env(t_env *env, char *variable, int *j)
 		var = ft_strtok(env->envp[i], '=');
 		if (!ft_strcmp(var, variable))
 		{
+			free(var);
 			ret = ft_strdup(&env->envp[i][ft_strlen(variable) + 1]);
 			break ;
 		}
 		i++;
+		free(var);
 	}
 	if (!ret)
 		ret = ft_strdup("");
@@ -37,7 +39,7 @@ static char	*copy_expanded_env(t_env *env, char *variable, int *j)
 	return (ret);
 }
 
-static int	check_envi(t_env *env, char *variable)
+int	check_envi(t_env *env, char *variable)
 {
 	int		i;
 	char	*var;
@@ -47,8 +49,12 @@ static int	check_envi(t_env *env, char *variable)
 	{
 		var = ft_strtok(env->envp[i], '=');
 		if (!ft_strcmp(var, variable))
+		{
+			free(var);
 			return (1);
+		}
 		i++;
+		free(var);
 	}
 	return (0);
 }
@@ -57,6 +63,7 @@ void	dollar_variables(t_parser *p, t_env *env, int *j)
 {
 	int		k;
 	char	*variable;
+	char	*aux;
 
 	k = 0;
 	variable = malloc(sizeof(char));
@@ -71,10 +78,14 @@ void	dollar_variables(t_parser *p, t_env *env, int *j)
 	if (check_envi(env, variable))
 	{
 		variable = copy_expanded_env(env, variable, j);
-		p->word = ft_strjoin(p->word, variable);
+		aux = ft_strjoin(p->word, variable);
+		free(p->word);
+		p->word = ft_strdup(aux);
+		free(aux);
 	}
 	else if (p->prompt[p->i])
 		p->i++;
+	free(variable);
 }
 
 void	expand_dollar_digit(t_parser *p, int *j)
@@ -90,6 +101,8 @@ void	expand_dollar_digit(t_parser *p, int *j)
 
 void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info)
 {
+	char	*aux;
+
 	if ((!ft_isalnum(p->prompt[p->i + 1])
 			&& p->prompt[p->i + 1] != '?' && p->prompt[p->i + 1] != '_')
 		|| p->prompt[p->i + 1] == ' ')
@@ -98,7 +111,9 @@ void	expand_dollars(t_env *env, t_parser *p, int *j, t_cmd_info *cmd_info)
 	if (p->prompt[p->i] == '?')
 	{
 		p->word = ft_itoa(cmd_info->return_code);
-		(*j) += ft_strlen(ft_itoa(cmd_info->return_code));
+		aux = ft_itoa(cmd_info->return_code);
+		(*j) += ft_strlen(aux);
+		free(aux);
 		p->i++;
 	}
 	else if (ft_isdigit(p->prompt[p->i]))
