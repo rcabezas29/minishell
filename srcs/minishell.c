@@ -6,11 +6,16 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 10:27:58 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 10:13:28 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	leaks(void)
+{
+	system("leaks minishell");
+}
 
 void	del(void *node)
 {
@@ -40,7 +45,7 @@ void	free_exe(t_cmd_info *cmd_info)
 	int	i;
 
 	i = 0;
-	while (i < cmd_info->no_pipes)
+	while (i <= cmd_info->no_pipes)
 	{
 		free(cmd_info->exe[i].cmd);
 		if (cmd_info->exe[i].args)
@@ -68,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
+	atexit(leaks);
 	take_envs(envp, env);
 	tcgetattr(0, &old);
 	prompt = memory_main(argc, argv);
