@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 17:31:04 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/11/25 13:28:42 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,12 @@ int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 	}
 	pipe_execution(cmd_info, env, fd);
 	cmd_info->return_code = waiting_room(cmd_info->no_pipes);
+	i = 0;
+	while (i < cmd_info->no_pipes)
+	{
+		free(fd[i]);
+		i++;
+	}
+	free(fd);
 	return (cmd_info->return_code);
 }
