@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 18:40:59 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:11:08 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,12 @@ int			main(int argc, char **argv, char **envp);
 char		*ft_strchr2(const char *str, char c);
 char		**add_basic_envs(char **envp);
 void		take_envs(char	**envp, t_env *env);
-void		add_slash_to_path(t_env *env);
+
+/*
+** ENV/ENV_UTILS.C
+*/
+void		change_shlvl(t_env *env);
+void		add_slash_to_path(t_env *env, char *envp);
 
 /*
 ** ENV/FIND_INITIAL_ENVS.C
@@ -133,9 +138,6 @@ void		double_quotes_after_char(t_parser *p, t_env *env,
 
 /*
 ** LEXER/DOLLAR.C
-** Also include this static funtions:
-** static char	*copy_expanded_env(t_env *env, char *variable, int *j);
-** static int	check_envi(t_env *env, char *variable);
 */
 void		dollar_variables(t_parser *p, t_env *env, int *j);
 void		expand_dollar_digit(t_parser *p, int *j);
@@ -193,8 +195,6 @@ int			execute_exit(t_exe exe);
 
 /*
 ** BUILTINS/EXPORT.C
-** Also include this static funtion:
-** static int	check_env(char *env, char **list);
 */
 char		**order_envs(char **envs);
 void		print_envs_export(char **envs);
@@ -208,11 +208,6 @@ int			execute_pwd(void);
 
 /*
 ** BUILTINS/UNSET.C
-** Also include this static funtions:
-** static char	*check_nums_in_unset(t_list *list);
-** static char	**remove_env(t_env *env, char *erased);
-** static char	**save_envs(t_list	*list);
-** static int	check_env(char *env, char **list);
 */
 int			execute_unset(t_exe exe, t_env *env);
 
@@ -225,9 +220,6 @@ void		ft_take_envs_free(t_env *env);
 
 /*
 ** SIGNAL/SIGNAL.C
-** Also include this static funtions:
-** static void	sig_int(int sig);
-** static void	sig_quit(int sig);
 */
 void		child_signal(void);
 void		sig_init(void);
@@ -239,8 +231,6 @@ void		not_sig_int(int sig);
 
 /*
 ** REDIRECTIONS/REDIRECTION.C
-** Also include this static funtions:
-** static void	ft_heredoc_buc(char *file, int fd);
 */
 char		*fill_env(char *dollar, t_env *env);
 int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env,
@@ -290,12 +280,11 @@ int			check_builtin(char *cmd);
 */
 void		restore_fds(int saved_stdin, int saved_stdout);
 void		manage_fds(t_exe exe, int *fd_stdin, int *fd_stdout);
+void		manage_read_fd(t_exe exe, int read_pipe);
+void		manage_write_fd(t_exe exe, int write_pipe[2]);
 
 /*
 ** EXECUTER/PIPES.C
 */
 int			execute_pipes(t_cmd_info *cmd_info, t_env *env);
-
-
-void		change_shlvl(t_env *env);
 #endif

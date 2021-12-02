@@ -6,11 +6,19 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 12:58:54 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:10:02 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	parent_management(int read_pipe, int write_pipe[2])
+{
+	if (read_pipe)
+		close(read_pipe);
+	if (write_pipe[WRITE_END] != STDOUT_FILENO)
+		close(write_pipe[WRITE_END]);
+}
 
 void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 {
@@ -22,27 +30,9 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (exe.fd_in)
-		{
-			dup2(exe.fd_in, STDIN_FILENO);
-			close(exe.fd_in);
-		}
-		else if (read_pipe)
-		{
-			dup2(read_pipe, STDIN_FILENO);
-			close(read_pipe);
-		}
+		manage_read_fd(exe, read_pipe);
 		close(write_pipe[READ_END]);
-		if (exe.fd_out)
-		{
-			dup2(exe.fd_out, STDOUT_FILENO);
-			close(exe.fd_out);
-		}
-		else if (write_pipe[WRITE_END] != STDOUT_FILENO)
-		{
-			dup2(write_pipe[STDOUT_FILENO], STDOUT_FILENO);
-			close(write_pipe[STDOUT_FILENO]);
-		}
+		manage_write_fd(exe, write_pipe);
 		if (check_builtin(exe.cmd))
 		{
 			execute_builtins(exe, env);
@@ -54,10 +44,7 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 	}
 	else
 	{
-		if (read_pipe)
-			close(read_pipe);
-		if (write_pipe[WRITE_END] != STDOUT_FILENO)
-			close(write_pipe[WRITE_END]);
+		parent_management(read_pipe, write_pipe);
 		cancel_signals();
 	}
 }

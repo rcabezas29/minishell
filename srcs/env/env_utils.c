@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:32:34 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 18:53:57 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 21:59:54 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	change_shlvl(t_env *env)
 {
-	int	level;
-	int	i;
+	int		level;
+	int		i;
 	char	*level_str;
 
 	i = 0;
@@ -27,18 +27,21 @@ void	change_shlvl(t_env *env)
 			level = ft_atoi(level_str);
 			level += 1;
 			free(env->envp[i]);
-			env->envp[i] = ft_strjoin("SHLVL=", ft_itoa(level));
+			level_str = ft_itoa(level);
+			env->envp[i] = ft_strjoin("SHLVL=", level_str);
+			free(level_str);
 		}
 		i++;
 	}
 }
 
-void	add_slash_to_path(t_env *env)
+void	add_slash_to_path(t_env *env, char *envp)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
+	env->paths = ft_split(ft_strchr(envp, '/'), ':');
 	while (env->paths[i])
 	{
 		tmp = ft_strjoin(env->paths[i], "/");

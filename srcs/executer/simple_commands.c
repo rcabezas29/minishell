@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 16:53:30 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 22:11:56 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,6 @@ int	execute_simple_commands(t_cmd_info *cmd_info, t_env *env)
 		return (1);
 	if (!cmd_info->exe[0].cmd)
 		return (0);
-	// if (!ft_strncmp(cmd_info->exe[0].cmd, "..", ft_strlen(cmd_info->exe[0].cmd)))
-	// {
-	// 	write(2, "minishell: ..: command not found\n", 34);
-	// 	cmd_info->return_code = 127;
-	// 	return (127);
-	// }
-	// if (!ft_strncmp(cmd_info->exe[0].cmd, ".", ft_strlen(cmd_info->exe[0].cmd)))
-	// {
-	// 	write(2, ".: usage: . filename [arguments]\n", 34);
-	// 	cmd_info->return_code = 2;
-	// 	return (2);
-	// }
-	// if (!ft_strncmp(cmd_info->exe[0].cmd, "/", ft_strlen(cmd_info->exe[0].cmd))
-	// 	|| !ft_strncmp(cmd_info->exe[0].cmd, "//", ft_strlen(cmd_info->exe[0].cmd))
-	// 	|| !ft_strncmp(cmd_info->exe[0].cmd, "./", ft_strlen(cmd_info->exe[0].cmd)))
-	// {
-	// 	write(2, "minishell: ", 12);
-	// 	write(2, cmd_info->exe[0].cmd, ft_strlen(cmd_info->exe[0].cmd));
-	// 	write(2, ": is a directory\n", 18);
-	// 	cmd_info->return_code = 2;
-	// 	return (2);
-	// }
 	manage_fds(cmd_info->exe[0], &saved_stdin, &saved_stdout);
 	if (check_builtin(cmd_info->exe[0].cmd))
 	{
