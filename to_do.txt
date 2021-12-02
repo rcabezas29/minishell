@@ -1,4 +1,5 @@
 .. . / ./ //
-SHLVL
 ./minishell
 error_code
+> (directorio)
+ctrl-D en <<

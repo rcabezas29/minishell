@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/02 13:23:09 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/12/02 18:33:03 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRCS_PARSER = parser.c preparser.c analyzer.c assign_exe.c
 
 SRCS_EXEC = execute.c execute2.c simple_commands.c pipes.c manage_fds.c
 
-SRCS_ENV = environments.c find_initial_envs.c
+SRCS_ENV = environments.c find_initial_envs.c env_utils.c
 
 SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
 

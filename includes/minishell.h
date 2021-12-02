@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 12:59:56 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:40:59 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,4 +295,7 @@ void		manage_fds(t_exe exe, int *fd_stdin, int *fd_stdout);
 ** EXECUTER/PIPES.C
 */
 int			execute_pipes(t_cmd_info *cmd_info, t_env *env);
+
+
+void		change_shlvl(t_env *env);
 #endif

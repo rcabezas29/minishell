@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 10:26:38 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/24 11:02:53 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 18:53:52 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	take_envs(char	**envp, t_env *env)
 	if (!*envp)
 		env->envp = add_basic_envs(envp);
 	else
+	{
 		env->envp = ft_matrixdup(envp);
+		change_shlvl(env);
+	}
 	while (envp[i])
 	{
 		if (ft_strncmp("PATH=", envp[i], 5) == 0)
@@ -90,22 +93,6 @@ void	take_envs(char	**envp, t_env *env)
 			env->pwd = ft_strchr2(envp[i], '=');
 		if (ft_strncmp("OLDPWD", envp[i], 7) == 0)
 			env->oldpwd = NULL;
-		i++;
-	}
-}
-
-void	add_slash_to_path(t_env *env)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (env->paths[i])
-	{
-		tmp = ft_strjoin(env->paths[i], "/");
-		free(env->paths[i]);
-		env->paths[i] = ft_strdup(tmp);
-		free(tmp);
 		i++;
 	}
 }
