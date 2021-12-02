@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 13:05:06 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 13:25:23 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ int	main(int argc, char **argv, char **envp)
 			analyze_prompt(cmd_info, env);
 			parser(cmd_info);
 			execute(cmd_info, env);
+			reset_values(cmd_info);
 		}
 		else
 			free(prompt);
 		tcsetattr(0, TCSANOW, &old);
-		reset_values(cmd_info);
 		prompt = memory_main(argc, argv);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/11/18 14:25:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/02 17:20:55 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 	aux[j] = '\0';
 	if ((d_quotes > 0 && (d_quotes % 2)) || (s_quotes > 0 && (s_quotes % 2)))
 	{
-		printf("Minishell: systax error\n");
+		printf("minishell: syntax error\n");
 		cmd_info->return_code = 3;
 		return (NULL);
 	}

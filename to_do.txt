@@ -1,1 +1,4 @@
-
+.. . / ./ //
+SHLVL
+./minishell
+error_code
