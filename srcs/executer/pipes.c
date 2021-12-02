@@ -6,11 +6,59 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/25 13:28:42 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:00:42 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
+{
+	pid_t	pid;
+	char	*path;
+	char	**exeggutor;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (exe.fd_in)
+		{
+			dup2(exe.fd_in, STDIN_FILENO);
+			close(exe.fd_in);
+		}
+		else if (read_pipe)
+		{
+			dup2(read_pipe, STDIN_FILENO);
+			close(read_pipe);
+		}
+		close(write_pipe[READ_END]);
+		if (exe.fd_out)
+		{
+			dup2(exe.fd_out, STDOUT_FILENO);
+			close(exe.fd_out);
+		}
+		else if (write_pipe[WRITE_END] != STDOUT_FILENO)
+		{
+			dup2(write_pipe[STDOUT_FILENO], STDOUT_FILENO);
+			close(write_pipe[STDOUT_FILENO]);
+		}
+		if (check_builtin(exe.cmd))
+		{
+			execute_builtins(exe, env);
+			exit(EXIT_SUCCESS);
+		}
+		path = cmd_path(env, exe.cmd);
+		exeggutor = assign_arguments_with_cmd(exe);
+		execve(path, exeggutor, env->envp);
+	}
+	else
+	{
+		if (read_pipe)
+			close(read_pipe);
+		if (write_pipe[WRITE_END] != STDOUT_FILENO)
+			close(write_pipe[WRITE_END]);
+	}
+}
 
 int	waiting_room(int no_pipes)
 {
@@ -26,74 +74,23 @@ int	waiting_room(int no_pipes)
 	return (j);
 }
 
-void	close_pipes(int	**fd, int *saved_fds, int i,
-			t_cmd_info *cmd_info)
-{
-	if (i == 0)
-		close(fd[0][WRITE_END]);
-	else if (i == cmd_info->no_pipes)
-	{
-		close(fd[i - 1][READ_END]);
-		dup2(saved_fds[STDIN_FILENO], STDIN_FILENO);
-		close(saved_fds[STDIN_FILENO]);
-		dup2(saved_fds[STDOUT_FILENO], STDOUT_FILENO);
-		close(saved_fds[STDOUT_FILENO]);
-	}
-	else
-	{
-		close(fd[i - 1][READ_END]);
-		close(fd[i][WRITE_END]);
-	}
-}
-
-void	pipe_execution(t_cmd_info *cmd_info, t_env *env, int **fd)
-{
-	int	saved_fds[2];
-	int	pid;
-	int	i;
-
-	saved_fds[STDIN_FILENO] = dup(STDIN_FILENO);
-	saved_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
-	i = 0;
-	while (i <= cmd_info->no_pipes)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			if (i == 0)
-				execute_first_pipe(cmd_info->exe[i], env, fd[i]);
-			else if (i == cmd_info->no_pipes)
-				execute_last_pipe(cmd_info->exe[i], env, fd[i - 1]);
-			else
-				execute_between_pipes(cmd_info->exe[i], env, fd[i - 1], fd[i]);
-		}
-		else
-			close_pipes(fd, saved_fds, i, cmd_info);
-		i++;
-	}
-}
-
 int	execute_pipes(t_cmd_info *cmd_info, t_env *env)
 {
-	int		i;
-	int		**fd;
+	int	i;
+	int	write_pipe[2];
+	int	read_pipe;
 
-	fd = malloc(sizeof(int *) * cmd_info->no_pipes);
 	i = 0;
-	while (i < cmd_info->no_pipes)
+	read_pipe = 0;
+	while (i <= cmd_info->no_pipes)
 	{
-		fd[i] = malloc(sizeof(int) * 2);
-		pipe(fd[i]);
+		if (i != cmd_info->no_pipes)
+			pipe(write_pipe);
+		else
+			write_pipe[WRITE_END] = STDOUT_FILENO;
+		pipe_execution(cmd_info->exe[i], read_pipe, write_pipe, env);
+		read_pipe = write_pipe[READ_END];
 		i++;
 	}
-	pipe_execution(cmd_info, env, fd);
-	cmd_info->return_code = waiting_room(cmd_info->no_pipes);
-	i = 0;
-	while (i < cmd_info->no_pipes)
-	{
-		free(fd[i]);
-		i++;
-	}
-	free(fd);
-	return (cmd_info->return_code);
+	return (waiting_room(cmd_info->no_pipes));
 }

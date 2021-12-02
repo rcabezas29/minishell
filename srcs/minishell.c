@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/25 13:16:38 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/01 18:12:44 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	atexit(leaks);
+	//atexit(leaks);
 	take_envs(envp, env);
 	tcgetattr(0, &old);
 	prompt = memory_main(argc, argv);

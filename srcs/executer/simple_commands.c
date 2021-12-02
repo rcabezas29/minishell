@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/25 10:04:52 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 09:34:32 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	**assign_arguments_with_cmd(t_exe exe)
 
 int	check_builtin(char *cmd)
 {
-	if (!ft_strcmp(cmd, "echo")
-		|| !ft_strcmp(cmd, "cd")
-		|| !ft_strcmp(cmd, "pwd")
-		|| !ft_strcmp(cmd, "env")
-		|| !ft_strcmp(cmd, "export")
-		|| !ft_strcmp(cmd, "unset")
-		|| !ft_strcmp(cmd, "exit"))
+	if (ft_strcmp(cmd, "echo") == 0
+		|| ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "pwd") == 0
+		|| ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	else
 		return (0);
@@ -60,7 +60,7 @@ int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
 	exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
 	child_signal();
 	pid = fork();
-	if (pid == 0)
+	if (pid)
 		execve(path, exeggutor, env->envp);
 	else
 	{
