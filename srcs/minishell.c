@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/01 18:12:44 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/02 12:53:50 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*memory_main(int argc, char **argv)
 
 	argc = 0;
 	argv = NULL;
-	sig_init();
 	prom = readline("\033[0;32mminishell - \033[0;0m");
 	if (!prom)
 		exit(0);
@@ -73,15 +72,15 @@ int	main(int argc, char **argv, char **envp)
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	//atexit(leaks);
+	atexit(leaks);
 	take_envs(envp, env);
 	tcgetattr(0, &old);
+	sig_init();
 	prompt = memory_main(argc, argv);
 	while (1)
 	{
 		if (prompt[0] != '\0')
 		{
-			add_history(prompt);
 			prompt = check_prompt(prompt, cmd_info);
 			if (!prompt)
 			{
