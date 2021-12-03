@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 18:08:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:10:57 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
 
 	j = 0;
 	path = cmd_path(env, cmd_info->exe[0].cmd);
+	if (opendir(path))
+	{
+		restore_fds(saved_stdin, saved_stdout);
+		write(2, "minishell: ", 12);
+		write(2, path, ft_strlen(path));
+		write(2, ": is a directory\n", 18);
+		cmd_info->return_code = 126;
+		return (cmd_info->return_code);
+	}
 	if (!path)
 	{
 		restore_fds(saved_stdin, saved_stdout);

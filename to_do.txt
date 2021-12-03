@@ -1,5 +1,6 @@
-.. . / ./ //
 ./minishell
 error_code
 > (directorio)
 signals
+> >> < << solos y sus codigos de error (258)
+

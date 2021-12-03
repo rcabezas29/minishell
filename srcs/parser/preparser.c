@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/02 17:20:55 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:13:05 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	check_end_prompt(char *prompt, t_cmd_info *cmd_info)
 	if (prompt[len - 1] == '|' || prompt[len - 1] == '>'
 		|| prompt[len - 1] == '<')
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
-		return (cmd_info->return_code = 1);
+		write(2, "minishell: syntax error near unexpected token `newline'\n", 57);
+		return (cmd_info->return_code = 258);
 	}
 	return (0);
 }

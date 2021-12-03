@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 17:58:41 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 20:18:57 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	free_exe(t_cmd_info *cmd_info)
 	i = 0;
 	while (i <= cmd_info->no_pipes)
 	{
-		free(cmd_info->exe[i].cmd);
+		if (!access(cmd_info->exe[i].cmd, X_OK))
+			free(cmd_info->exe[i].cmd);
 		if (cmd_info->exe[i].args)
 			ft_freematrix(cmd_info->exe[i].args);
 		i++;
