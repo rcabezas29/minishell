@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:43:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 13:07:31 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 09:33:02 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
 {
 	t_node	*node;
 
+	if (ft_strlen(word) == 0)
+		return ;
 	node = ft_calloc(sizeof(t_node), 1);
 	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<<", 2) && !comillas)

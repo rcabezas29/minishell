@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/02 17:27:09 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 09:35:36 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ void	ft_heredoc_bucle(const char *file, t_env *env, int comillas, int fd)
 	while (1)
 	{
 		tmp = readline("> ");
+		if (!tmp)
+			break ;
 		if (tmp[0] != '\0')
 		{
 			if (!ft_strncmp(file, tmp, ft_strlen(file) + 1))
