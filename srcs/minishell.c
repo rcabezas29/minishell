@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 09:26:56 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 17:58:41 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	reset_values(t_cmd_info *cmd_info)
 	free(cmd_info->exe);
 	cmd_info->exe = NULL;
 	cmd_info->no_pipes = 0;
-	cmd_info->return_code = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
