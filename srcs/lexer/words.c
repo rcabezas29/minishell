@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:43:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 09:33:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/03 17:11:36 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,9 @@ void	word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info)
 	p->i++;
 }
 
-void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
-			int comillas)
+void	assign_types(t_cmd_info *cmd_info, char *word, int comillas,
+	t_node *node)
 {
-	t_node	*node;
-
-	if (ft_strlen(word) == 0)
-		return ;
-	node = ft_calloc(sizeof(t_node), 1);
-	node->prompts = ft_strdup(word);
 	if (!ft_strncmp(word, "<<", 2) && !comillas)
 		node->types = HERE_DOC;
 	else if (!ft_strncmp(word, ">>", 2) && !comillas)
@@ -69,5 +63,17 @@ void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
 		if (comillas > 0)
 			node->comillas = comillas;
 	}
+}
+
+void	add_word_to_list(t_list **list, t_cmd_info *cmd_info, char *word,
+			int comillas)
+{
+	t_node	*node;
+
+	if (ft_strlen(word) == 0)
+		return ;
+	node = ft_calloc(sizeof(t_node), 1);
+	node->prompts = ft_strdup(word);
+	assign_types(cmd_info, word, comillas, node);
 	ft_lstadd_back(list, ft_lstnew(node));
 }
