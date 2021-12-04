@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
+#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/03 20:12:24 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/12/04 11:46:01 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
 
 SRCS_SIG = signal.c child_sigs.c
 
-SRCS_REDIRECT = redirections.c
+SRCS_REDIRECT = redirections.c heredoc.c heredocexpander.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 

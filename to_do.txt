@@ -3,4 +3,5 @@ error_code
 > (directorio)
 signals
 > >> < << solos y sus codigos de error (258)
+<< aa cat > b No redirige la salida a b revisar los fd para builtin solos
 

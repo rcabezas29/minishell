@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 20:04:37 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/04 13:09:22 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ typedef enum s_type
 	APPEND,
 	FILE_NAME
 }			t_type;
+
+typedef struct s_here
+{
+	int		i;
+	int		j;
+	int		z;
+	int		s_qoutes;
+	int		d_quotes;
+	int		comillas;
+	int		fd;
+	char	*str1;
+	char	*str2;
+}	t_here;
 
 typedef struct s_env
 {
@@ -233,16 +246,29 @@ void		not_sig_int(int sig);
 /*
 ** REDIRECTIONS/REDIRECTION.C
 */
-char		*fill_env(char *dollar, t_env *env);
-int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env,
-				int comillas);
-void		ft_heredoc_bucle(const char *file, t_env *env, int comillas,
-				int fd);
-char		*heredoc_expander(const char *file, char *tmp, t_env *env);
-char		*fill_env(char *dollar, t_env *env);
+int			ft_append(char *filename, t_cmd_info *cmd_info);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);
 int			ft_redirection(char *filename, t_cmd_info *cmd_info);
+void		ft_manageredirections_b(t_cmd_info *cmd_info, t_list *tmp);
 void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
+
+/*
+** REDIRECTIONS/HEREDOC.C
+*/
+char		*heredoc_expander(const char *file, char *tmp, t_env *env, t_here *h);
+char		*heredoc_bucle_disclaimer(const char *file, char *tmp, t_env *env, t_here *h);
+void		ft_heredoc_bucle_b(const char *file, char *tmp, t_env *env, t_here *h);
+void		ft_heredoc_bucle(const char *file, t_env *env, int comillas, int fd);
+int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env, int comillas);
+
+/*
+** REDIRECTIONS/HEREDOCEXPANDER.C
+*/
+char		*fill_env(char *dollar, t_env *env);
+void		heredoc_expander_init(char *tmp, t_here *h);
+void		heredoc_expander_dollar(char *tmp, t_env *env, t_here *h);
+void		heredoc_expander_finish(char *tmp, t_here *h);
+char		*heredoc_expander_free(char *tmp, t_here *h);
 
 /*
 ** PARSER/PARSER.C
