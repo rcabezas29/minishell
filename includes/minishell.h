@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/04 13:09:22 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/04 19:22:24 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ typedef struct s_here
 	char	*str1;
 	char	*str2;
 }	t_here;
+
+typedef struct s_pparse
+{
+	char	*aux;
+	int		s_quotes;
+	int		d_quotes;
+	int		i;
+	int		j;	
+}	t_pparse;
 
 typedef struct s_env
 {
@@ -271,16 +280,26 @@ void		heredoc_expander_finish(char *tmp, t_here *h);
 char		*heredoc_expander_free(char *tmp, t_here *h);
 
 /*
+** REDIRECTIONS/HEREDOCWRITE.C
+*/
+void		heredoc_writer(char *tmp, t_here *h);
+
+/*
 ** PARSER/PARSER.C
 */
 void		parser(t_cmd_info *cmd_info);
 
 /*
-** PARSER/PREPARSER.C
+** PARSER/PREPARSER.C AND TWO STATIC FUNTIONS
 */
-char		*expand_mayorminor(char *prompt, int *i, int *j);
+char		*expand_mayorminor(char *prompt, t_pparse *pp);
 int			check_end_prompt(char *prompt, t_cmd_info *cmd_info);
 char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
+
+/*
+** PARSER/PREPARSER.C AND TWO STATIC FUNTIONS
+*/
+
 
 /*
 ** PARSER/ANALYZER.C

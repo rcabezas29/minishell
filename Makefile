@@ -6,9 +6,11 @@
 #    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/04 11:46:01 by fballest         ###   ########.fr        #
+#    Updated: 2021/12/05 00:36:57 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+.DELETE_ON_ERROR:
 
 NAME = minishell
 
@@ -44,7 +46,7 @@ SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
 
 SRCS_SIG = signal.c child_sigs.c
 
-SRCS_REDIRECT = redirections.c heredoc.c heredocexpander.c
+SRCS_REDIRECT = redirections.c heredoc.c heredocexpander.c heredocwrite.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 

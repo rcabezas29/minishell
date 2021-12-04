@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/05 00:29:45 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/05 00:15:47 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*expand_mayorminor(char *prompt, t_pparse *pp)
 	int		z;
 
 	tmp = ft_strdup(prompt);
-	y = 0;
 	while (prompt[(pp->i)])
 	{
 		z = expand_conditions(prompt, tmp, pp);
@@ -92,6 +91,65 @@ int	check_end_prompt(char *prompt, t_cmd_info *cmd_info)
 	return (0);
 }
 
+void	check_simplequotes(char *prompt, t_pparse *pp)
+{
+	if (prompt[pp->i + 1] != '\'')
+	{
+		pp->s_quotes += 1;
+		if (prompt[pp->i + 1] == '\"'
+			&& (pp->s_quotes == 0 || !(pp->s_quotes % 2)))
+		{
+			pp->d_quotes += 1;
+			pp->i += 2;
+		}
+		else
+			pp->aux[pp->j++] = prompt[pp->i++];
+	}
+	else
+		pp->i += 2;
+}
+
+void	check_doublequotes(char *prompt, t_pparse *pp)
+{
+	if (prompt[pp->i + 1] != '\"')
+	{
+		pp->d_quotes += 1;
+		if (prompt[pp->i + 1] == '\''
+			&& (pp->d_quotes == 0 || !(pp->d_quotes % 2)))
+		{
+			pp->s_quotes += 1;
+			pp->i += 2;
+		}
+		else
+			pp->aux[pp->j++] = prompt[pp->i++];
+	}
+	else
+		pp->i += 2;
+}
+
+void	check_mayorminor(char *prompt, t_cmd_info *cmd_info, t_pparse *pp)
+{
+	if ((prompt[pp->i] == '>' || prompt[pp->i] == '<')
+		&& ((pp->d_quotes == 0 || (pp->d_quotes % 2) == 0)
+			&& (pp->s_quotes == 0 || (pp->s_quotes % 2) == 0)))
+	{
+		prompt = expand_mayorminor(prompt, pp);
+		free (pp->aux);
+		pp->aux = ft_strdup(prompt);
+		if (!prompt)
+		{
+			cmd_info->return_code = 1;
+			return ;
+		}
+	}
+	else
+	{
+		pp->aux[pp->j++] = prompt[pp->i++];
+		pp->aux[pp->j] = '\0';
+	}
+	return ;
+}
+
 char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 {
 	t_pparse	*pp;
@@ -103,63 +161,16 @@ char	*check_prompt(char *prompt, t_cmd_info *cmd_info)
 	while (prompt[pp->i] != '\0')
 	{
 		if (prompt[pp->i] == '\'' && (pp->d_quotes == 0 || !(pp->d_quotes % 2)))
-		{
-			if (prompt[pp->i + 1] != '\'')
-			{
-				pp->s_quotes += 1;
-				if (prompt[pp->i + 1] == '\"'
-					&& (pp->s_quotes == 0 || !(pp->s_quotes % 2)))
-				{
-					pp->d_quotes += 1;
-					pp->i += 2;
-				}
-				else
-					pp->aux[pp->j++] = prompt[pp->i++];
-			}
-			else
-				pp->i += 2;
-		}
+			check_simplequotes(prompt, pp);
 		else if (prompt[pp->i] == '\"' && (pp->s_quotes == 0 || !(pp->s_quotes % 2)))
-		{
-			if (prompt[pp->i + 1] != '\"')
-			{
-				pp->d_quotes += 1;
-				if (prompt[pp->i + 1] == '\''
-					&& (pp->d_quotes == 0 || !(pp->d_quotes % 2)))
-				{
-					pp->s_quotes += 1;
-					pp->i += 2;
-				}
-				else
-					pp->aux[pp->j++] = prompt[pp->i++];
-			}
-			else
-				pp->i += 2;
-		}
-		else if ((prompt[pp->i] == '>' || prompt[pp->i] == '<')
-			&& ((pp->d_quotes == 0 || (pp->d_quotes % 2) == 0)
-				&& (pp->s_quotes == 0 || (pp->s_quotes % 2) == 0)))
-		{
-			prompt = expand_mayorminor(prompt, pp);
-			free (pp->aux);
-			pp->aux = ft_strdup(prompt);
-			if (!prompt)
-			{
-				cmd_info->return_code = 1;
-				return (NULL);
-			}
-		}
-		else
-		{
-			pp->aux[pp->j++] = prompt[pp->i++];
-			pp->aux[pp->j] = '\0';
-		}
+			check_doublequotes(prompt, pp);
+		check_mayorminor(prompt, cmd_info, pp);
 	}
 	pp->aux[pp->j] = '\0';
 	if ((pp->d_quotes > 0 && (pp->d_quotes % 2))
 		|| (pp->s_quotes > 0 && (pp->s_quotes % 2)))
 	{
-		printf("minishell: syntax error\n");
+		write(2, "minishell: syntax error\n", 24);
 		cmd_info->return_code = 3;
 		return (NULL);
 	}
