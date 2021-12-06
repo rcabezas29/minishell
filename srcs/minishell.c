@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/06 18:12:27 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/06 21:52:03 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*prompt_main(int argc, char **argv)
 {
 	char			*prompt;
 
-	argc = 0;
-	argv = NULL;
+	(void)argc;
+	(void)argv;
 	prompt = readline("\033[0;32mminishell - \033[0;0m");
 	if (!prompt)
 		exit(0);

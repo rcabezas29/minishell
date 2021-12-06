@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:27:54 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/25 09:22:51 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/06 21:53:34 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ static void	downcase_cmds(t_cmd_info *cmd_info)
 
 void	parser(t_cmd_info *cmd_info)
 {
-	int		i;
-
-	i = 0;
 	cmd_info->exe = ft_calloc(sizeof(t_exe), cmd_info->no_pipes + 2);
 	fill_exe(cmd_info, 0);
 	downcase_cmds(cmd_info);
