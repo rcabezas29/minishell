@@ -1,7 +1,4 @@
-./minishell
-error_code
+error codes
 > (directorio)
-signals
 > >> < << solos y sus codigos de error (258)
-<< aa cat > b No redirige la salida a b revisar los fd para builtin solos
-
+<< aa cat > b No redirige la salida a b revisar los fd para builtin solos (el error esta en el <<)

@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 20:10:57 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:16:06 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	parent_cleanning(char *path, char **exeggutor,
 	free(path);
 	ft_freematrix(exeggutor);
 	restore_fds(saved_stdin, saved_stdout);
-	cancel_signals();
 }
 
 int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
@@ -58,11 +57,14 @@ int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
 	int		pid;
 	int		j;
 	char	**exeggutor;
+	DIR		*dir;
 
 	j = 0;
 	path = cmd_path(env, cmd_info->exe[0].cmd);
-	if (opendir(path))
+	dir = opendir(path);
+	if (dir)
 	{
+		closedir(dir);
 		restore_fds(saved_stdin, saved_stdout);
 		write(2, "minishell: ", 12);
 		write(2, path, ft_strlen(path));
@@ -77,12 +79,15 @@ int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
 		return (cmd_info->return_code);
 	}
 	exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
-	child_signal();
 	pid = fork();
 	if (pid == 0)
+	{
+		child_signal();
 		execve(path, exeggutor, env->envp);
+	}	
 	else
 	{
+		negligent_parent();
 		parent_cleanning(path, exeggutor, saved_stdin, saved_stdout);
 		waitpid(pid, &j, 0);
 	}

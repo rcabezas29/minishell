@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/06 11:19:54 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:21:23 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,11 +246,9 @@ void		ft_take_envs_free(t_env *env);
 */
 void		child_signal(void);
 void		sig_init(void);
-void		cancel_signals(void);
 void		sig_int(int sig);
 void		sig_quit(int sig);
-void		not_sig_quit(int sig);
-void		not_sig_int(int sig);
+void		negligent_parent(void);
 
 /*
 ** REDIRECTIONS/REDIRECTION.C
@@ -264,11 +262,16 @@ void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
 /*
 ** REDIRECTIONS/HEREDOC.C
 */
-char		*heredoc_expander(const char *file, char *tmp, t_env *env, t_here *h);
-char		*heredoc_bucle_disclaimer(const char *file, char *tmp, t_env *env, t_here *h);
-void		ft_heredoc_bucle_b(const char *file, char *tmp, t_env *env, t_here *h);
-void		ft_heredoc_bucle(const char *file, t_env *env, int comillas, int fd);
-int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env, int comillas);
+char		*heredoc_expander(const char *file, char *tmp, t_env *env,
+				t_here *h);
+char		*heredoc_bucle_disclaimer(const char *file, char *tmp, t_env *env,
+				t_here *h);
+void		ft_heredoc_bucle_b(const char *file, char *tmp, t_env *env,
+				t_here *h);
+void		ft_heredoc_bucle(const char *file, t_env *env, int comillas,
+				int fd);
+int			ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env,
+				int comillas);
 
 /*
 ** REDIRECTIONS/HEREDOCEXPANDER.C
@@ -310,7 +313,7 @@ void		check_simplequotes(char *prompt, t_pparse *pp);
 /*
 ** PARSER/PREPARSER_3.C
 */
-int	expand_conditions(char *prompt, char *tmp, t_pparse *pp);
+int			expand_conditions(char *prompt, char *tmp, t_pparse *pp);
 
 /*
 ** PARSER/ANALYZER.C

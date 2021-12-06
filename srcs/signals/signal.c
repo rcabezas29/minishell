@@ -6,11 +6,23 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 16:50:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 09:11:26 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:17:03 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	negligent_parent(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	child_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
 void	sig_int(int sig)
 {
@@ -36,10 +48,4 @@ void	sig_init(void)
 {
 	signal(SIGINT, sig_int);
 	signal(SIGQUIT, sig_quit);
-}
-
-void	cancel_signals(void)
-{
-	signal(SIGINT, not_sig_int);
-	signal(SIGQUIT, not_sig_quit);
 }
