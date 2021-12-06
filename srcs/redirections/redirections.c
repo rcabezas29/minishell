@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/04 11:49:35 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:22:52 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	ft_append(char *filename, t_cmd_info *cmd_info)
 	{
 		cmd_info->return_code = errno;
 		write(2, "minishell: ", 12);
-		write(2, &filename[0], 1);
-		write(2, ": syntax error near unexpected token", 35);
+		write(2, filename, ft_strlen(filename));
+		write(2, ": syntax error near unexpected token\n", 38);
 		return (cmd_info->return_code);
 	}
 	return (fd);
@@ -37,6 +37,13 @@ int	ft_indirection(char *filename, t_cmd_info *cmd_info)
 	int		fd;
 
 	fd = 0;
+	if (opendir(filename))
+	{
+		write(2, "minishell: ", 11);
+		write(2, filename, ft_strlen(filename));
+		write(2, " is a directory/n", 17);
+		return (cmd_info->return_code = -126);
+	}
 	if (!access(filename, R_OK))
 		fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -58,8 +65,9 @@ int	ft_redirection(char *filename, t_cmd_info *cmd_info)
 	fd = open(filename, O_RDWR | O_CREAT, S_IRWXU);
 	if (fd < 0)
 	{
-		write(2, "minishel: syntax error near unexpected token", 45);
-		write(2, &filename[0], 1);
+		write(2, "minishel: syntax error near unexpected token ", 45);
+		write(2, filename, ft_strlen(filename));
+		write(2, "\n", 1);
 		cmd_info->return_code = (-1);
 		return (cmd_info->return_code);
 	}
