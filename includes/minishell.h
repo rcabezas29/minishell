@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/04 19:22:24 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/06 11:19:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,16 +290,27 @@ void		heredoc_writer(char *tmp, t_here *h);
 void		parser(t_cmd_info *cmd_info);
 
 /*
-** PARSER/PREPARSER.C AND TWO STATIC FUNTIONS
+** PARSER/PREPARSER.C
 */
-char		*expand_mayorminor(char *prompt, t_pparse *pp);
-int			check_end_prompt(char *prompt, t_cmd_info *cmd_info);
+char		*check_finish(char *prompt, t_cmd_info *cmd_info, t_pparse *pp);
+void		check_doublequotes(char *prompt, t_pparse *pp);
+void		check_addletter(char *prompt, t_pparse *pp);
+char		*check_prompt_b(char *prompt, t_cmd_info *cmd_info, t_pparse *pp);
 char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
 
 /*
-** PARSER/PREPARSER.C AND TWO STATIC FUNTIONS
+** PARSER/PREPARSER_2.C
 */
+char		*check_tmpmemory(char *prompt, char *tmp, int *z, int *y);
+char		*expand_mayorminor_b(char *prompt, char *tmp, t_pparse *pp, int *z);
+char		*expand_mayorminor(char *prompt, t_pparse *pp);
+int			check_end_prompt(char *prompt, t_cmd_info *cmd_info);
+void		check_simplequotes(char *prompt, t_pparse *pp);
 
+/*
+** PARSER/PREPARSER_3.C
+*/
+int	expand_conditions(char *prompt, char *tmp, t_pparse *pp);
 
 /*
 ** PARSER/ANALYZER.C

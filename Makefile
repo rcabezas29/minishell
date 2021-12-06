@@ -6,7 +6,7 @@
 #    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/05 00:36:57 by fballest         ###   ########.fr        #
+#    Updated: 2021/12/06 11:15:34 by fballest         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ REDIRECT_DIR = redirections/
 
 SRCS_LEX = lexer.c dollars.c quotes.c words.c
 
-SRCS_PARSER = parser.c preparser.c analyzer.c assign_exe.c
+SRCS_PARSER = parser.c preparser.c preparser_2.c preparser_3.c analyzer.c assign_exe.c
 
 SRCS_EXEC = execute.c execute2.c simple_commands.c pipes.c manage_fds.c
 
