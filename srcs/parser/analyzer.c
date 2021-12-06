@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 17:32:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 18:11:47 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/06 17:03:19 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@ void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 		if (((t_node *)aux->content)->types > 1
 			&& ((t_node *)aux->content)->types < 6)
 		{
-			aux = aux->next;
+			if (aux->next)
+				aux = aux->next;
+			else
+			{
+				//write (2, "minishell: syntax error near unexpected token\n", 46);
+				cmd_info->return_code = 258;
+				break ;
+			}
 			((t_node *)aux->content)->types = FILE_NAME;
 			ft_manageredirections(cmd_info, env);
 		}
