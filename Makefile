@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/07 08:38:31 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/12/07 09:05:01 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 
 NAME = minishell
 
-SRCS_MS = minishell.c $(LEX_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) $(SIG_SRCS) $(REDIRECT_SRCS) $(PARSER_SRCS)
+SRCS_MS = minishell.c $(LEX_SRCS) $(ENV_SRCS) $(EXEC_SRCS) $(BUILTINS_SRCS) \
+			$(SIG_SRCS) $(REDIRECT_SRCS) $(PARSER_SRCS) $(CLEAN_SRCS)
 
 INCLUDES = includes/
 
@@ -34,6 +35,8 @@ SIG_DIR = signals/
 
 REDIRECT_DIR = redirections/
 
+CLEAN_DIR = clean/
+
 SRCS_LEX = lexer.c dollars.c quotes.c words.c
 
 SRCS_PARSER = parser.c preparser.c preparser_2.c preparser_3.c analyzer.c assign_exe.c
@@ -47,6 +50,8 @@ SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
 SRCS_SIG = signal.c
 
 SRCS_REDIRECT = redirections.c heredoc.c heredocexpander.c heredocwrite.c
+
+SRCS_CLEAN = cleanning.c
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_MS))
 
@@ -63,6 +68,8 @@ BUILTINS_SRCS = $(addprefix $(BUILTINS_DIR), $(SRCS_BUILTINS))
 SIG_SRCS = $(addprefix $(SIG_DIR), $(SRCS_SIG))
 
 REDIRECT_SRCS = $(addprefix $(REDIRECT_DIR), $(SRCS_REDIRECT))
+
+CLEAN_SRCS = $(addprefix $(CLEAN_DIR), $(SRCS_CLEAN))
 
 OBJS = $(SRCS:.c=.o)
 

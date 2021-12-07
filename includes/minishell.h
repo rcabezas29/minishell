@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/07 08:32:10 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/07 09:03:12 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,4 +349,12 @@ void		manage_write_fd(t_exe exe, int write_pipe[2]);
 ** EXECUTER/PIPES.C
 */
 int			execute_pipes(t_cmd_info *cmd_info, t_env *env);
+
+/*
+** CLEAN/CLEANNING.C
+*/
+void		del(void *node);
+void		free_exe(t_cmd_info *cmd_info);
+void		reset_values(t_cmd_info *cmd_info);
+
 #endif
