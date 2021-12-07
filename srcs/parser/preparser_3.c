@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   preparser_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/06 22:47:59 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/07 08:34:04 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	expand_conditions(char *prompt, char *tmp, t_pparse *pp)
 
 	z = 0;
 	if ((prompt[pp->i] == '>' && prompt[pp->i + 1] == '>'
-		&& prompt[pp->i + 2] == '>') || (prompt[pp->i] == '<'
-		&& prompt[pp->i + 1] == '<' && prompt[pp->i + 2] == '<')
+			&& prompt[pp->i + 2] == '>') || (prompt[pp->i] == '<'
+			&& prompt[pp->i + 1] == '<' && prompt[pp->i + 2] == '<')
 		|| (prompt[pp->i] == '>' && prompt[pp->i + 1] == '<')
 		|| (prompt[pp->i] == '<' && prompt[pp->i + 1] == '>'))
 		z = 666;

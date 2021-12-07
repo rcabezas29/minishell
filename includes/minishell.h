@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/06 23:15:27 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/07 08:32:10 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
 char		*check_tmpmemory(char *prompt, char *tmp, int *z, int *y);
 char		*expand_mayorminor_b(char *prompt, char *tmp, t_pparse *pp, int *z);
 char		*expand_mayorminor(char *prompt, t_pparse *pp);
-int	check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp);
+int				check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp);
 void		check_simplequotes(char *prompt, t_pparse *pp);
 
 /*

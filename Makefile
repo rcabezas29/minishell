@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/06 22:18:47 by fballest         ###   ########.fr        #
+#    Updated: 2021/12/07 08:38:31 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ LIBFT = libft
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -g #3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 BLUE = \033[0;34m
 

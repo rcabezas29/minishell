@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 17:32:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/06 22:26:35 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/07 08:35:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 				aux = aux->next;
 			else
 			{
-				//write (2, "minishell: syntax error near unexpected token\n", 46);
+				ft_putstr_fd(
+					"minishell: syntax error near unexpected token\n", 2);
 				cmd_info->return_code = 258;
 				break ;
 			}
