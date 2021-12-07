@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/02 22:10:02 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/06 18:16:50 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 	char	*path;
 	char	**exeggutor;
 
-	child_signal();
 	pid = fork();
 	if (pid == 0)
 	{
+		child_signal();
 		manage_read_fd(exe, read_pipe);
 		close(write_pipe[READ_END]);
 		manage_write_fd(exe, write_pipe);
@@ -44,8 +44,8 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 	}
 	else
 	{
+		negligent_parent();
 		parent_management(read_pipe, write_pipe);
-		cancel_signals();
 	}
 }
 

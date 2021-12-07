@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
 /*   Updated: 2021/12/06 22:19:28 by fballest         ###   ########.fr       */
@@ -103,6 +103,5 @@ int	ft_heredoc(char *file, t_cmd_info *cmd_info, t_env *env, int comillas)
 		close (fd);
 		ft_indirection(filename, cmd_info);
 	}
-	system ("leaks minishell");
 	return (fd);
 }

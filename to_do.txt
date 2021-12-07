@@ -6,3 +6,4 @@ signals de heredoc
 Queda algún leaks por ejemplo echo hola >> abc deja leaks de echo parece ser el cmd.
 Al dar errores de compilación crea archivos sucesivod .o ejemplo minishell.o minishell\ 2.o
 
+> >> < << solos y sus codigos de error (258)

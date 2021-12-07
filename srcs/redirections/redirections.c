@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
 /*   Updated: 2021/12/06 22:35:08 by fballest         ###   ########.fr       */
@@ -25,8 +25,8 @@ int	ft_append(char *filename, t_cmd_info *cmd_info)
 	{
 		cmd_info->return_code = errno;
 		write(2, "minishell: ", 12);
-		write(2, filename, 1);
-		write(2, ": syntax error near unexpected token\n", 37);
+		write(2, filename, ft_strlen(filename));
+		write(2, ": syntax error near unexpected token\n", 38);
 		return (cmd_info->return_code);
 	}
 	return (fd);
@@ -35,8 +35,18 @@ int	ft_append(char *filename, t_cmd_info *cmd_info)
 int	ft_indirection(char *filename, t_cmd_info *cmd_info)
 {
 	int		fd;
+	DIR		*dir;
 
 	fd = 0;
+	dir = opendir(filename);
+	if (dir)
+	{
+		write(2, "minishell: ", 11);
+		write(2, filename, ft_strlen(filename));
+		write(2, " is a directory/n", 17);
+		closedir(dir);
+		return (cmd_info->return_code = -126);
+	}
 	if (!access(filename, R_OK))
 		fd = open(filename, O_RDONLY);
 	if (fd < 0)

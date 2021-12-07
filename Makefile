@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fballest <fballest@student.42.fr>          +#+  +:+       +#+         #
+#    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
 #    Updated: 2021/12/06 22:18:47 by fballest         ###   ########.fr        #
@@ -44,7 +44,7 @@ SRCS_ENV = environments.c find_initial_envs.c env_utils.c
 
 SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
 
-SRCS_SIG = signal.c child_sigs.c
+SRCS_SIG = signal.c
 
 SRCS_REDIRECT = redirections.c heredoc.c heredocexpander.c heredocwrite.c
 
