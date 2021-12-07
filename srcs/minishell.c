@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/07 09:00:51 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/07 10:12:43 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	//atexit(leaks);
+	atexit(leaks);
 	take_envs(envp, env);
 	while (1)
 	{
@@ -48,6 +48,12 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			prompt = check_prompt(prompt, cmd_info);
+			if (!prompt)
+			{
+				free(prompt);
+				prompt = prompt_main(argc, argv);
+				continue ;
+			}
 			lexer(env, cmd_info, prompt);
 			analyze_prompt(cmd_info, env);
 			parser(cmd_info);
