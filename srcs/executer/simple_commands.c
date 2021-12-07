@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/06 22:35:32 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/07 10:16:41 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
 		write(2, "minishell: ", 12);
 		write(2, path, ft_strlen(path));
 		write(2, ": is a directory\n", 18);
-		closedir ((DIR *)path);
 		cmd_info->return_code = 126;
 		return (cmd_info->return_code);
 	}
