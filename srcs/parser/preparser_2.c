@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/06 11:14:56 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/07 01:31:21 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ char	*check_tmpmemory(char *prompt, char *tmp, int *z, int *y)
 char	*expand_mayorminor_b(char *prompt, char *tmp, t_pparse *pp, int *z)
 {
 	tmp[pp->j++] = ' ';
+	while ((*z) > 0)
+	{
+		tmp[pp->j++] = prompt[pp->i++];
+		(*z)--;
+	}
+	tmp[pp->j++] = ' ';
 	(*z) = pp->i++;
 	while (prompt[(*z)])
 		tmp[pp->j++] = prompt[(*z)++];
@@ -36,7 +42,10 @@ char	*expand_mayorminor_b(char *prompt, char *tmp, t_pparse *pp, int *z)
 	pp->j = pp->i + 2;
 	pp->i = pp->j;
 	free (prompt);
-	return (tmp);
+	prompt = ft_strdup(tmp);
+	free (tmp);
+	tmp = NULL;
+	return (prompt);
 }
 
 char	*expand_mayorminor(char *prompt, t_pparse *pp)
@@ -50,33 +59,42 @@ char	*expand_mayorminor(char *prompt, t_pparse *pp)
 	while (prompt[(pp->i)])
 	{
 		z = expand_conditions(prompt, tmp, pp);
+		if (z == 666)
+		{
+			write(2, "minishell: not supported redirection\n", 37);
+			free (prompt);
+			free (pp->aux);
+			free (tmp);
+			free (pp);
+			return (NULL);
+		}
 		while (z > 0)
 		{
 			tmp = check_tmpmemory(prompt, tmp, &z, &y);
-			tmp[pp->j++] = ' ';
-			while (z > 0)
-			{
-				tmp[pp->j++] = prompt[pp->i++];
-				z--;
-			}
 			tmp = expand_mayorminor_b(prompt, tmp, pp, &z);
 			return (tmp);
 		}
 	}
-	return (prompt);
+	return (tmp);
 }
 
-int	check_end_prompt(char *prompt, t_cmd_info *cmd_info)
+int	check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp)
 {
 	int		len;
 
 	len = ft_strlen(prompt);
+	while (prompt[len - 1] == ' ')
+		len--;
 	if (prompt[len - 1] == '|' || prompt[len - 1] == '>'
 		|| prompt[len - 1] == '<')
 	{
 		write(2,
 			"minishell: syntax error near unexpected token `newline'\n", 57);
-		return (cmd_info->return_code = 258);
+		cmd_info->return_code = 258;
+		free (prompt);
+		prompt = NULL;
+		free (pp);
+		return (1);
 	}
 	return (0);
 }
