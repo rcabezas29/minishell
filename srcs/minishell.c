@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/07 10:12:43 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/08 10:37:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			prompt = check_prompt(prompt, cmd_info);
 			if (!prompt)
-			{
-				free(prompt);
-				prompt = prompt_main(argc, argv);
 				continue ;
-			}
 			lexer(env, cmd_info, prompt);
 			analyze_prompt(cmd_info, env);
 			parser(cmd_info);

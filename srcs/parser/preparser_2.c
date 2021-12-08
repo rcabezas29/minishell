@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/07 01:31:21 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 10:32:19 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ int	check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp)
 	int		len;
 
 	len = ft_strlen(prompt);
-	while (prompt[len - 1] == ' ')
+	while (len > 0 && prompt[len - 1] && prompt[len - 1] == ' ')
 		len--;
-	if (prompt[len - 1] == '|' || prompt[len - 1] == '>'
-		|| prompt[len - 1] == '<')
+	if (len > 0 && (prompt[len - 1] == '|' || prompt[len - 1] == '>'
+			|| prompt[len - 1] == '<'))
 	{
 		write(2,
 			"minishell: syntax error near unexpected token `newline'\n", 57);
