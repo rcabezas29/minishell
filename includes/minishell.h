@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/07 09:03:12 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/08 09:51:50 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,8 +258,8 @@ void		negligent_parent(void);
 int			ft_append(char *filename, t_cmd_info *cmd_info);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);
 int			ft_redirection(char *filename, t_cmd_info *cmd_info);
-void		ft_manageredirections_b(t_cmd_info *cmd_info, t_list *tmp);
-void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env);
+//void		ft_manageredirections_b(t_cmd_info *cmd_info, t_list **tmp);
+void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env, t_node *node, t_type type);
 
 /*
 ** REDIRECTIONS/HEREDOC.C

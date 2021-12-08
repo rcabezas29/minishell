@@ -1,5 +1,4 @@
 error_code
 signals de heredoc
-<< aa cat > b No redirige la salida a b revisar si es el manageredirections al partir la función o los fd para builtin solos
 Al dar errores de compilación crea archivos sucesivod .o ejemplo minishell.o minishell\ 2.o
 > >> < << solos y sus codigos de error (258)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/06 22:35:08 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 09:57:59 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,49 +85,23 @@ int	ft_redirection(char *filename, t_cmd_info *cmd_info)
 	return (fd);
 }
 
-void	ft_manageredirections_b(t_cmd_info *cmd_info, t_list *tmp)
+void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env, t_node *node,
+		t_type type)
 {
-	if (((t_node *)tmp->content)->types == 2)
+	if (type == HERE_DOC)
 	{
-		tmp = tmp->next;
-		((t_node *)tmp->content)->fd_in
-			= ft_indirection(((t_node *)tmp->content)->prompts, cmd_info);
-	}
-	else if (((t_node *)tmp->content)->types == 3)
-	{
-		tmp = tmp->next;
-		((t_node *)tmp->content)->fd_out
-			= ft_redirection(((t_node *)tmp->content)->prompts, cmd_info);
-	}
-	else if (((t_node *)tmp->content)->types == 5)
-	{
-		tmp = tmp->next;
-		((t_node *)tmp->content)->fd_out
-			= ft_append(((t_node *)tmp->content)->prompts, cmd_info);
-	}
-}
-
-void	ft_manageredirections(t_cmd_info *cmd_info, t_env *env)
-{
-	t_list	*tmp;
-
-	tmp = cmd_info->command_list;
-	while (tmp)
-	{
-		ft_manageredirections_b(cmd_info, tmp);
-		if (((t_node *)tmp->content)->types == 4)
+		if (!ft_strlen(node->prompts))
 		{
-			tmp = tmp->next;
-			if (!ft_strlen(((t_node *)tmp->content)->prompts))
-			{
-				write (2, "minishell: Non-existing enviroment variable\n", 44);
-				cmd_info->return_code = 1;
-				continue ;
-			}
-			((t_node *)tmp->content)->fd_in
-				= ft_heredoc((char *)((t_node *)tmp->content)->prompts,
-					cmd_info, env, ((t_node *)tmp->content)->comillas);
+			write (2, "minishell: Non-existing enviroment variable\n", 44);
+			cmd_info->return_code = 1;
+			return ;
 		}
-		tmp = tmp->next;
+		node->fd_in = ft_heredoc(node->prompts, cmd_info, env, node->comillas);
 	}
+	else if (type == INDIRECTION)
+		node->fd_in = ft_indirection(node->prompts, cmd_info);
+	else if (type == REDIRECTION)
+		node->fd_out = ft_redirection(node->prompts, cmd_info);
+	else if (type == APPEND)
+		node->fd_out = ft_append(node->prompts, cmd_info);
 }
