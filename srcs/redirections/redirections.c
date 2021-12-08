@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/15 11:01:44 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/08 09:57:59 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:37:31 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,17 @@ int	ft_indirection(char *filename, t_cmd_info *cmd_info)
 int	ft_redirection(char *filename, t_cmd_info *cmd_info)
 {
 	int		fd;
+	DIR		*dir;
 
 	fd = 0;
-	if (opendir (filename))
+	dir = opendir(filename);
+	if (dir)
 	{
+		closedir(dir);
 		write(2, "minishell: ", 11);
 		write(2, filename, ft_strlen(filename));
-		write(2, " is a directory/n", 17);
-		closedir ((DIR *)filename);
-		return (cmd_info->return_code = -126);
+		write(2, " is a directory\n", 17);
+		return (cmd_info->return_code = 1);
 	}
 	if (!access(filename, R_OK))
 		unlink(filename);

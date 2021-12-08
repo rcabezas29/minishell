@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/08 10:32:19 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:43:29 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ char	*expand_mayorminor_b(char *prompt, char *tmp, t_pparse *pp, int *z)
 	return (prompt);
 }
 
+void	free_mayorminor(char *prompt, char *tmp, t_pparse *pp)
+{
+	write(2, "minishell: not supported redirection\n", 37);
+	free (prompt);
+	free (pp->aux);
+	free (tmp);
+	free (pp);
+}
+
 char	*expand_mayorminor(char *prompt, t_pparse *pp)
 {
 	char	*tmp;
@@ -61,11 +70,7 @@ char	*expand_mayorminor(char *prompt, t_pparse *pp)
 		z = expand_conditions(prompt, tmp, pp);
 		if (z == 666)
 		{
-			write(2, "minishell: not supported redirection\n", 37);
-			free (prompt);
-			free (pp->aux);
-			free (tmp);
-			free (pp);
+			free_mayorminor(prompt, tmp, pp);
 			return (NULL);
 		}
 		while (z > 0)
@@ -78,41 +83,18 @@ char	*expand_mayorminor(char *prompt, t_pparse *pp)
 	return (tmp);
 }
 
-int	check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp)
+int	check_before_pipes(char *prompt, t_cmd_info *cmd_info, int len)
 {
-	int		len;
-
-	len = ft_strlen(prompt);
-	while (len > 0 && prompt[len - 1] && prompt[len - 1] == ' ')
-		len--;
-	if (len > 0 && (prompt[len - 1] == '|' || prompt[len - 1] == '>'
-			|| prompt[len - 1] == '<'))
-	{
-		write(2,
-			"minishell: syntax error near unexpected token `newline'\n", 57);
-		cmd_info->return_code = 258;
-		free (prompt);
-		prompt = NULL;
-		free (pp);
+	if (len == 0)
 		return (1);
-	}
+	while (len > 0 && prompt[len - 1] != '|')
+		len--;
+	len--;
+	while (len > 0 && prompt[len - 1] == ' ')
+		len--;
+	if (len > 0 && (prompt[len - 1] == '>' || prompt[len - 1] == '<'))
+		return (1);
+	if (len > 0)
+		check_before_pipes(prompt, cmd_info, len);
 	return (0);
-}
-
-void	check_simplequotes(char *prompt, t_pparse *pp)
-{
-	if (prompt[pp->i + 1] != '\'')
-	{
-		pp->s_quotes += 1;
-		if (prompt[pp->i + 1] == '\"'
-			&& (pp->s_quotes == 0 || !(pp->s_quotes % 2)))
-		{
-			pp->d_quotes += 1;
-			pp->i += 2;
-		}
-		else
-			pp->aux[pp->j++] = prompt[pp->i++];
-	}
-	else
-		pp->i += 2;
 }

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 13:08:30 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/08 10:37:54 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 10:43:05 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **envp)
 
 	cmd_info = ft_calloc(sizeof(t_cmd_info), 1);
 	env = ft_calloc(sizeof(t_env), 1);
-	atexit(leaks);
 	take_envs(envp, env);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/08 09:51:50 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:44:35 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,15 +307,17 @@ char		*check_prompt(char *prompt, t_cmd_info *cmd_info);
 ** PARSER/PREPARSER_2.C
 */
 char		*check_tmpmemory(char *prompt, char *tmp, int *z, int *y);
+void		free_mayorminor(char *prompt, char *tmp, t_pparse *pp);
 char		*expand_mayorminor_b(char *prompt, char *tmp, t_pparse *pp, int *z);
 char		*expand_mayorminor(char *prompt, t_pparse *pp);
-int				check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp);
-void		check_simplequotes(char *prompt, t_pparse *pp);
+int			check_before_pipes(char *prompt, t_cmd_info *cmd_info, int len);
 
 /*
 ** PARSER/PREPARSER_3.C
 */
 int			expand_conditions(char *prompt, char *tmp, t_pparse *pp);
+int			check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp);
+void		check_simplequotes(char *prompt, t_pparse *pp);
 
 /*
 ** PARSER/ANALYZER.C

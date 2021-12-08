@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 17:32:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/08 09:48:56 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/08 11:17:14 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ void	analyze_prompt(t_cmd_info *cmd_info, t_env *env)
 			type = ((t_node *)aux->content)->types;
 			if (aux->next)
 				aux = aux->next;
-			else
+			if (((t_node *)aux->content)->types == PIPE)
 			{
 				ft_putstr_fd(
 					"minishell: syntax error near unexpected token\n", 2);
 				cmd_info->return_code = 258;
-				break ;
+				return ;
 			}
 			((t_node *)aux->content)->types = FILE_NAME;
-			ft_manageredirections(cmd_info, env, ((t_node *)aux->content), type);
+			ft_manageredirections(cmd_info, env, ((t_node *)aux->content),
+				type);
 		}
 		aux = aux->next;
 	}
