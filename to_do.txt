@@ -1,5 +1,4 @@
 error_code
 signals de heredoc
 ls | . incluir comprobación directorio para ultimo pipe y entrepipes
-No such file or directory return
 añadir comprobación directorio en redirecciones

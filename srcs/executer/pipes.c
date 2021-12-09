@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/06 18:16:50 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/09 11:49:07 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,17 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 	pid_t	pid;
 	char	*path;
 	char	**exeggutor;
+	DIR		*dir;
 
+	dir = opendir(exe.cmd);
+	if (dir)
+	{
+		closedir(dir);
+		write(2, "minishell: ", 12);
+		write(2, exe.cmd, ft_strlen(exe.cmd));
+		write(2, ": is a directory\n", 18);
+		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
