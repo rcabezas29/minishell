@@ -4,7 +4,5 @@ ls | . incluir comprobación directorio para ultimo pipe y entrepipes
 comandos vacios (espacio)
 No such file or directory return
 leak en directorio
-despues de comillas espacio
-unset variables en estructura
 cd comprobacion directorio
 cd - leak
