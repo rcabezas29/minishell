@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:36:49 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/25 10:50:17 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:41:30 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	cd_guion(t_env *env)
 	else
 	{
 		tmp = ft_strdup(env->pwd);
+		free (env->pwd);
 		env->pwd = ft_strdup(env->oldpwd);
 		env->oldpwd = ft_strdup(tmp);
 		free (tmp);
@@ -71,6 +72,20 @@ int	cd_path(t_env *env, t_exe exe)
 	return (0);
 }
 
+int	check_cddirectory(char *direct)
+{
+	DIR		*dir;
+
+	dir = opendir(direct);
+	if (!dir)
+	{
+		perror ("minishell");
+		return (1);
+	}
+	closedir(dir);
+	return (0);
+}
+
 int	execute_cd(t_exe exe, t_env *env)
 {
 	int		nargs;
@@ -87,7 +102,14 @@ int	execute_cd(t_exe exe, t_env *env)
 		&& ft_strcmp(exe.args[0], "-") == 0)
 		ret = cd_guion(env);
 	else
+	{
+		if (check_cddirectory(exe.args[0]) == 1)
+		{
+			free(env->pwd);
+			return (1);
+		}
 		ret = cd_path(env, exe);
+	}
 	ft_change_env(env);
 	ft_take_envs_free(env);
 	return (ret);

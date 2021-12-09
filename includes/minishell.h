@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/08 11:48:11 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:06:00 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int			execute_builtins(t_exe exe, t_env *env);
 int			cd_alone(t_env *env);
 int			cd_guion(t_env *env);
 int			cd_path(t_env *env, t_exe exe);
+int			check_cddirectory(char *direct);
 int			execute_cd(t_exe exe, t_env *env);
 
 /*
