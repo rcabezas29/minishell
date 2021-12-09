@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:40:35 by fballest          #+#    #+#             */
-/*   Updated: 2021/12/08 11:42:16 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:58:54 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	check_end_prompt(char *prompt, t_cmd_info *cmd_info, t_pparse *pp)
 	len = ft_strlen(prompt);
 	while (len > 0 && prompt[len - 1] && prompt[len - 1] == ' ')
 		len--;
+	if (len == 0)
+		return (0);
 	i = check_before_pipes(prompt, cmd_info, len);
 	if (i > 0 || (len > 0 && (prompt[len - 1] == '|' || prompt[len - 1] == '>'
 				|| prompt[len - 1] == '<')))
