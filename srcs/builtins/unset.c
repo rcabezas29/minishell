@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/23 10:12:07 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/09 09:53:59 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,20 @@
 static void	check_util_envs_for_unset(char *variable, t_env *env)
 {
 	if (!ft_strncmp(variable, "PWD", ft_strlen(variable)))
-	{
-		free(env->pwd);
 		env->pwd = NULL;
-	}
+
 	else if (!ft_strncmp(variable, "OLDPWD", ft_strlen(variable)))
-	{
-		free(env->oldpwd);
 		env->oldpwd = NULL;
-	}
 	else if (!ft_strncmp(variable, "PATH", ft_strlen(variable)))
 	{
 		ft_freematrix(env->paths);
 		env->paths = NULL;
 	}
 	else if (!ft_strncmp(variable, "HOME", ft_strlen(variable)))
-	{
-		free(env->home);
 		env->home = NULL;
-	}
+
 	else if (!ft_strncmp(variable, "USER", ft_strlen(variable)))
-	{
-		free(env->user);
 		env->user = NULL;
-	}
 }
 
 static char	*check_nums_in_unset(char **args)

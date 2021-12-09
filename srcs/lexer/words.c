@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 11:43:56 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/03 17:11:36 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/09 10:30:16 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,22 @@ void	word_analyzer(t_parser *p, t_env *env, t_cmd_info *cmd_info)
 	{
 		comillas = 1;
 		parse_quotes(env, p, '\'', cmd_info);
+		if (p->prompt[p->i] == '\'' && p->prompt[p->i + 1] && p->prompt[p->i + 1] != ' ')
+		{
+			p->i++;
+			parse_simple_chars(env, p, cmd_info, ft_strlen(p->word));
+		}
 		add_word_to_list(&cmd_info->command_list, cmd_info, p->word, comillas);
 	}
 	else if (p->prompt[p->i] == '\"')
 	{
 		comillas = 2;
 		parse_quotes(env, p, '\"', cmd_info);
+		if (p->prompt[p->i] == '\"' && p->prompt[p->i + 1] && p->prompt[p->i + 1] != ' ')
+		{
+			p->i++;
+			parse_simple_chars(env, p, cmd_info, ft_strlen(p->word));
+		}
 		add_word_to_list(&cmd_info->command_list, cmd_info, p->word, comillas);
 	}
 	else
