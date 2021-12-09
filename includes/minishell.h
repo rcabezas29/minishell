@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 10:06:00 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/09 12:39:43 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ void		negligent_parent(void);
 int			ft_append(char *filename, t_cmd_info *cmd_info);
 int			ft_indirection(char *filename, t_cmd_info *cmd_info);
 int			ft_redirection(char *filename, t_cmd_info *cmd_info);
-//void		ft_manageredirections_b(t_cmd_info *cmd_info, t_list **tmp);
+int			check_directory(char *filename, t_cmd_info *cmd_info);
 void		ft_manageredirections(t_cmd_info *cmd_info, t_env *env,
 				t_node *node, t_type type);
 

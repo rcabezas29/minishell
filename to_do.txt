@@ -1,4 +1,2 @@
 error_code
 signals de heredoc
-ls | . incluir comprobación directorio para ultimo pipe y entrepipes
-añadir comprobación directorio en redirecciones
