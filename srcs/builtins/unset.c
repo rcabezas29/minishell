@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 09:53:59 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:35:07 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	check_util_envs_for_unset(char *variable, t_env *env)
 {
 	if (!ft_strncmp(variable, "PWD", ft_strlen(variable)))
 		env->pwd = NULL;
-
 	else if (!ft_strncmp(variable, "OLDPWD", ft_strlen(variable)))
 		env->oldpwd = NULL;
 	else if (!ft_strncmp(variable, "PATH", ft_strlen(variable)))
@@ -26,7 +25,6 @@ static void	check_util_envs_for_unset(char *variable, t_env *env)
 	}
 	else if (!ft_strncmp(variable, "HOME", ft_strlen(variable)))
 		env->home = NULL;
-
 	else if (!ft_strncmp(variable, "USER", ft_strlen(variable)))
 		env->user = NULL;
 }

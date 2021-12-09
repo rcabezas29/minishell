@@ -6,45 +6,16 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 09:55:10 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 11:02:12 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:41:51 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	**assign_arguments_with_cmd(t_exe exe)
-{
-	char	**exeggutor;
-	int		i;
-
-	exeggutor = ft_calloc(sizeof(char *), (ft_matrixlen(exe.args) + 2));
-	exeggutor[0] = ft_strdup(exe.cmd);
-	i = 0;
-	while (i < ft_matrixlen(exe.args))
-	{
-		i++;
-		exeggutor[i] = ft_strdup(exe.args[i - 1]);
-	}
-	return (exeggutor);
-}
-
-int	check_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "echo") == 0
-		|| ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "pwd") == 0
-		|| ft_strcmp(cmd, "env") == 0
-		|| ft_strcmp(cmd, "export") == 0
-		|| ft_strcmp(cmd, "unset") == 0
-		|| ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	else
-		return (0);
-}
-
 void	parent_cleanning(char *path, char **exeggutor,
 	int saved_stdin, int saved_stdout)
 {
+	negligent_parent();
 	free(path);
 	ft_freematrix(exeggutor);
 	restore_fds(saved_stdin, saved_stdout);
@@ -57,38 +28,22 @@ int	execute_execve_on_simple_commands(t_cmd_info *cmd_info, t_env *env,
 	int		pid;
 	int		j;
 	char	**exeggutor;
-	DIR		*dir;
 
 	j = 0;
 	path = cmd_path(env, cmd_info->exe[0].cmd);
-	dir = opendir(path);
-	if (dir)
-	{
-		closedir(dir);
-		restore_fds(saved_stdin, saved_stdout);
-		write(2, "minishell: ", 12);
-		write(2, path, ft_strlen(path));
-		write(2, ": is a directory\n", 18);
-		free(path);
-		cmd_info->return_code = 126;
-		return (cmd_info->return_code);
-	}
+	if (check_dir_error(path, saved_stdin, saved_stdout))
+		return (126);
 	if (!path)
 	{
 		restore_fds(saved_stdin, saved_stdout);
-		cmd_info->return_code = 127;
-		return (cmd_info->return_code);
+		return (cmd_info->return_code = 127);
 	}
 	exeggutor = assign_arguments_with_cmd(cmd_info->exe[0]);
 	pid = fork();
 	if (pid == 0)
-	{
-		child_signal();
-		execve(path, exeggutor, env->envp);
-	}	
+		child_signal(), execve(path, exeggutor, env->envp);
 	else
 	{
-		negligent_parent();
 		parent_cleanning(path, exeggutor, saved_stdin, saved_stdout);
 		waitpid(pid, &j, 0);
 	}

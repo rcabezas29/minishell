@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:20:01 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 11:49:07 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:38:56 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,28 @@
 
 void	parent_management(int read_pipe, int write_pipe[2])
 {
+	negligent_parent();
 	if (read_pipe)
 		close(read_pipe);
 	if (write_pipe[WRITE_END] != STDOUT_FILENO)
 		close(write_pipe[WRITE_END]);
+}
+
+static int	check_dir_error_pipes(char *path)
+{
+	DIR	*dir;
+
+	dir = opendir(path);
+	if (dir)
+	{
+		closedir(dir);
+		write(2, "minishell: ", 12);
+		write(2, path, ft_strlen(path));
+		write(2, ": is a directory\n", 18);
+		return (1);
+	}
+	else
+		return (0);
 }
 
 void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
@@ -25,17 +43,9 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 	pid_t	pid;
 	char	*path;
 	char	**exeggutor;
-	DIR		*dir;
 
-	dir = opendir(exe.cmd);
-	if (dir)
-	{
-		closedir(dir);
-		write(2, "minishell: ", 12);
-		write(2, exe.cmd, ft_strlen(exe.cmd));
-		write(2, ": is a directory\n", 18);
+	if (check_dir_error_pipes(exe.cmd))
 		return ;
-	}
 	pid = fork();
 	if (pid == 0)
 	{
@@ -53,10 +63,7 @@ void	pipe_execution(t_exe exe, int read_pipe, int write_pipe[2], t_env *env)
 		execve(path, exeggutor, env->envp);
 	}
 	else
-	{
-		negligent_parent();
 		parent_management(read_pipe, write_pipe);
-	}
 }
 
 int	waiting_room(int no_pipes)

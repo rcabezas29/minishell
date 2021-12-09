@@ -6,7 +6,7 @@
 /*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 12:56:42 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:33:01 by fballest         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,9 +240,11 @@ int			execute_unset(t_exe exe, t_env *env);
 /*
 ** BUILTINS/BUILTIN_UTILS.C
 */
-char		**remove_env(t_env *env, char *erased);
-void		ft_change_env(t_env *env);
 void		ft_take_envs_free(t_env *env);
+void		ft_change_env(t_env *env);
+void		change_env_in_env_utils(char **newenv, t_env *env, int *i, int *j);
+char		**remove_env(t_env *env, char *erased);
+int			check_builtin(char *cmd);
 
 /*
 ** SIGNAL/SIGNAL.C
@@ -339,7 +341,7 @@ void		assign_fd_from_list(t_list *tmp, t_exe *exe, int n);
 */
 int			execute_simple_commands(t_cmd_info *cmd_info, t_env *env);
 char		**assign_arguments_with_cmd(t_exe exe);
-int			check_builtin(char *cmd);
+//int			check_builtin(char *cmd);
 
 /*
 ** EXECUTER/MANAGE_FDS.C
@@ -361,4 +363,9 @@ void		del(void *node);
 void		free_exe(t_cmd_info *cmd_info);
 void		reset_values(t_cmd_info *cmd_info);
 
+/*
+** EXECUTER/SIMPLE_COMMANDS_UTILS.C
+*/
+int			check_dir_error(char *path, int saved_stdin, int saved_stdout);
+char		**assign_arguments_with_cmd(t_exe exe);
 #endif
