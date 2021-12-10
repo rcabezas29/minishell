@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 14:33:01 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/10 11:19:17 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ int			execute_exit(t_exe exe);
 */
 char		**order_envs(char **envs);
 void		print_envs_export(char **envs);
-char		**add_string_to_array(char **arr, char *str);
+char		**add_string_to_array(t_env *env, char **arr, char *str);
 int			execute_export(t_exe exe, t_env *env);
 
 /*

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fballest <fballest@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/09 14:35:07 by fballest         ###   ########.fr       */
+/*   Updated: 2021/12/10 11:48:07 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static char	*check_nums_in_unset(char **args)
 	int	i;
 
 	i = 0;
+	if (!args)
+		return (NULL);
 	while (args[i])
 	{
 		if (ft_isdigit(args[i][0]))
@@ -80,6 +82,8 @@ int	execute_unset(t_exe exe, t_env *env)
 	char	**variables;
 	char	*error;
 
+	if (!exe.args)
+		return (0);
 	error = check_nums_in_unset(exe.args);
 	if (error)
 	{

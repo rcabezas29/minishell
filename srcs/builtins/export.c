@@ -6,11 +6,20 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 10:39:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/11/21 09:52:06 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/10 11:51:51 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	assign_path(t_env *env, char *str)
+{
+	char	*aux;
+
+	aux = ft_strchr2(str, '=');
+	if (!env->paths)
+		add_slash_to_path(env, str);
+}
 
 static int	check_env(char *env, char **list)
 {
@@ -76,7 +85,7 @@ void	print_envs_export(char **envs)
 	ft_freematrix(ordered);
 }
 
-char	**add_string_to_array(char **arr, char *str)
+char	**add_string_to_array(t_env *env, char **arr, char *str)
 {
 	char	**ret;
 	char	*name;
@@ -99,6 +108,8 @@ char	**add_string_to_array(char **arr, char *str)
 	}
 	if (!check_env(str, ret))
 		ret[i++] = ft_strdup(str);
+	if (ft_strcmp(str, "PATH="))
+		assign_path(env, str);
 	ret[i] = NULL;
 	ft_freematrix(arr);
 	arr = NULL;
@@ -117,7 +128,7 @@ int	execute_export(t_exe exe, t_env *env)
 	i = 0;
 	while (exe.args[i])
 	{
-		env->envp = add_string_to_array(env->envp,
+		env->envp = add_string_to_array(env, env->envp,
 				exe.args[i]);
 		i++;
 	}
