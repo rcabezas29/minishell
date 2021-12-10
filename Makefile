@@ -6,7 +6,7 @@
 #    By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/23 13:43:21 by rcabezas          #+#    #+#              #
-#    Updated: 2021/12/10 11:50:13 by rcabezas         ###   ########.fr        #
+#    Updated: 2021/12/10 12:08:45 by rcabezas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRCS_EXEC = execute.c execute2.c simple_commands.c pipes.c manage_fds.c simple_c
 
 SRCS_ENV = environments.c find_initial_envs.c env_utils.c
 
-SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c
+SRCS_BUILTINS = pwd.c echo.c env.c unset.c cd.c export.c exit.c builtin_utils.c environments_utils.c
 
 SRCS_SIG = signal.c
 

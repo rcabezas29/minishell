@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 11:40:58 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/10 11:48:07 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/10 12:17:04 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,6 @@ static char	**save_envs(char **args)
 	}
 	ret[i] = NULL;
 	return (ret);
-}
-
-static int	check_env(char *env, char **list)
-{
-	int	i;
-
-	i = 0;
-	while (list[i])
-	{
-		if (!ft_strncmp(env, list[i], ft_strlen(env)))
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 int	execute_unset(t_exe exe, t_env *env)

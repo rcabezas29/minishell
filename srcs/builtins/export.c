@@ -6,61 +6,11 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 10:39:24 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/10 11:51:51 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/10 12:18:58 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	assign_path(t_env *env, char *str)
-{
-	char	*aux;
-
-	aux = ft_strchr2(str, '=');
-	if (!env->paths)
-		add_slash_to_path(env, str);
-}
-
-static int	check_env(char *env, char **list)
-{
-	int	i;
-
-	i = 0;
-	while (list[i])
-	{
-		if (!ft_strncmp(env, list[i], ft_strlen(env)))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	**order_envs(char **envs)
-{
-	char	**ordered;
-	char	*tmp;
-	int		i;
-	int		j;
-
-	ordered = ft_matrixdup(envs);
-	i = 0;
-	while (i < ft_matrixlen(envs))
-	{
-		j = 1;
-		while (ordered[j])
-		{
-			if (ft_strcmp(ordered[j - 1], ordered[j]) > 0)
-			{
-				tmp = ordered[j - 1];
-				ordered[j - 1] = ordered[j];
-				ordered[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (ordered);
-}
 
 void	print_envs_export(char **envs)
 {
@@ -85,6 +35,16 @@ void	print_envs_export(char **envs)
 	ft_freematrix(ordered);
 }
 
+static char	**export_checks(t_env *env, char *str, char **ret, int i)
+{
+	if (!check_env(str, ret))
+		ret[i++] = ft_strdup(str);
+	if (ft_strcmp(str, "PATH="))
+		assign_path(env, str);
+	ret[i] = NULL;
+	return (ret);
+}
+
 char	**add_string_to_array(t_env *env, char **arr, char *str)
 {
 	char	**ret;
@@ -106,11 +66,7 @@ char	**add_string_to_array(t_env *env, char **arr, char *str)
 		free(name);
 		free(aux);
 	}
-	if (!check_env(str, ret))
-		ret[i++] = ft_strdup(str);
-	if (ft_strcmp(str, "PATH="))
-		assign_path(env, str);
-	ret[i] = NULL;
+	ret = export_checks(env, str, ret, i);
 	ft_freematrix(arr);
 	arr = NULL;
 	return (ret);

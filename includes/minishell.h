@@ -6,7 +6,7 @@
 /*   By: rcabezas <rcabezas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 14:07:06 by rcabezas          #+#    #+#             */
-/*   Updated: 2021/12/10 11:19:17 by rcabezas         ###   ########.fr       */
+/*   Updated: 2021/12/10 12:09:57 by rcabezas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,4 +368,11 @@ void		reset_values(t_cmd_info *cmd_info);
 */
 int			check_dir_error(char *path, int saved_stdin, int saved_stdout);
 char		**assign_arguments_with_cmd(t_exe exe);
+
+/*
+** BUILTINS/ENVIRONMENTS_UTILS.C
+*/
+void		assign_path(t_env *env, char *str);
+int			check_env(char *env, char **list);
+char		**order_envs(char **envs);
 #endif
